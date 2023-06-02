@@ -19,21 +19,26 @@
                 SemanticProperties.Description="Cute dot net bot waving hi to you!"
                 Source="dotnet_bot.png" />
 
-            <Label Text="Correo UCAB" />
-            <Entry x:Name="TxtEmail" Placeholder="usuario@est.ucab.edu.ve" />
-
-            <Label Text="Contraseña" />
-            <Entry
-                x:Name="TxtPassword"
-                IsPassword="True"
-                Placeholder="Contraseña" />
+            <Label Margin="0,0,0,-20" Text="Correo UCAB:" />
+            <Border>
+                <Entry x:Name="TxtEmail" Placeholder="usuario@est.ucab.edu.ve" />
+            </Border>
+            <Label Margin="0,0,0,-20" Text="Contraseña:" />
+            <Border>
+                <Entry
+                    x:Name="TxtPassword"
+                    IsPassword="True"
+                    Placeholder="Contraseña" />
+            </Border>
 
             <Button x:Name="BtnLogin" Text="Login" />
+
             <!--  A horizontal line that divides the buttons  -->
             <BoxView
                 BackgroundColor="Black"
                 HeightRequest="1"
                 HorizontalOptions="FillAndExpand" />
+
             <Button x:Name="BtnGoogle" Text="Registrarse con Google" />
 
         </VerticalStackLayout>

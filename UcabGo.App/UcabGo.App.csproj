@@ -15,7 +15,7 @@
 		<ApplicationTitle>UcabGo.App</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.ucabgo.app</ApplicationId>
+		<ApplicationId>com.ucab.ucabgo.app</ApplicationId>
 		<ApplicationIdGuid>02e32c71-91f5-4da3-9e4f-7c119b985a5b</ApplicationIdGuid>
 
 		<!-- Versions -->
