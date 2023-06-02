@@ -396,3 +396,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+UcabGo.App/appsettings.json
+UcabGo.App/Resources/Raw/API.txt

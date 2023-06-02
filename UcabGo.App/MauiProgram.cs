@@ -1,4 +1,7 @@
-﻿namespace UcabGo.App;
+﻿using System.Reflection;
+using UcabGo.App.ApiAccess.Tools;
+
+namespace UcabGo.App;
 
 public static class MauiProgram
 {
@@ -13,6 +16,12 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 
-		return builder.Build();
+		//Setting the API URL
+        using var stream = FileSystem.OpenAppPackageFileAsync("API.txt").Result;
+        using var reader = new StreamReader(stream);
+        var apiUrl = reader.ReadToEnd();
+		Routes.BASE_URL = apiUrl;
+
+        return builder.Build();
 	}
 }

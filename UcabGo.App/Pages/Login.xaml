@@ -31,7 +31,10 @@
                     Placeholder="Contraseña" />
             </Border>
 
-            <Button x:Name="BtnLogin" Text="Login" />
+            <Button
+                x:Name="BtnLogin"
+                Clicked="BtnLogin_Clicked"
+                Text="Login" />
 
             <!--  A horizontal line that divides the buttons  -->
             <BoxView

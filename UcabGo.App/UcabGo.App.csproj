@@ -92,6 +92,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="resources\raw\API.txt" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Compile Update="App.xaml.cs">
 	    <DependentUpon>App.xaml</DependentUpon>
 	  </Compile>
