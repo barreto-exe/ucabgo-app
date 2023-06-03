@@ -24,9 +24,19 @@
             <Border>
                 <Entry
                     x:Name="TxtEmail"
+                    IsSpellCheckEnabled="False"
+                    Keyboard="Email"
                     Placeholder="usuario@est.ucab.edu.ve"
                     Text="{Binding Email}" />
             </Border>
+            <Label
+                Margin="0,-20,0,0"
+                FontSize="12"
+                HorizontalOptions="Start"
+                IsVisible="{Binding IsEmailErrorVisible}"
+                Text="❌ Correo inválido. &#10;-Sólo permitidos correos UCAB."
+                TextColor="Red" />
+
             <Label Margin="0,0,0,-20" Text="Contraseña:" />
             <Border>
                 <Entry
@@ -35,18 +45,28 @@
                     Placeholder="Contraseña"
                     Text="{Binding Password}" />
             </Border>
+            <Label
+                Margin="0,-20,0,0"
+                FontSize="12"
+                HorizontalOptions="Start"
+                IsVisible="{Binding IsPasswordErrorVisible}"
+                Text="❌ Contraseña inválida. &#10;- Mínimo 8 caracteres. &#10;- Al menos una mayúscula. &#10;- Al menos un número. &#10;- Al menos un carácter especial."
+                TextColor="Red" />
+
 
             <!--  a label binded to Token  -->
             <Label
-                FontSize="Small"
-                HorizontalOptions="Center"
-                Text="{Binding Token}" />
+                FontSize="Micro"
+                HorizontalOptions="StartAndExpand"
+                Text="{Binding Token}"
+                TextColor="Red" />
 
             <Button
                 x:Name="BtnLogin"
                 Command="{Binding LoginCommand}"
                 IsEnabled="{Binding IsEnabled}"
                 Text="Login" />
+
 
             <!--  A horizontal line that divides the buttons  -->
             <BoxView

@@ -2,17 +2,17 @@
 
 public partial class App : Application
 {
-	public App()
-	{
-		try
-		{
-			InitializeComponent();
+    public App()
+    {
+        try
+        {
+            InitializeComponent();
 
-			MainPage = new AppShell();
-		}
-		catch(Exception ex)
-		{
+            MainPage = new AppShell();
+        }
+        catch (Exception ex)
+        {
 
-		}
-	}
+        }
+    }
 }

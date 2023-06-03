@@ -23,10 +23,10 @@ namespace UcabGo.App.ApiAccess.Services
 
         public async Task<Login> LoginAsync(string email, string password)
         {
-            var login = new 
-            { 
-                Email = email, 
-                Password = password 
+            var login = new
+            {
+                Email = email,
+                Password = password
             };
             var json = JsonConvert.SerializeObject(login, serializerSettings);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
