@@ -17,9 +17,6 @@ public partial class LoginViewModel : ObservableObject
     string password;
 
     [ObservableProperty]
-    string token;
-
-    [ObservableProperty]
     bool isEnabled;
 
     [ObservableProperty]
@@ -27,6 +24,9 @@ public partial class LoginViewModel : ObservableObject
 
     [ObservableProperty]
     bool isPasswordErrorVisible;
+
+    [ObservableProperty]
+    bool isInvalidCredentialsVisible;
 
     public LoginViewModel(AuthService authService)
     {
@@ -42,18 +42,25 @@ public partial class LoginViewModel : ObservableObject
     [RelayCommand]
     async void Login()
     {
+        IsInvalidCredentialsVisible = false;
         IsEmailErrorVisible = !IsValidEmail();
         IsPasswordErrorVisible = !IsValidPassword();
 
         if (IsEmailErrorVisible || IsPasswordErrorVisible) return;
 
-        Token = "Cargando...";
         IsEnabled = false;
 
         var response = await authService.LoginAsync(Email, Password);
 
-        Token = response?.Token ?? "⚠ Credenciales inválidas.";
-        IsEnabled = true;
+        if(response != null)
+        {
+            //Navigate to RolSelection
+        }
+        else
+        {
+            IsInvalidCredentialsVisible = true;
+            IsEnabled = true;
+        }
     }
 
     bool IsValidEmail()

@@ -116,6 +116,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\order_ride.svg" />
 	  <None Remove="resources\raw\API.txt" />
 	</ItemGroup>
 
