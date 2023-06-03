@@ -1,5 +1,6 @@
 ﻿using UcabGo.App.ApiAccess;
 using UcabGo.App.ApiAccess.Services;
+using UcabGo.App.ViewModel;
 
 namespace UcabGo.App.Pages;
 
@@ -8,15 +9,7 @@ public partial class Login : ContentPage
 	public Login()
 	{
 		InitializeComponent();
+		BindingContext = new LoginViewModel();
 	}
-
-    private async void BtnLogin_Clicked(object sender, EventArgs e)
-    {
-		var email = TxtEmail.Text;
-		var password = TxtPassword.Text;
-
-		var auth = new AuthService();
-		var login = await auth.LoginAsync(email, password);
-    }
 }
 

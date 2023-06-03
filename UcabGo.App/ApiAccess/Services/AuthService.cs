@@ -1,16 +1,12 @@
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+using UcabGo.App.ApiAccess.Interfaces;
 using UcabGo.App.ApiAccess.Models;
 using UcabGo.App.ApiAccess.Tools;
 
 namespace UcabGo.App.ApiAccess.Services
 {
-    public class AuthService
+    public class AuthService : IAuthService
     {
         HttpClient client;
         JsonSerializerSettings serializerSettings;

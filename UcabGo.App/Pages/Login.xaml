@@ -3,7 +3,9 @@
     x:Class="UcabGo.App.Pages.Login"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Iniciar Sesión">
+    xmlns:viewmodel="clr-namespace:UcabGo.App.ViewModel"
+    Title="Iniciar Sesión"
+    x:DataType="viewmodel:LoginViewModel">
 
     <ScrollView>
         <VerticalStackLayout
@@ -16,24 +18,33 @@
             <Image
                 HeightRequest="200"
                 HorizontalOptions="Center"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
                 Source="dotnet_bot.png" />
 
             <Label Margin="0,0,0,-20" Text="Correo UCAB:" />
             <Border>
-                <Entry x:Name="TxtEmail" Placeholder="usuario@est.ucab.edu.ve" />
+                <Entry
+                    x:Name="TxtEmail"
+                    Placeholder="usuario@est.ucab.edu.ve"
+                    Text="{Binding Email}" />
             </Border>
             <Label Margin="0,0,0,-20" Text="Contraseña:" />
             <Border>
                 <Entry
                     x:Name="TxtPassword"
                     IsPassword="True"
-                    Placeholder="Contraseña" />
+                    Placeholder="Contraseña"
+                    Text="{Binding Password}" />
             </Border>
+
+            <!--  a label binded to Token  -->
+            <Label
+                FontSize="Small"
+                HorizontalOptions="Center"
+                Text="{Binding Token}" />
 
             <Button
                 x:Name="BtnLogin"
-                Clicked="BtnLogin_Clicked"
+                Command="{Binding LoginCommand}"
                 Text="Login" />
 
             <!--  A horizontal line that divides the buttons  -->
