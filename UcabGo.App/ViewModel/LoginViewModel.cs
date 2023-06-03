@@ -25,9 +25,13 @@ public partial class LoginViewModel : ObservableObject
     [ObservableProperty]
     string token;
 
+    [ObservableProperty]
+    bool isEnabled;
+
     public LoginViewModel()
     {
         this.authService = new AuthService();
+        isEnabled = true;
     }
 
     [RelayCommand]
@@ -35,7 +39,18 @@ public partial class LoginViewModel : ObservableObject
     {
         if (string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Password)) return;
 
+        Token = "Cargando...";
+        IsEnabled = false;
+
         var response = await authService.LoginAsync(Email, Password);
+
         Token = response.Token;
+        IsEnabled = true;
     }
+
+    //readonly Func<Action, Task> UpdateUI = async (action) =>
+    //{
+    //    action.Invoke();
+    //    await Task.Delay(1);
+    //};
 }

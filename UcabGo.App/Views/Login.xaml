@@ -45,6 +45,7 @@
             <Button
                 x:Name="BtnLogin"
                 Command="{Binding LoginCommand}"
+                IsEnabled="{Binding IsEnabled}"
                 Text="Login" />
 
             <!--  A horizontal line that divides the buttons  -->
