@@ -2,7 +2,7 @@
 using UcabGo.App.ApiAccess.Services;
 using UcabGo.App.ViewModel;
 
-namespace UcabGo.App.Pages;
+namespace UcabGo.App.Views;
 
 public partial class Login : ContentPage
 {

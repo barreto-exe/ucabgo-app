@@ -104,7 +104,7 @@
 	  <Compile Update="App.xaml.cs">
 	    <DependentUpon>App.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Pages\Login.xaml.cs">
+	  <Compile Update="Views\Login.xaml.cs">
 	    <DependentUpon>Login.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
