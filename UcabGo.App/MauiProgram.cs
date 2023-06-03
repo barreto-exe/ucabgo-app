@@ -1,4 +1,5 @@
-﻿using UcabGo.App.ApiAccess.Services;
+﻿using UcabGo.App.ApiAccess.Interfaces;
+using UcabGo.App.ApiAccess.Services;
 using UcabGo.App.ApiAccess.Tools;
 using UcabGo.App.ViewModel;
 using UcabGo.App.Views;
@@ -20,12 +21,14 @@ public static class MauiProgram
 
         //DI Views
         builder.Services.AddSingleton<LoginView>();
+        builder.Services.AddSingleton<RoleSelectionView>();
 
         //DI ViewModels
         builder.Services.AddSingleton<LoginViewModel>();
+        builder.Services.AddSingleton<RoleSelectionViewModel>();
 
         //DI Services
-        builder.Services.AddSingleton<AuthService>();
+        builder.Services.AddSingleton<IAuthService, AuthService>();
 
 
         //Setting the API URL

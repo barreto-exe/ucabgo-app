@@ -1,8 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using UcabGo.App.ApiAccess.Interfaces;
-using UcabGo.App.ApiAccess.Services;
+using UcabGo.App.Views;
 
 namespace UcabGo.App.ViewModel;
 
@@ -28,7 +29,7 @@ public partial class LoginViewModel : ObservableObject
     [ObservableProperty]
     bool isInvalidCredentialsVisible;
 
-    public LoginViewModel(AuthService authService)
+    public LoginViewModel(IAuthService authService)
     {
         this.authService = authService;
         isEnabled = true;
@@ -40,7 +41,7 @@ public partial class LoginViewModel : ObservableObject
     }
 
     [RelayCommand]
-    async void Login()
+    async Task Login()
     {
         IsInvalidCredentialsVisible = false;
         IsEmailErrorVisible = !IsValidEmail();
@@ -54,7 +55,12 @@ public partial class LoginViewModel : ObservableObject
 
         if(response != null)
         {
-            //Navigate to RolSelection
+            var userJson = JsonConvert.SerializeObject(response.User);
+
+            Preferences.Set("User", userJson);
+            Preferences.Set("Token", response.Token);
+
+            await Shell.Current.GoToAsync(nameof(RoleSelectionView));
         }
         else
         {
@@ -62,6 +68,7 @@ public partial class LoginViewModel : ObservableObject
             IsEnabled = true;
         }
     }
+
 
     bool IsValidEmail()
     {

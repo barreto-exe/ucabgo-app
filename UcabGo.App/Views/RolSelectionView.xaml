@@ -1,12 +1,59 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="UcabGo.App.Views.RolSelectionView"
-             Title="RolSelectionView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+<ContentPage
+    x:Class="UcabGo.App.Views.RoleSelectionView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:UcabGo.App.ViewModel"
+    Title="Inicio"
+    x:DataType="viewmodel:RoleSelectionViewModel">
+    <ScrollView>
+        <AbsoluteLayout HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
+            <VerticalStackLayout>
+
+                <Border
+                    Margin="10"
+                    BackgroundColor="LightSlateGray"
+                    MaximumWidthRequest="400">
+                    <VerticalStackLayout>
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            HorizontalTextAlignment="Start"
+                            Text="Dar cola" />
+                        <ImageButton Source="driver.png" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border
+                    Margin="10"
+                    BackgroundColor="LightSlateGray"
+                    MaximumWidthRequest="400">
+                    <VerticalStackLayout>
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            HorizontalTextAlignment="Start"
+                            Text="Pedir cola" />
+                        <ImageButton Source="walker.png" />
+                    </VerticalStackLayout>
+                </Border>
+
+
+                <!--  A horizontal line that divides the buttons  -->
+                <BoxView
+                    Margin="10,30"
+                    BackgroundColor="Black"
+                    HeightRequest="1"
+                    HorizontalOptions="FillAndExpand" />
+
+                <!--  Botón de cerrar sesión  -->
+                <Button
+                    Margin="10"
+                    Command="{Binding LogoutCommand}"
+                    FontAttributes="Bold"
+                    FontSize="Medium"
+                    Text="Cerrar sesión" />
+            </VerticalStackLayout>
+        </AbsoluteLayout>
+    </ScrollView>
 </ContentPage>

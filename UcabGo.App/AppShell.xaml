@@ -8,7 +8,7 @@
 
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate local:Views.LoginView}"
-        Route="MainPage" />
+        ContentTemplate="{DataTemplate local:Views.RoleSelectionView}"
+        Route="Home" />
 
 </Shell>
