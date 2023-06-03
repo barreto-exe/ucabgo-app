@@ -1,4 +1,4 @@
-namespace UcabGo.App.ApiAccess.Models
+namespace UcabGo.App.Api.Models
 {
     public class Login
     {

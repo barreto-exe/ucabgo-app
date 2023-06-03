@@ -2,14 +2,14 @@
 using CommunityToolkit.Mvvm.Input;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
-using UcabGo.App.ApiAccess.Interfaces;
+using UcabGo.App.Api.Interfaces;
 using UcabGo.App.Views;
 
 namespace UcabGo.App.ViewModel;
 
 public partial class LoginViewModel : ObservableObject
 {
-    readonly IAuthService authService;
+    readonly IAuthApi authService;
 
     [ObservableProperty]
     string email;
@@ -29,7 +29,7 @@ public partial class LoginViewModel : ObservableObject
     [ObservableProperty]
     bool isInvalidCredentialsVisible;
 
-    public LoginViewModel(IAuthService authService)
+    public LoginViewModel(IAuthApi authService)
     {
         this.authService = authService;
         isEnabled = true;

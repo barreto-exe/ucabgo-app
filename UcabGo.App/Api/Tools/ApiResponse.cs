@@ -1,4 +1,4 @@
-namespace UcabGo.App.ApiAccess.Tools
+namespace UcabGo.App.Api.Tools
 {
     public class ApiResponse<T>
     {

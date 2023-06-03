@@ -1,17 +1,17 @@
 using Newtonsoft.Json;
 using System.Text;
-using UcabGo.App.ApiAccess.Interfaces;
-using UcabGo.App.ApiAccess.Models;
-using UcabGo.App.ApiAccess.Tools;
+using UcabGo.App.Api.Interfaces;
+using UcabGo.App.Api.Models;
+using UcabGo.App.Api.Tools;
 
-namespace UcabGo.App.ApiAccess.Services
+namespace UcabGo.App.Api.Services
 {
-    public class AuthService : IAuthService
+    public class AuthApi : IAuthApi
     {
         HttpClient client;
         JsonSerializerSettings serializerSettings;
 
-        public AuthService()
+        public AuthApi()
         {
             client = new HttpClient();
             serializerSettings = new()
@@ -31,7 +31,7 @@ namespace UcabGo.App.ApiAccess.Services
             var json = JsonConvert.SerializeObject(login, serializerSettings);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var responseHttp = await client.PostAsync(new Uri(Routes.LOGIN), content);
+            var responseHttp = await client.PostAsync(new Uri(ApiRoutes.LOGIN), content);
 
             var responseString = await responseHttp.Content.ReadAsStringAsync();
             var response = JsonConvert.DeserializeObject<ApiResponse<Login>>(responseString, serializerSettings);

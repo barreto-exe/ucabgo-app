@@ -1,6 +1,6 @@
-namespace UcabGo.App.ApiAccess.Tools
+namespace UcabGo.App.Api.Tools
 {
-    public static class Routes
+    public static class ApiRoutes
     {
         public static string BASE_URL = "";
         public static string LOGIN { get => BASE_URL + "auth/login"; }

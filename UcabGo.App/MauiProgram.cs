@@ -1,6 +1,6 @@
-﻿using UcabGo.App.ApiAccess.Interfaces;
-using UcabGo.App.ApiAccess.Services;
-using UcabGo.App.ApiAccess.Tools;
+﻿using UcabGo.App.Api.Interfaces;
+using UcabGo.App.Api.Services;
+using UcabGo.App.Api.Tools;
 using UcabGo.App.ViewModel;
 using UcabGo.App.Views;
 
@@ -28,14 +28,14 @@ public static class MauiProgram
         builder.Services.AddSingleton<RoleSelectionViewModel>();
 
         //DI Services
-        builder.Services.AddSingleton<IAuthService, AuthService>();
+        builder.Services.AddSingleton<IAuthApi, AuthApi>();
 
 
         //Setting the API URL
         using var stream = FileSystem.OpenAppPackageFileAsync("API.txt").Result;
         using var reader = new StreamReader(stream);
         var apiUrl = reader.ReadToEnd();
-        Routes.BASE_URL = apiUrl;
+        ApiRoutes.BASE_URL = apiUrl;
 
         return builder.Build();
     }
