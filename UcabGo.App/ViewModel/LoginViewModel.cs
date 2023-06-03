@@ -28,9 +28,9 @@ public partial class LoginViewModel : ObservableObject
     [ObservableProperty]
     bool isEnabled;
 
-    public LoginViewModel()
+    public LoginViewModel(AuthService authService)
     {
-        this.authService = new AuthService();
+        this.authService = authService;
         isEnabled = true;
     }
 
@@ -47,10 +47,4 @@ public partial class LoginViewModel : ObservableObject
         Token = response.Token;
         IsEnabled = true;
     }
-
-    //readonly Func<Action, Task> UpdateUI = async (action) =>
-    //{
-    //    action.Invoke();
-    //    await Task.Delay(1);
-    //};
 }

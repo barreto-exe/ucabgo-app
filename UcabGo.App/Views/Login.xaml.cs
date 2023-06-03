@@ -4,12 +4,12 @@ using UcabGo.App.ViewModel;
 
 namespace UcabGo.App.Views;
 
-public partial class Login : ContentPage
+public partial class LoginView : ContentPage
 {
-	public Login()
+	public LoginView(LoginViewModel viewModel)
 	{
 		InitializeComponent();
-		BindingContext = new LoginViewModel();
-	}
+		BindingContext = viewModel;
+    }
 }
 
