@@ -1,18 +1,13 @@
-﻿namespace UcabGo.App;
+﻿using UcabGo.App.Services;
+
+namespace UcabGo.App;
 
 public partial class App : Application
 {
-    public App()
+    public App(INavigationService service)
     {
-        try
-        {
-            InitializeComponent();
+        InitializeComponent();
 
-            MainPage = new AppShell();
-        }
-        catch (Exception ex)
-        {
-
-        }
+        MainPage = new AppShell(service);
     }
 }

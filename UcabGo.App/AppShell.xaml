@@ -4,11 +4,27 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:UcabGo.App"
-    Shell.FlyoutBehavior="Disabled">
+    FlyoutBehavior="Disabled">
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:Views.RoleSelectionView}"
-        Route="Home" />
+        x:Name="login"
+        Title="Login"
+        ContentTemplate="{DataTemplate local:Views.LoginView}"
+        Route="LoginView" />
+
+    <TabBar>
+        <Tab Title="RolTab" Route="Main">
+            <ShellContent
+                Title="RolShell"
+                ContentTemplate="{DataTemplate local:Views.RoleSelectionView}"
+                Route="RoleSelectionView" />
+        </Tab>
+        <Tab Title="Rol2Tab" Route="Main2">
+            <ShellContent
+                Title="Rol2Shell"
+                ContentTemplate="{DataTemplate local:Views.RoleSelectionView}"
+                Route="RoleSelectionView2" />
+        </Tab>
+    </TabBar>
 
 </Shell>

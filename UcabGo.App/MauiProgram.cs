@@ -1,6 +1,9 @@
 ﻿using UcabGo.App.Api.Interfaces;
 using UcabGo.App.Api.Services;
 using UcabGo.App.Api.Tools;
+using UcabGo.App.Services;
+using UcabGo.App.Services.Navigation;
+using UcabGo.App.Services.Settings;
 using UcabGo.App.ViewModel;
 using UcabGo.App.Views;
 
@@ -27,9 +30,12 @@ public static class MauiProgram
         builder.Services.AddSingleton<LoginViewModel>();
         builder.Services.AddSingleton<RoleSelectionViewModel>();
 
-        //DI Services
+        //DI API Services
         builder.Services.AddSingleton<IAuthApi, AuthApi>();
 
+        //DI Services
+        builder.Services.AddSingleton<ISettingsService, SettingsService>();
+        builder.Services.AddSingleton<INavigationService, NavigationService>();
 
         //Setting the API URL
         using var stream = FileSystem.OpenAppPackageFileAsync("API.txt").Result;

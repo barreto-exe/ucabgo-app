@@ -3,11 +3,12 @@ using CommunityToolkit.Mvvm.Input;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using UcabGo.App.Api.Interfaces;
+using UcabGo.App.Services;
 using UcabGo.App.Views;
 
 namespace UcabGo.App.ViewModel;
 
-public partial class LoginViewModel : ObservableObject
+public partial class LoginViewModel : ViewModelBase
 {
     readonly IAuthApi authService;
 
@@ -29,7 +30,10 @@ public partial class LoginViewModel : ObservableObject
     [ObservableProperty]
     bool isInvalidCredentialsVisible;
 
-    public LoginViewModel(IAuthApi authService)
+    public LoginViewModel(
+        IAuthApi authService, 
+        ISettingsService settingsService,
+        INavigationService navigationService) : base(settingsService, navigationService)
     {
         this.authService = authService;
         isEnabled = true;
@@ -55,12 +59,10 @@ public partial class LoginViewModel : ObservableObject
 
         if(response != null)
         {
-            var userJson = JsonConvert.SerializeObject(response.User);
+            settings.User = response.User;
+            settings.AccessToken = response.Token;
 
-            Preferences.Set("User", userJson);
-            Preferences.Set("Token", response.Token);
-
-            await Shell.Current.GoToAsync(nameof(RoleSelectionView));
+            await navigation.NavigateToAsync(nameof(RoleSelectionView));
         }
         else
         {

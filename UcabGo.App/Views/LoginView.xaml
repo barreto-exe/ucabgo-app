@@ -69,7 +69,7 @@
                 x:Name="BtnLogin"
                 Command="{Binding LoginCommand}"
                 IsEnabled="{Binding IsEnabled}"
-                Text="Login" />
+                Text="Iniciar sesión" />
 
 
             <!--  A horizontal line that divides the buttons  -->

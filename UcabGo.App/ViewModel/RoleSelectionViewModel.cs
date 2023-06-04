@@ -1,17 +1,13 @@
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using UcabGo.App.Services;
 using UcabGo.App.Views;
 
 namespace UcabGo.App.ViewModel
 {
-    public partial class RoleSelectionViewModel : ObservableObject
+    public partial class RoleSelectionViewModel : ViewModelBase
     {
-        public RoleSelectionViewModel()
+        public RoleSelectionViewModel(
+            ISettingsService settingsService, INavigationService navigationService) : base(settingsService, navigationService)
         {
             ValidateToken().Wait();
         }
@@ -19,16 +15,15 @@ namespace UcabGo.App.ViewModel
         [RelayCommand]
         async Task Logout()
         {
-            Preferences.Set("User", string.Empty);
-            Preferences.Set("Token", string.Empty);
-            await Shell.Current.GoToAsync($"{nameof(LoginView)}");
+            settings.User = null;
+            settings.AccessToken = null;
+
+            await navigation.NavigateToAsync(nameof(LoginView));
         }
 
         async Task ValidateToken()
         {
-            var token = Preferences.Get("Token", string.Empty);
-
-            if (string.IsNullOrEmpty(token))
+            if (string.IsNullOrEmpty(settings.AccessToken))
             {
                await Logout();
             }
