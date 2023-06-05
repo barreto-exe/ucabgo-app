@@ -1,6 +1,5 @@
 using CommunityToolkit.Mvvm.Input;
 using UcabGo.App.Services;
-using UcabGo.App.Views;
 
 namespace UcabGo.App.ViewModel
 {
@@ -18,7 +17,7 @@ namespace UcabGo.App.ViewModel
             settings.User = null;
             settings.AccessToken = null;
 
-            await navigation.NavigateToAsync(nameof(LoginView));
+            await navigation.RestartSession();
         }
 
         async Task ValidateToken()

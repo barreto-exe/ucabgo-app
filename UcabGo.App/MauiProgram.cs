@@ -37,12 +37,17 @@ public static class MauiProgram
         //DI ViewModels
         builder.Services.AddSingleton<LoginViewModel>();
         builder.Services.AddSingleton<RoleSelectionViewModel>();
+        builder.Services.AddSingleton<ProfileViewModel>();
 
         //DI Views
         builder.Services.AddSingleton<LoginView>();
         builder.Services.AddSingleton<RoleSelectionView>();
+        builder.Services.AddSingleton<ProfileView>();
+        builder.Services.AddSingleton<HelpView>();
+        builder.Services.AddSingleton<AboutView>();
+        builder.Services.AddSingleton<TermsView>();
 
-
+        
         //Setting the API URL
         using var stream = FileSystem.OpenAppPackageFileAsync("API.txt").Result;
         using var reader = new StreamReader(stream);

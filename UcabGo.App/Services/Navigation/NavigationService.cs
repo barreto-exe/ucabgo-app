@@ -17,30 +17,21 @@ namespace UcabGo.App.Services.Navigation
             this.settings = settings;
         }
 
-        public async Task InitializeAsync()
+        public async Task RestartSession()
         {
-            bool hasToken = string.IsNullOrEmpty(settings.AccessToken);
+            bool hasToken = !string.IsNullOrEmpty(settings.AccessToken);
 
             if (hasToken)
             {
-                
+                App.GoToAppShell();
             }
             else
             {
-
+                App.GoToSessionShell();
             }
         }
         public Task NavigateToAsync(string route, IDictionary<string, object> routeParameters = null)
         {
-            if(!route.Contains(nameof(LoginView)))
-            {
-                route = "//Main/" + route;
-            }
-            else
-            {
-                route = "//" + route;
-            }
-
             return
                 routeParameters != null
                     ? Shell.Current.GoToAsync(route, routeParameters)

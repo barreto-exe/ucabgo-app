@@ -6,39 +6,41 @@ namespace UcabGo.App;
 
 public partial class App : Application
 {
-    public static SessionShell SessionShell { get; set; }
-    public static AppShell AppShell { get; set; }
     private readonly ISettingsService settingsService;
+    private readonly INavigationService navigationService;
+    private static IServiceProvider ServiceProvider { get; set; }
 
-    public App(AppShell appShell, SessionShell sessionShell, ISettingsService settingsService)
+    public App(ISettingsService settingsService, INavigationService navigationService, IServiceProvider serviceProvider)
     {
         InitializeComponent();
 
-        AppShell = appShell;
-        SessionShell = sessionShell;
-
         this.settingsService = settingsService;
+        this.navigationService = navigationService;
+        ServiceProvider = serviceProvider;
     }
 
     protected override Window CreateWindow(IActivationState activationState)
     {
+        var navigationService = ServiceProvider.GetService<INavigationService>();
         bool isLoggedIn = settingsService.IsLoggedIn;
         if (isLoggedIn)
         {
-            return new Window(AppShell);
+            return new Window(new AppShell(navigationService));
         }
         else
         {
-            return new Window(SessionShell);
+            return new Window(new SessionShell(navigationService));
         }
     }
 
     public static void GoToAppShell()
     {
-        Current.MainPage = AppShell;
+        var navigationService = ServiceProvider.GetService<INavigationService>();
+        Current.MainPage = new AppShell(navigationService);
     }
     public static void GoToSessionShell()
     {
-        Current.MainPage = SessionShell;
+        var navigationService = ServiceProvider.GetService<INavigationService>();
+        Current.MainPage = new SessionShell(navigationService);
     }
 }

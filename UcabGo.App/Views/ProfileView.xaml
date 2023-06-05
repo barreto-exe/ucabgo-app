@@ -3,11 +3,31 @@
     x:Class="UcabGo.App.Views.ProfileView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="ProfileView">
+    xmlns:viewmodel="clr-namespace:UcabGo.App.ViewModel"
+    Title="Perfil"
+    x:DataType="viewmodel:ProfileViewModel">
     <VerticalStackLayout>
         <Label
             HorizontalOptions="Center"
             Text="Perfil"
             VerticalOptions="Center" />
+
+
+        <VerticalStackLayout MaximumWidthRequest="400">
+            <!--  A horizontal line that divides the buttons  -->
+            <BoxView
+                Margin="10,30"
+                BackgroundColor="Black"
+                HeightRequest="1"
+                HorizontalOptions="FillAndExpand" />
+
+            <!--  Botón de cerrar sesión  -->
+            <Button
+                Margin="10"
+                Command="{Binding LogoutCommand}"
+                FontAttributes="Bold"
+                FontSize="Medium"
+                Text="Cerrar sesión" />
+        </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

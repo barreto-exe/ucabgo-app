@@ -4,7 +4,7 @@ namespace UcabGo.App.Services
 {
     public interface INavigationService
     {
-        Task InitializeAsync();
+        Task RestartSession();
 
         Task NavigateToAsync(string route, IDictionary<string, object> routeParameters = null);
 

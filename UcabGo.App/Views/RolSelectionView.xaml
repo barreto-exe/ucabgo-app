@@ -37,22 +37,6 @@
                         <ImageButton Source="walker.png" />
                     </VerticalStackLayout>
                 </Border>
-
-
-                <!--  A horizontal line that divides the buttons  -->
-                <BoxView
-                    Margin="10,30"
-                    BackgroundColor="Black"
-                    HeightRequest="1"
-                    HorizontalOptions="FillAndExpand" />
-
-                <!--  Botón de cerrar sesión  -->
-                <Button
-                    Margin="10"
-                    Command="{Binding LogoutCommand}"
-                    FontAttributes="Bold"
-                    FontSize="Medium"
-                    Text="Cerrar sesión" />
             </VerticalStackLayout>
         </AbsoluteLayout>
     </ScrollView>

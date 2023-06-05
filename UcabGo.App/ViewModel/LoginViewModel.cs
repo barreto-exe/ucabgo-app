@@ -62,7 +62,7 @@ public partial class LoginViewModel : ViewModelBase
             settings.User = response.User;
             settings.AccessToken = response.Token;
 
-            await navigation.NavigateToAsync(nameof(RoleSelectionView));
+            await navigation.RestartSession();
         }
         else
         {
