@@ -25,6 +25,7 @@ namespace UcabGo.App.Services.Settings
             get => GetValueOrDefault(nameof(User), UserDefault);
             set => SetValue(nameof(User), value);
         }
+        public bool IsLoggedIn => !string.IsNullOrWhiteSpace(AccessToken);
 
         //Methods for settings
         public void SetValue(string key, object value)

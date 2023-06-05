@@ -1,7 +1,7 @@
 ﻿using UcabGo.App.Services;
 using UcabGo.App.Views;
 
-namespace UcabGo.App;
+namespace UcabGo.App.Shells;
 
 public partial class AppShell : Shell
 {
@@ -19,9 +19,9 @@ public partial class AppShell : Shell
     {
         base.OnParentSet();
 
-        if(Parent is not null)
-        {
-            await navigationService.InitializeAsync();
-        }
+        //if(Parent is not null)
+        //{
+        //    await navigationService.InitializeAsync();
+        //}
     }
 }

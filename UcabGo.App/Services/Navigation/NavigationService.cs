@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UcabGo.App.Shells;
 using UcabGo.App.ViewModel;
 using UcabGo.App.Views;
 
@@ -11,17 +12,23 @@ namespace UcabGo.App.Services.Navigation
     public class NavigationService : INavigationService
     {
         private readonly ISettingsService settings;
-        public NavigationService(ISettingsService settingsService)
+        public NavigationService(ISettingsService settings)
         {
-            this.settings = settingsService;
+            this.settings = settings;
         }
-
 
         public async Task InitializeAsync()
         {
-            await NavigateToAsync(string.IsNullOrEmpty(settings.AccessToken)
-                ? nameof(LoginView)
-                : nameof(RoleSelectionView));
+            bool hasToken = string.IsNullOrEmpty(settings.AccessToken);
+
+            if (hasToken)
+            {
+                
+            }
+            else
+            {
+
+            }
         }
         public Task NavigateToAsync(string route, IDictionary<string, object> routeParameters = null)
         {
