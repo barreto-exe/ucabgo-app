@@ -3,6 +3,7 @@
     x:Class="UcabGo.App.Shells.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:icon="clr-namespace:UcabGo.App.Utils"
     xmlns:local="clr-namespace:UcabGo.App"
     FlyoutBehavior="Flyout">
 
@@ -10,22 +11,42 @@
         <ShellContent
             Title="Inicio"
             ContentTemplate="{DataTemplate local:Views.RoleSelectionView}"
-            Route="RoleSelectionView" />
+            Route="RoleSelectionView">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="IconFont" Glyph="{x:Static icon:IconFont.Home}" />
+            </ShellContent.Icon>
+        </ShellContent>
         <ShellContent
             Title="Perfil"
             ContentTemplate="{DataTemplate local:Views.ProfileView}"
-            Route="ProfileView" />
+            Route="ProfileView">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="IconFont" Glyph="{x:Static icon:IconFont.Person}" />
+            </ShellContent.Icon>
+        </ShellContent>
     </FlyoutItem>
     <ShellContent
         Title="Ayuda"
         ContentTemplate="{DataTemplate local:Views.HelpView}"
-        Route="HelpView" />
+        Route="HelpView">
+        <ShellContent.Icon>
+            <FontImageSource FontFamily="IconFont" Glyph="{x:Static icon:IconFont.Help}" />
+        </ShellContent.Icon>
+    </ShellContent>
     <ShellContent
         Title="Acerca de"
         ContentTemplate="{DataTemplate local:Views.AboutView}"
-        Route="AboutView" />
+        Route="AboutView">
+        <ShellContent.Icon>
+            <FontImageSource FontFamily="IconFont" Glyph="{x:Static icon:IconFont.Info}" />
+        </ShellContent.Icon>
+    </ShellContent>
     <ShellContent
         Title="Términos y condiciones"
         ContentTemplate="{DataTemplate local:Views.TermsView}"
-        Route="TermsView" />
+        Route="TermsView">
+        <ShellContent.Icon>
+            <FontImageSource FontFamily="IconFont" Glyph="{x:Static icon:IconFont.Edit_document}" />
+        </ShellContent.Icon>
+    </ShellContent>
 </Shell>
