@@ -4,21 +4,28 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:UcabGo.App"
-    FlyoutBehavior="Disabled">
+    FlyoutBehavior="Flyout">
 
-    <TabBar>
-        <Tab Title="RolTab" Route="Main">
-            <ShellContent
-                Title="RolShell"
-                ContentTemplate="{DataTemplate local:Views.RoleSelectionView}"
-                Route="RoleSelectionView" />
-        </Tab>
-        <Tab Title="Rol2Tab" Route="Main2">
-            <ShellContent
-                Title="Rol2Shell"
-                ContentTemplate="{DataTemplate local:Views.RoleSelectionView}"
-                Route="RoleSelectionView2" />
-        </Tab>
-    </TabBar>
-
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
+        <ShellContent
+            Title="Inicio"
+            ContentTemplate="{DataTemplate local:Views.RoleSelectionView}"
+            Route="RoleSelectionView" />
+        <ShellContent
+            Title="Perfil"
+            ContentTemplate="{DataTemplate local:Views.ProfileView}"
+            Route="ProfileView" />
+    </FlyoutItem>
+    <ShellContent
+        Title="Ayuda"
+        ContentTemplate="{DataTemplate local:Views.HelpView}"
+        Route="HelpView" />
+    <ShellContent
+        Title="Acerca de"
+        ContentTemplate="{DataTemplate local:Views.AboutView}"
+        Route="AboutView" />
+    <ShellContent
+        Title="Términos y condiciones"
+        ContentTemplate="{DataTemplate local:Views.TermsView}"
+        Route="TermsView" />
 </Shell>

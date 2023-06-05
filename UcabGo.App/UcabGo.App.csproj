@@ -134,8 +134,14 @@
 	  <Compile Update="Shells\SessionShell.xaml.cs">
 	    <DependentUpon>SessionShell.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\HelpView.xaml.cs">
+	    <DependentUpon>HelpView.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\LoginView.xaml.cs">
 	    <DependentUpon>LoginView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\TermsView.xaml.cs">
+	    <DependentUpon>TermsView.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
@@ -143,7 +149,19 @@
 	  <MauiXaml Update="Shells\SessionShell.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\AboutView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\HelpView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ProfileView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\RolSelectionView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\TermsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
