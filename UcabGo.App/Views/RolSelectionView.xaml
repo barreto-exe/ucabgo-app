@@ -7,7 +7,7 @@
     Title="Inicio"
     x:DataType="viewmodel:RoleSelectionViewModel"
     BackgroundColor="{AppThemeBinding Light={StaticResource Gray100},
-                                      Dark={StaticResource Gray600}}">
+                                      Dark={StaticResource Gray900}}">
     <ScrollView HorizontalOptions="Center" VerticalOptions="Center">
         <VerticalStackLayout>
             <Border Margin="20" MaximumWidthRequest="400">

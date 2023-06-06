@@ -3,31 +3,83 @@
     x:Class="UcabGo.App.Views.ProfileView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:icon="clr-namespace:UcabGo.App.Utils"
     xmlns:viewmodel="clr-namespace:UcabGo.App.ViewModel"
     Title="Perfil"
-    x:DataType="viewmodel:ProfileViewModel">
-    <VerticalStackLayout>
-        <Label
-            HorizontalOptions="Center"
-            Text="Perfil"
-            VerticalOptions="Center" />
+    x:DataType="viewmodel:ProfileViewModel"
+    BackgroundColor="{AppThemeBinding Light={StaticResource Gray100},
+                                      Dark={StaticResource Gray900}}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button">
+                <Setter Property="CornerRadius" Value="0" />
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}" />
+                <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource White}}" />
+                <Setter Property="FontSize" Value="Medium" />
+                <Setter Property="HeightRequest" Value="70" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView HorizontalOptions="Center">
+        <VerticalStackLayout Padding="20">
+            <!--  Imagen de perfil  -->
+            <Image
+                x:Name="ProfilePicture"
+                Aspect="AspectFit"
+                HeightRequest="100"
+                HorizontalOptions="Center"
+                Source="dotnet_bot.png"
+                VerticalOptions="Center"
+                WidthRequest="100" />
+            <!--  Nombre de usuario  -->
+            <Label
+                Margin="0,10"
+                FontAttributes="Bold"
+                FontSize="Large"
+                HorizontalOptions="Center"
+                Text="Luis Barreto"
+                VerticalOptions="Center" />
+            <!--  Email  -->
+            <Label
+                FontAttributes="Bold"
+                FontSize="Small"
+                HorizontalOptions="Center"
+                Text="luis@mail.com"
+                VerticalOptions="Center" />
 
-
-        <VerticalStackLayout MaximumWidthRequest="400">
             <!--  A horizontal line that divides the buttons  -->
             <BoxView
-                Margin="10,30"
+                Margin="30"
+                BackgroundColor="Black"
+                HeightRequest="1"
+                HorizontalOptions="FillAndExpand" />
+
+            <VerticalStackLayout>
+                <Button Text="🔑    Cambiar contraseña" />
+                <Button Text="📞    Número de teléfono" />
+                <Button Text="🆘    Contactos de emergencia" />
+                <Button Text="🚗    Vehículos" />
+                <Button Text="🚘    Mis viajes" />
+            </VerticalStackLayout>
+
+            <!--  A horizontal line that divides the buttons  -->
+            <BoxView
+                Margin="30"
                 BackgroundColor="Black"
                 HeightRequest="1"
                 HorizontalOptions="FillAndExpand" />
 
             <!--  Botón de cerrar sesión  -->
             <Button
-                Margin="10"
+                Margin="20"
+                BackgroundColor="{AppThemeBinding Light={StaticResource White},
+                                                  Dark={StaticResource White}}"
                 Command="{Binding LogoutCommand}"
+                CornerRadius="8"
                 FontAttributes="Bold"
-                FontSize="Medium"
-                Text="Cerrar sesión" />
+                Text="Cerrar sesión"
+                TextColor="Red" />
         </VerticalStackLayout>
-    </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
