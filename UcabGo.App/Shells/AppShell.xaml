@@ -6,6 +6,35 @@
     xmlns:icon="clr-namespace:UcabGo.App.Utils"
     xmlns:local="clr-namespace:UcabGo.App"
     FlyoutBehavior="Flyout">
+    <Shell.FlyoutHeader>
+        <VerticalStackLayout Padding="10" BackgroundColor="{StaticResource Primary}">
+            <Image
+                Aspect="AspectFit"
+                HeightRequest="50"
+                HorizontalOptions="Start"
+                Source="taxi.png"
+                WidthRequest="50" />
+            <Label
+                FontSize="Medium"
+                Text="Ucabery"
+                VerticalOptions="StartAndExpand" />
+        </VerticalStackLayout>
+    </Shell.FlyoutHeader>
+    <Shell.FlyoutFooter>
+        <VerticalStackLayout>
+            <!--  Mensaje con todos los derechos reservados, el icono de copyright y la versión  -->
+            <Label
+                FontSize="Micro"
+                HorizontalOptions="Center"
+                Text="© Todos los derechos reservados."
+                TextColor="Gray" />
+            <Label
+                FontSize="Micro"
+                HorizontalOptions="Center"
+                Text="Versión 1.0.0"
+                TextColor="Gray" />
+        </VerticalStackLayout>
+    </Shell.FlyoutFooter>
 
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent
@@ -13,7 +42,10 @@
             ContentTemplate="{DataTemplate local:Views.RoleSelectionView}"
             Route="RoleSelectionView">
             <ShellContent.Icon>
-                <FontImageSource FontFamily="IconFont" Glyph="{x:Static icon:IconFont.Home}" />
+                <FontImageSource
+                    FontFamily="IconFont"
+                    Glyph="{x:Static icon:IconFont.Home}"
+                    Color="Gray" />
             </ShellContent.Icon>
         </ShellContent>
         <ShellContent
@@ -21,7 +53,10 @@
             ContentTemplate="{DataTemplate local:Views.ProfileView}"
             Route="ProfileView">
             <ShellContent.Icon>
-                <FontImageSource FontFamily="IconFont" Glyph="{x:Static icon:IconFont.Person}" />
+                <FontImageSource
+                    FontFamily="IconFont"
+                    Glyph="{x:Static icon:IconFont.Person}"
+                    Color="Gray" />
             </ShellContent.Icon>
         </ShellContent>
     </FlyoutItem>
@@ -30,7 +65,10 @@
         ContentTemplate="{DataTemplate local:Views.HelpView}"
         Route="HelpView">
         <ShellContent.Icon>
-            <FontImageSource FontFamily="IconFont" Glyph="{x:Static icon:IconFont.Help}" />
+            <FontImageSource
+                FontFamily="IconFont"
+                Glyph="{x:Static icon:IconFont.Help}"
+                Color="Gray" />
         </ShellContent.Icon>
     </ShellContent>
     <ShellContent
@@ -38,7 +76,10 @@
         ContentTemplate="{DataTemplate local:Views.AboutView}"
         Route="AboutView">
         <ShellContent.Icon>
-            <FontImageSource FontFamily="IconFont" Glyph="{x:Static icon:IconFont.Info}" />
+            <FontImageSource
+                FontFamily="IconFont"
+                Glyph="{x:Static icon:IconFont.Info}"
+                Color="Gray" />
         </ShellContent.Icon>
     </ShellContent>
     <ShellContent
@@ -46,7 +87,10 @@
         ContentTemplate="{DataTemplate local:Views.TermsView}"
         Route="TermsView">
         <ShellContent.Icon>
-            <FontImageSource FontFamily="IconFont" Glyph="{x:Static icon:IconFont.Edit_document}" />
+            <FontImageSource
+                FontFamily="IconFont"
+                Glyph="{x:Static icon:IconFont.Edit_document}"
+                Color="Gray" />
         </ShellContent.Icon>
     </ShellContent>
 </Shell>

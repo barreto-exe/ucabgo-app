@@ -119,6 +119,7 @@
 	  <None Remove="Resources\Fonts\MaterialIcons-Regular.ttf" />
 	  <None Remove="Resources\Images\driver.svg" />
 	  <None Remove="Resources\Images\order_ride.svg" />
+	  <None Remove="Resources\Images\taxi.svg" />
 	  <None Remove="Resources\Images\walker.svg" />
 	  <None Remove="resources\raw\API.txt" />
 	</ItemGroup>
