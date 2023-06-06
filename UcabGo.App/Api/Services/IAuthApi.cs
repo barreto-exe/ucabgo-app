@@ -6,5 +6,6 @@ namespace UcabGo.App.Api.Interfaces
     public interface IAuthApi
     {
         Task<ApiResponse<Login>> LoginAsync(string email, string password);
+        Task<ApiResponse<object>> ChangePasswordAsync(string oldPassword, string newPassword);
     }
 }

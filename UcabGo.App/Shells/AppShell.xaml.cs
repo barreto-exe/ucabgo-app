@@ -11,8 +11,7 @@ public partial class AppShell : Shell
         InitializeComponent();
         this.navigationService = navigationService;
 
-        //Routing.RegisterRoute(nameof(LoginView), typeof(LoginView));
-        //Routing.RegisterRoute(nameof(RoleSelectionView), typeof(RoleSelectionView));
+        Routing.RegisterRoute(nameof(PasswordView), typeof(PasswordView));
     }
 
     protected override async void OnParentSet()

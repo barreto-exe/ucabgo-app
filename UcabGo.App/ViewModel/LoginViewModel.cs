@@ -1,10 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using UcabGo.App.Api.Interfaces;
 using UcabGo.App.Services;
-using UcabGo.App.Views;
 
 namespace UcabGo.App.ViewModel;
 

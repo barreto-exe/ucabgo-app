@@ -1,10 +1,6 @@
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UcabGo.App.Services;
+using UcabGo.App.Views;
 
 namespace UcabGo.App.ViewModel
 {
@@ -14,6 +10,12 @@ namespace UcabGo.App.ViewModel
             ISettingsService settingsService, 
             INavigationService navigationService) : base(settingsService, navigationService)
         {
+        }
+
+        [RelayCommand]
+        async Task ChangePassword()
+        {
+            await navigation.NavigateToAsync<PasswordView>();
         }
 
         [RelayCommand]

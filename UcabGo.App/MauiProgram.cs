@@ -39,6 +39,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<LoginViewModel>();
         builder.Services.AddSingleton<RoleSelectionViewModel>();
         builder.Services.AddSingleton<ProfileViewModel>();
+        builder.Services.AddSingleton<PasswordViewModel>();
 
         //DI Views
         builder.Services.AddSingleton<LoginView>();
@@ -47,6 +48,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<HelpView>();
         builder.Services.AddSingleton<AboutView>();
         builder.Services.AddSingleton<TermsView>();
+        builder.Services.AddScoped<PasswordView>();
 
         
         //Setting the API URL

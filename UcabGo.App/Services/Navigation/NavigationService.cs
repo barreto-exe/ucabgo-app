@@ -1,3 +1,4 @@
+using Microsoft.Maui.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,20 +31,21 @@ namespace UcabGo.App.Services.Navigation
                 App.GoToSessionShell();
             }
         }
-        public Task NavigateToAsync(string route, IDictionary<string, object> routeParameters = null)
-        {
-            return
-                routeParameters != null
-                    ? Shell.Current.GoToAsync(route, routeParameters)
-                    : Shell.Current.GoToAsync(route);
-        }
         public Task PopAsync()
         {
             throw new NotImplementedException();
         }
-        public Task GoBackAsync()
+        public async Task GoBackAsync()
         {
-            throw new NotImplementedException();
+            await Shell.Current.GoToAsync("..");
+        }
+
+        public Task NavigateToAsync<T>(IDictionary<string, object> routeParameters = null) where T : Page
+        {
+            return
+                routeParameters != null
+                    ? Shell.Current.GoToAsync(typeof(T).Name, routeParameters)
+                    : Shell.Current.GoToAsync(typeof(T).Name);
         }
     }
 }

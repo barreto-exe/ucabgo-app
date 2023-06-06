@@ -56,7 +56,7 @@
                 HorizontalOptions="FillAndExpand" />
 
             <VerticalStackLayout>
-                <Button Text="🔑    Cambiar contraseña" />
+                <Button Command="{Binding ChangePasswordCommand}" Text="🔑    Cambiar contraseña" />
                 <Button Text="📞    Número de teléfono" />
                 <Button Text="🆘    Contactos de emergencia" />
                 <Button Text="🚗    Vehículos" />
