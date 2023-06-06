@@ -55,20 +55,23 @@ public partial class LoginViewModel : ViewModelBase
 
         IsEnabled = false;
 
-        var response = await authService.LoginAsync(Email, Password);
+        var responseData = await authService.LoginAsync(Email, Password);
+        var loginData = responseData?.Data;
+        var message = responseData?.Message;
 
-        if(response != null)
+        if (loginData != null)
         {
-            settings.User = response.User;
-            settings.AccessToken = response.Token;
+            settings.User = loginData.User;
+            settings.AccessToken = loginData.Token;
 
             await navigation.RestartSession();
         }
-        else
+        else if (message == "WRONG_CREDENTIALS")
         {
             IsInvalidCredentialsVisible = true;
-            IsEnabled = true;
         }
+
+        IsEnabled = true;
     }
 
 
