@@ -5,39 +5,31 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:viewmodel="clr-namespace:UcabGo.App.ViewModel"
     Title="Inicio"
-    x:DataType="viewmodel:RoleSelectionViewModel">
-    <ScrollView>
-        <AbsoluteLayout HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
-            <VerticalStackLayout>
+    x:DataType="viewmodel:RoleSelectionViewModel"
+    BackgroundColor="{AppThemeBinding Light={StaticResource Gray100},
+                                      Dark={StaticResource Gray600}}">
+    <ScrollView HorizontalOptions="Center" VerticalOptions="Center">
+        <VerticalStackLayout>
+            <Border Margin="20" MaximumWidthRequest="400">
+                <VerticalStackLayout>
+                    <Image
+                        HeightRequest="150"
+                        Source="driver.png"
+                        VerticalOptions="Start" />
+                    <Button Margin="0,20" Text="Dar cola" />
+                </VerticalStackLayout>
+            </Border>
 
-                <Border
-                    Margin="10"
-                    BackgroundColor="LightSlateGray"
-                    MaximumWidthRequest="400">
-                    <VerticalStackLayout>
-                        <Label
-                            FontAttributes="Bold"
-                            FontSize="Medium"
-                            HorizontalTextAlignment="Start"
-                            Text="Dar cola" />
-                        <ImageButton Source="driver.png" />
-                    </VerticalStackLayout>
-                </Border>
-
-                <Border
-                    Margin="10"
-                    BackgroundColor="LightSlateGray"
-                    MaximumWidthRequest="400">
-                    <VerticalStackLayout>
-                        <Label
-                            FontAttributes="Bold"
-                            FontSize="Medium"
-                            HorizontalTextAlignment="Start"
-                            Text="Pedir cola" />
-                        <ImageButton Source="walker.png" />
-                    </VerticalStackLayout>
-                </Border>
-            </VerticalStackLayout>
-        </AbsoluteLayout>
+            <Border Margin="20,0" MaximumWidthRequest="400">
+                <VerticalStackLayout>
+                    <Image
+                        Margin="0,20,0,0"
+                        HeightRequest="150"
+                        Source="walker.png"
+                        VerticalOptions="Start" />
+                    <Button Margin="0,20" Text="Pedir cola" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
