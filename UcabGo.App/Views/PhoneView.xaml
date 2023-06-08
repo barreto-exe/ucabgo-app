@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="UcabGo.App.Views.PhoneView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:UcabGo.App.ViewModel"
+    Title="Número de teléfono"
+    x:DataType="viewmodel:PhoneViewModel">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ScrollView Grid.Row="0" VerticalOptions="Start">
+            <VerticalStackLayout Margin="20" Spacing="25">
+                <Label Margin="0,0,0,-20" Text="Teléfono:" />
+                <Border>
+                    <Entry Placeholder="0414-1234567" Text="{Binding Phone}" />
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!--  Save button  -->
+        <Button
+            Grid.Row="1"
+            Margin="20"
+            Command="{Binding ChangePhoneCommand}"
+            HeightRequest="50"
+            IsEnabled="{Binding IsButtonEnabled}"
+            Text="{Binding ButtonText}" />
+    </Grid>
+</ContentPage>

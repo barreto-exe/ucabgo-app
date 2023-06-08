@@ -19,6 +19,13 @@ namespace UcabGo.App.ViewModel
         }
 
         [RelayCommand]
+        async Task ChangePhone()
+        {
+            await navigation.NavigateToAsync<PhoneView>();
+        }
+
+
+        [RelayCommand]
         async Task Logout()
         {
             settings.User = null;

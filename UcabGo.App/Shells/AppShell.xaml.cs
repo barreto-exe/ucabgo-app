@@ -12,6 +12,7 @@ public partial class AppShell : Shell
         this.navigationService = navigationService;
 
         Routing.RegisterRoute(nameof(PasswordView), typeof(PasswordView));
+        Routing.RegisterRoute(nameof(PhoneView), typeof(PhoneView));
     }
 
     protected override async void OnParentSet()

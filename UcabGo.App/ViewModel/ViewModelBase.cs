@@ -12,5 +12,10 @@ namespace UcabGo.App.ViewModel
             settings = settingsService;
             this.navigation = navigation;
         }
+
+        public virtual void OnAppearing()
+        {
+            //Override for some functionality
+        }
     }
 }

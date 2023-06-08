@@ -59,7 +59,7 @@
 
             <VerticalStackLayout>
                 <Button Command="{Binding ChangePasswordCommand}" Text="🔑    Cambiar contraseña" />
-                <Button Text="📞    Número de teléfono" />
+                <Button Command="{Binding ChangePhoneCommand}" Text="📞    Número de teléfono" />
                 <Button Text="🆘    Contactos de emergencia" />
                 <Button Text="🚗    Vehículos" />
                 <Button Text="🚘    Mis viajes" />

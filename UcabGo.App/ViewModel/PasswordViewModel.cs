@@ -41,7 +41,7 @@ namespace UcabGo.App.ViewModel
             OnAppearing();
         }
 
-        public void OnAppearing()
+        public override void OnAppearing()
         {
             CurrentPassword = string.Empty;
             NewPassword = string.Empty;

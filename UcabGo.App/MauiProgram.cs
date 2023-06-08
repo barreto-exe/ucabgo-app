@@ -1,5 +1,6 @@
 ﻿using UcabGo.App.Api.Interfaces;
 using UcabGo.App.Api.Services;
+using UcabGo.App.Api.Services.Phone;
 using UcabGo.App.Api.Tools;
 using UcabGo.App.Services;
 using UcabGo.App.Services.Navigation;
@@ -26,6 +27,7 @@ public static class MauiProgram
 
         //DI API Services
         builder.Services.AddSingleton<IAuthApi, AuthApi>();
+        builder.Services.AddSingleton<IPhoneApi, PhoneApi>();
 
         //DI Services
         builder.Services.AddSingleton<INavigationService, NavigationService>();
@@ -40,6 +42,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<RoleSelectionViewModel>();
         builder.Services.AddSingleton<ProfileViewModel>();
         builder.Services.AddSingleton<PasswordViewModel>();
+        builder.Services.AddSingleton<PhoneViewModel>();
+
 
         //DI Views
         builder.Services.AddSingleton<LoginView>();
@@ -49,6 +53,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<AboutView>();
         builder.Services.AddSingleton<TermsView>();
         builder.Services.AddScoped<PasswordView>();
+        builder.Services.AddScoped<PhoneView>();
 
         
         //Setting the API URL
