@@ -22,35 +22,37 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ScrollView HorizontalOptions="Center">
-        <VerticalStackLayout Padding="20">
-            <!--  Imagen de perfil  -->
-            <Image
-                x:Name="ProfilePicture"
-                Aspect="AspectFit"
-                HeightRequest="100"
-                HorizontalOptions="Center"
-                Source="dotnet_bot.png"
-                VerticalOptions="Center"
-                WidthRequest="100" />
-            <!--  Nombre de usuario  -->
-            <Label
-                Margin="0,10"
-                FontAttributes="Bold"
-                FontSize="Large"
-                HorizontalOptions="Center"
-                Text="Luis Barreto"
-                VerticalOptions="Center" />
-            <!--  Email  -->
-            <Label
-                FontAttributes="Bold"
-                FontSize="Small"
-                HorizontalOptions="Center"
-                Text="luis@mail.com"
-                VerticalOptions="Center" />
+        <VerticalStackLayout>
+            <VerticalStackLayout Margin="10">
+                <!--  Imagen de perfil  -->
+                <Image
+                    x:Name="ProfilePicture"
+                    Aspect="AspectFit"
+                    HeightRequest="100"
+                    HorizontalOptions="Center"
+                    Source="dotnet_bot.png"
+                    VerticalOptions="Center"
+                    WidthRequest="100" />
+                <!--  Nombre de usuario  -->
+                <Label
+                    Margin="0,10"
+                    FontAttributes="Bold"
+                    FontSize="Large"
+                    HorizontalOptions="Center"
+                    Text="Luis Barreto"
+                    VerticalOptions="Center" />
+                <!--  Email  -->
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Small"
+                    HorizontalOptions="Center"
+                    Text="luis@mail.com"
+                    VerticalOptions="Center" />
+            </VerticalStackLayout>
 
             <!--  A horizontal line that divides the buttons  -->
             <BoxView
-                Margin="30"
+                Margin="50,30"
                 BackgroundColor="Black"
                 HeightRequest="1"
                 HorizontalOptions="FillAndExpand" />
@@ -65,7 +67,7 @@
 
             <!--  A horizontal line that divides the buttons  -->
             <BoxView
-                Margin="30"
+                Margin="50,30"
                 BackgroundColor="Black"
                 HeightRequest="1"
                 HorizontalOptions="FillAndExpand" />
@@ -78,6 +80,7 @@
                 Command="{Binding LogoutCommand}"
                 CornerRadius="8"
                 FontAttributes="Bold"
+                HeightRequest="50"
                 Text="Cerrar sesión"
                 TextColor="Red" />
         </VerticalStackLayout>
