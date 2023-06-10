@@ -7,18 +7,20 @@
     xmlns:local="clr-namespace:UcabGo.App"
     FlyoutBehavior="Flyout">
     <Shell.FlyoutHeader>
-        <VerticalStackLayout Padding="10" BackgroundColor="{StaticResource Primary}">
-            <Image
-                Aspect="AspectFit"
-                HeightRequest="50"
-                HorizontalOptions="Start"
-                Source="taxi.png"
-                WidthRequest="50" />
-            <Label
-                FontSize="Medium"
-                Text="Ucabery"
-                VerticalOptions="StartAndExpand" />
-        </VerticalStackLayout>
+        <Grid BackgroundColor="{StaticResource Primary}">
+            <HorizontalStackLayout Padding="20" HorizontalOptions="Start">
+                <Image
+                    HeightRequest="100"
+                    HorizontalOptions="Start"
+                    Source="logo.png"
+                    WidthRequest="100" />
+                <Label
+                    Margin="20,0,0,0"
+                    FontSize="Large"
+                    Text="Ucabery"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+        </Grid>
     </Shell.FlyoutHeader>
     <Shell.FlyoutFooter>
         <VerticalStackLayout>
