@@ -13,6 +13,7 @@ public partial class AppShell : Shell
 
         Routing.RegisterRoute(nameof(PasswordView), typeof(PasswordView));
         Routing.RegisterRoute(nameof(PhoneView), typeof(PhoneView));
+        Routing.RegisterRoute(nameof(SosContactsView), typeof(SosContactsView));
     }
 
     protected override async void OnParentSet()

@@ -136,13 +136,13 @@
 	  <Compile Update="Shells\SessionShell.xaml.cs">
 	    <DependentUpon>SessionShell.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\HelpView.xaml.cs">
+	  <Compile Update="Views\Documentation\HelpView.xaml.cs">
 	    <DependentUpon>HelpView.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\LoginView.xaml.cs">
+	  <Compile Update="Views\Login\LoginView.xaml.cs">
 	    <DependentUpon>LoginView.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\TermsView.xaml.cs">
+	  <Compile Update="Views\Documentation\TermsView.xaml.cs">
 	    <DependentUpon>TermsView.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
@@ -151,25 +151,28 @@
 	  <MauiXaml Update="Shells\SessionShell.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\AboutView.xaml">
+	  <MauiXaml Update="Views\Documentation\AboutView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\HelpView.xaml">
+	  <MauiXaml Update="Views\Documentation\HelpView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\PasswordView.xaml">
+	  <MauiXaml Update="Views\ProfileSettings\PasswordView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\PhoneView.xaml">
+	  <MauiXaml Update="Views\ProfileSettings\PhoneView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\ProfileView.xaml">
+	  <MauiXaml Update="Views\ProfileSettings\ProfileView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\RolSelectionView.xaml">
+	  <MauiXaml Update="Views\RoleSelection\RolSelectionView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\TermsView.xaml">
+	  <MauiXaml Update="Views\Documentation\TermsView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ProfileSettings\SosContactsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

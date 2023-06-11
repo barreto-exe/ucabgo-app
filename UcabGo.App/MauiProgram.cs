@@ -1,6 +1,8 @@
 ﻿using UcabGo.App.Api.Interfaces;
 using UcabGo.App.Api.Services;
-using UcabGo.App.Api.Services.Phone;
+using UcabGo.App.Api.Services.SosContacts;
+using UcabGo.App.Api.Services.User;
+using UcabGo.App.Api.Services.Vehicles;
 using UcabGo.App.Api.Tools;
 using UcabGo.App.Services;
 using UcabGo.App.Services.Navigation;
@@ -27,7 +29,10 @@ public static class MauiProgram
 
         //DI API Services
         builder.Services.AddSingleton<IAuthApi, AuthApi>();
-        builder.Services.AddSingleton<IPhoneApi, PhoneApi>();
+        builder.Services.AddSingleton<IUserApi, UserApi>();
+        builder.Services.AddSingleton<ISosContactsApi, SosContactsApi>();
+        builder.Services.AddSingleton<IVehiclesApi, VehiclesApi>();
+
 
         //DI Services
         builder.Services.AddSingleton<INavigationService, NavigationService>();
@@ -43,6 +48,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<ProfileViewModel>();
         builder.Services.AddSingleton<PasswordViewModel>();
         builder.Services.AddSingleton<PhoneViewModel>();
+        builder.Services.AddSingleton<SosContactsViewModel>();
 
 
         //DI Views
@@ -52,10 +58,10 @@ public static class MauiProgram
         builder.Services.AddSingleton<HelpView>();
         builder.Services.AddSingleton<AboutView>();
         builder.Services.AddSingleton<TermsView>();
-        builder.Services.AddScoped<PasswordView>();
-        builder.Services.AddScoped<PhoneView>();
+        builder.Services.AddSingleton<PasswordView>();
+        builder.Services.AddSingleton<PhoneView>();
+        builder.Services.AddSingleton<SosContactsView>();
 
-        
         //Setting the API URL
         using var stream = FileSystem.OpenAppPackageFileAsync("API.txt").Result;
         using var reader = new StreamReader(stream);

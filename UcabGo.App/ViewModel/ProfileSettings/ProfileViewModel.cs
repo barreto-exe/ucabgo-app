@@ -23,6 +23,21 @@ namespace UcabGo.App.ViewModel
         {
             await navigation.NavigateToAsync<PhoneView>();
         }
+        [RelayCommand]
+        async Task SosContacts()
+        {
+            await navigation.NavigateToAsync<SosContactsView>();
+        }
+        [RelayCommand]
+        async Task Vehicles()
+        {
+            //await navigation.NavigateToAsync<VehiclesView>();
+        }
+        [RelayCommand]
+        async Task MyTrips()
+        {
+            //await navigation.NavigateToAsync<MyTripsView>();
+        }
 
 
         [RelayCommand]

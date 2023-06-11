@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UcabGo.App.Api.Services.Phone;
+using UcabGo.App.Api.Services.User;
 using UcabGo.App.Services;
 
 namespace UcabGo.App.ViewModel
@@ -21,9 +21,9 @@ namespace UcabGo.App.ViewModel
         [ObservableProperty]
         private bool isButtonEnabled;
 
-        private readonly IPhoneApi phoneApi;
+        private readonly IUserApi phoneApi;
 
-        public PhoneViewModel(ISettingsService settingsService, INavigationService navigation, IPhoneApi phoneApi) : base(settingsService, navigation)
+        public PhoneViewModel(ISettingsService settingsService, INavigationService navigation, IUserApi phoneApi) : base(settingsService, navigation)
         {
             this.phoneApi = phoneApi;
 
