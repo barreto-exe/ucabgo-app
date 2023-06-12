@@ -49,6 +49,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<PasswordViewModel>();
         builder.Services.AddSingleton<PhoneViewModel>();
         builder.Services.AddSingleton<SosContactsViewModel>();
+        builder.Services.AddSingleton<SosContactsAddViewModel>();
 
 
         //DI Views
@@ -61,6 +62,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<PasswordView>();
         builder.Services.AddSingleton<PhoneView>();
         builder.Services.AddSingleton<SosContactsView>();
+        builder.Services.AddSingleton<SosContactAddView>();
 
         //Setting the API URL
         using var stream = FileSystem.OpenAppPackageFileAsync("API.txt").Result;

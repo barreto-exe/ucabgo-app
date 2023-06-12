@@ -105,6 +105,10 @@ namespace UcabGo.App.Api.Services
         {
             //Toast error message: "No se pudo conectar con el servidor"
         }
+        private static void ToastInvalidInput()
+        {
+
+        }
         private static void ToastMessage(HttpStatusCode code)
         {
             switch (code)
@@ -141,6 +145,16 @@ namespace UcabGo.App.Api.Services
             if (!response.IsSuccessStatusCode)
             {
                 ToastMessage(response.StatusCode);
+            }
+
+            if(responseString.Contains("INVALID_INPUT"))
+            {
+                ToastInvalidInput();
+                return new ApiResponse<T>()
+                {
+                    Data = default,
+                    Message = "INVALID_INPUT",
+                };
             }
 
             return JsonConvert.DeserializeObject<ApiResponse<T>>(responseString, serializerSettings);

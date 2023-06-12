@@ -15,48 +15,80 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <ScrollView>
-            <CollectionView
-                Grid.Row="0"
-                Margin="20"
-                ItemsSource="{Binding Contacts}"
-                SelectionMode="None">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:SosContact">
-                        <Frame Margin="0,10">
-                            <VerticalStackLayout Margin="1">
-                                <VerticalStackLayout Margin="5">
-                                    <Label
-                                        FontAttributes="Bold"
-                                        FontSize="Medium"
-                                        Text="{Binding Name}"
-                                        VerticalOptions="Center" />
-                                    <Label Text="{Binding Phone}" VerticalOptions="Center" />
-                                </VerticalStackLayout>
+            <VerticalStackLayout>
+                <Label
+                    Margin="10"
+                    HorizontalOptions="CenterAndExpand"
+                    IsVisible="{Binding IsRefreshing}"
+                    Text="Cargando..." />
 
-                                <HorizontalStackLayout HorizontalOptions="Start">
-                                    <Button
-                                        Margin="5"
-                                        FontFamily="IconFont"
-                                        Text="{x:Static icons:IconFont.Call}" />
-                                    <Button
-                                        Margin="5"
-                                        FontFamily="IconFont"
-                                        Text="{x:Static icons:IconFont.Edit}" />
-                                    <Button
-                                        Margin="5"
-                                        FontFamily="IconFont"
-                                        Text="{x:Static icons:IconFont.Delete}"
-                                        TextColor="Red" />
-                                </HorizontalStackLayout>
-                            </VerticalStackLayout>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                <Image
+                    Grid.Row="0"
+                    Margin="20"
+                    HorizontalOptions="Center"
+                    IsVisible="{Binding IsEmpty}"
+                    MaximumWidthRequest="300"
+                    Source="sos.png" />
+                <Label
+                    Grid.Row="0"
+                    Margin="20"
+                    HorizontalOptions="CenterAndExpand"
+                    HorizontalTextAlignment="Center"
+                    IsVisible="{Binding IsEmpty}"
+                    Text="¡Acá puedes agregar tus contactos de emergencia!" />
+
+
+                <CollectionView
+                    Grid.Row="0"
+                    Margin="20"
+                    ItemsSource="{Binding SosContacts}"
+                    SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:SosContact">
+                            <Frame Margin="0,10">
+                                <VerticalStackLayout Margin="1">
+                                    <VerticalStackLayout Margin="5">
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="Medium"
+                                            Text="{Binding Name}"
+                                            VerticalOptions="Center" />
+                                        <Label Text="{Binding Phone}" VerticalOptions="Center" />
+                                    </VerticalStackLayout>
+
+                                    <HorizontalStackLayout HorizontalOptions="Start">
+                                        <Button
+                                            Margin="5"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SosContactsViewModel}}, Path=CallContactCommand}"
+                                            CommandParameter="{Binding .}"
+                                            FontFamily="IconFont"
+                                            Text="{x:Static icons:IconFont.Call}" />
+                                        <Button
+                                            Margin="5"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SosContactsViewModel}}, Path=UpdateContactCommand}"
+                                            CommandParameter="{Binding .}"
+                                            FontFamily="IconFont"
+                                            Text="{x:Static icons:IconFont.Edit}" />
+                                        <Button
+                                            Margin="5"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SosContactsViewModel}}, Path=DeleteContactCommand}"
+                                            CommandParameter="{Binding .}"
+                                            FontFamily="IconFont"
+                                            Text="{x:Static icons:IconFont.Delete}"
+                                            TextColor="Red" />
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
         </ScrollView>
         <Button
             Grid.Row="1"
             Margin="20"
+            Command="{Binding AddContactCommand}"
+            HeightRequest="50"
             Text="Agregar" />
     </Grid>
 </ContentPage>

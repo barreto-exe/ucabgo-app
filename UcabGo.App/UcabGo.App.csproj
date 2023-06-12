@@ -119,6 +119,7 @@
 	  <None Remove="Resources\Fonts\MaterialIcons-Regular.ttf" />
 	  <None Remove="Resources\Images\driver.svg" />
 	  <None Remove="Resources\Images\order_ride.svg" />
+	  <None Remove="Resources\Images\sos.svg" />
 	  <None Remove="Resources\Images\taxi.svg" />
 	  <None Remove="Resources\Images\walker.svg" />
 	  <None Remove="resources\raw\API.txt" />
@@ -166,6 +167,9 @@
 	  <MauiXaml Update="Views\ProfileSettings\ProfileView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\ProfileSettings\SosContactAddView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\RoleSelection\RolSelectionView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -176,5 +180,7 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
+
+	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionUcabGoAppHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 
 </Project>

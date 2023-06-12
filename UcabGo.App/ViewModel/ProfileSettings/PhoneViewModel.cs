@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UcabGo.App.Api.Services.User;
+using UcabGo.App.Models;
 using UcabGo.App.Services;
 
 namespace UcabGo.App.ViewModel

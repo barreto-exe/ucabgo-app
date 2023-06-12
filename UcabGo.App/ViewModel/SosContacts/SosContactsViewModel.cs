@@ -1,29 +1,101 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UcabGo.App.Api.Services.SosContacts;
 using UcabGo.App.Models;
 using UcabGo.App.Services;
+using UcabGo.App.Views;
 
 namespace UcabGo.App.ViewModel
 {
     public partial class SosContactsViewModel : ViewModelBase
     {
-        [ObservableProperty]
-        ObservableCollection<SosContact> contacts;
+        private readonly ISosContactsApi sosContactsApi;
 
-        public SosContactsViewModel(ISettingsService settingsService, INavigationService navigation) : base(settingsService, navigation)
+        [ObservableProperty]
+        ObservableCollection<SosContact> sosContacts;
+
+        [ObservableProperty]
+        bool isRefreshing;
+
+        [ObservableProperty]
+        bool isEmpty;
+
+
+        public SosContactsViewModel(ISettingsService settingsService, INavigationService navigation, ISosContactsApi sosContactsApi) : base(settingsService, navigation)
         {
-            contacts = new ObservableCollection<SosContact>
+            sosContacts = new ObservableCollection<SosContact>();
+            this.sosContactsApi = sosContactsApi;
+        }
+
+        public override async void OnAppearing()
+        {
+            await Refresh();
+        }
+
+        [RelayCommand]
+        async Task Refresh()
+        {
+            SosContacts.Clear();
+            IsRefreshing = true;
+
+            var contacts = await sosContactsApi.GetSosContacts();
+            if(contacts?.Message == "SOSCONTACTS_FOUND")
             {
-                //Test data
-                new SosContact { Id = 1, Name = "Juan", Phone = "0414-1234567" },
-                new SosContact { Id = 2, Name = "Pedro", Phone = "0414-7654321" },
-                new SosContact { Id = 3, Name = "Maria", Phone = "0414-1234567" }
+                IsEmpty = contacts.Data.Count == 0;
+
+                foreach (var contact in contacts.Data)
+                {
+                    SosContacts.Add(contact);
+                }
+            }
+
+            IsRefreshing = false;
+        }
+
+        [RelayCommand]
+        async Task AddContact()
+        {
+            await navigation.NavigateToAsync<SosContactAddView>();
+        }
+
+        [RelayCommand]
+        async Task DeleteContact(SosContact contact)
+        {
+            var apiResponse = await sosContactsApi.DeleteSosContact(contact.Id);
+            if (apiResponse.Message == "SOSCONTACT_DELETED")
+            {
+                SosContacts.Remove(contact);
+
+                IsEmpty = SosContacts.Count == 0;
+            }
+        }
+        [RelayCommand]
+        async Task UpdateContact(SosContact contact)
+        {
+            //contact into a dictionary
+            var parameters = new Dictionary<string, object>
+            {
+                { "contact", contact }
             };
+
+            await navigation.NavigateToAsync<SosContactAddView>(parameters);
+        }
+
+        //call contact
+        [RelayCommand]
+        async Task CallContact(SosContact contact)
+        {
+            if (PhoneDialer.Default.IsSupported)
+            {
+                PhoneDialer.Default.Open(contact.Phone);
+            }
         }
     }
+
 }
