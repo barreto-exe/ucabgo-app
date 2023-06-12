@@ -1,5 +1,4 @@
-﻿using UcabGo.App.Api.Models;
-using UcabGo.App.Api.Tools;
+﻿using UcabGo.App.Api.Tools;
 
 namespace UcabGo.App.Api.Services.User
 {

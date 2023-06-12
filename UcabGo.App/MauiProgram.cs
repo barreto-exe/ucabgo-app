@@ -49,7 +49,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<PasswordViewModel>();
         builder.Services.AddSingleton<PhoneViewModel>();
         builder.Services.AddSingleton<SosContactsViewModel>();
-        builder.Services.AddSingleton<SosContactsAddViewModel>(); 
+        builder.Services.AddSingleton<SosContactsAddViewModel>();
         builder.Services.AddSingleton<VehiclesViewModel>();
         builder.Services.AddSingleton<VehiclesAddViewModel>();
 

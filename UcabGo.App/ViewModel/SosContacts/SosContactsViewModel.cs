@@ -1,11 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UcabGo.App.Api.Services.SosContacts;
 using UcabGo.App.Models;
 using UcabGo.App.Services;
@@ -45,7 +40,7 @@ namespace UcabGo.App.ViewModel
             IsRefreshing = true;
 
             var contacts = await sosContactsApi.GetSosContacts();
-            if(contacts?.Message == "SOSCONTACTS_FOUND")
+            if (contacts?.Message == "SOSCONTACTS_FOUND")
             {
                 IsEmpty = contacts.Data.Count == 0;
 

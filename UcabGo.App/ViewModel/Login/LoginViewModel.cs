@@ -29,7 +29,7 @@ public partial class LoginViewModel : ViewModelBase
     bool isInvalidCredentialsVisible;
 
     public LoginViewModel(
-        IAuthApi authService, 
+        IAuthApi authService,
         ISettingsService settingsService,
         INavigationService navigationService) : base(settingsService, navigationService)
     {

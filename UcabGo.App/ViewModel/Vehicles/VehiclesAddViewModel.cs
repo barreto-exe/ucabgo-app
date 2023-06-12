@@ -1,6 +1,5 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using UcabGo.App.Api.Services.SosContacts;
 using UcabGo.App.Api.Services.Vehicles;
 using UcabGo.App.Models;
 using UcabGo.App.Services;
@@ -64,10 +63,10 @@ namespace UcabGo.App.ViewModel
         [RelayCommand]
         async Task Save()
         {
-            bool isValidInput = 
-                !string.IsNullOrEmpty(BrandEntry) && 
-                !string.IsNullOrEmpty(ModelEntry) && 
-                !string.IsNullOrEmpty(PlateEntry) && 
+            bool isValidInput =
+                !string.IsNullOrEmpty(BrandEntry) &&
+                !string.IsNullOrEmpty(ModelEntry) &&
+                !string.IsNullOrEmpty(PlateEntry) &&
                 !string.IsNullOrEmpty(ColorEntry);
             if (!isValidInput)
             {
@@ -80,7 +79,7 @@ namespace UcabGo.App.ViewModel
             ButtonText = "Guardando...";
             IsButtonEnabled = false;
 
-            if(isEditing)
+            if (isEditing)
             {
                 await UpdateVehicle();
             }

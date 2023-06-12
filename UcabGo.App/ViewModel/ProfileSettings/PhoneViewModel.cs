@@ -1,12 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UcabGo.App.Api.Services.User;
-using UcabGo.App.Models;
 using UcabGo.App.Services;
 
 namespace UcabGo.App.ViewModel
@@ -64,7 +58,7 @@ namespace UcabGo.App.ViewModel
 
             //Call api
             var apiResponse = await phoneApi.ChangePhoneAsync(Phone);
-            if(apiResponse.Message == "PHONE_UPDATED")
+            if (apiResponse.Message == "PHONE_UPDATED")
             {
                 var user = settings.User;
                 user.Phone = Phone;

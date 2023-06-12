@@ -1,9 +1,8 @@
 ﻿using UcabGo.App.Services;
-using UcabGo.App.Views;
 
 namespace UcabGo.App.Shells;
 
-public partial class SessionShell: Shell
+public partial class SessionShell : Shell
 {
     private readonly INavigationService navigationService;
     public SessionShell(INavigationService navigationService)

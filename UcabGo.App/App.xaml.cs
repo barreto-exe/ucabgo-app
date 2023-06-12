@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using UcabGo.App.Services;
+﻿using UcabGo.App.Services;
 using UcabGo.App.Shells;
 
 namespace UcabGo.App;

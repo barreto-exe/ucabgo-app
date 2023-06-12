@@ -24,7 +24,7 @@ namespace UcabGo.App.ViewModel
         {
             if (string.IsNullOrEmpty(settings.AccessToken))
             {
-               await Logout();
+                await Logout();
             }
         }
     }

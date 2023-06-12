@@ -1,9 +1,4 @@
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UcabGo.App.Api.Models;
 
 namespace UcabGo.App.Services.Settings
@@ -30,7 +25,7 @@ namespace UcabGo.App.Services.Settings
         //Methods for settings
         public void SetValue(string key, object value)
         {
-            if(value == null || string.IsNullOrWhiteSpace(value.ToString()))
+            if (value == null || string.IsNullOrWhiteSpace(value.ToString()))
             {
                 Preferences.Remove(key);
             }

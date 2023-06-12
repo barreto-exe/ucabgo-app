@@ -63,7 +63,7 @@ namespace UcabGo.App.ViewModel
             ButtonText = "Guardando...";
             IsButtonEnabled = false;
 
-            if(isEditing)
+            if (isEditing)
             {
                 await UpdateContact();
             }

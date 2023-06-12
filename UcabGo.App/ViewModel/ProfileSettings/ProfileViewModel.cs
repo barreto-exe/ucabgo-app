@@ -7,7 +7,7 @@ namespace UcabGo.App.ViewModel
     public partial class ProfileViewModel : ViewModelBase
     {
         public ProfileViewModel(
-            ISettingsService settingsService, 
+            ISettingsService settingsService,
             INavigationService navigationService) : base(settingsService, navigationService)
         {
         }

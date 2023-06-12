@@ -147,7 +147,7 @@ namespace UcabGo.App.Api.Services
                 ToastMessage(response.StatusCode);
             }
 
-            if(responseString.Contains("INVALID_INPUT"))
+            if (responseString.Contains("INVALID_INPUT"))
             {
                 ToastInvalidInput();
                 return new ApiResponse<T>()

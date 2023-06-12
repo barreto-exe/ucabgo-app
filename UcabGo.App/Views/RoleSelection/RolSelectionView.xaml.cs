@@ -4,9 +4,9 @@ namespace UcabGo.App.Views;
 
 public partial class RoleSelectionView : ContentPage
 {
-	public RoleSelectionView(RoleSelectionViewModel viewModel)
-	{
-		InitializeComponent();
-		BindingContext = viewModel;
-	}
+    public RoleSelectionView(RoleSelectionViewModel viewModel)
+    {
+        InitializeComponent();
+        BindingContext = viewModel;
+    }
 }

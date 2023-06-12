@@ -1,6 +1,4 @@
-﻿using UcabGo.App.ViewModel;
-
-namespace UcabGo.App.Services
+﻿namespace UcabGo.App.Services
 {
     public interface INavigationService
     {
