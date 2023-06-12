@@ -31,7 +31,7 @@ namespace UcabGo.App.ViewModel
         [RelayCommand]
         async Task Vehicles()
         {
-            //await navigation.NavigateToAsync<VehiclesView>();
+            await navigation.NavigateToAsync<VehiclesView>();
         }
         [RelayCommand]
         async Task MyTrips()

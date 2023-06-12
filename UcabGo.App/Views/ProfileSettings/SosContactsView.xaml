@@ -56,7 +56,7 @@
                                         <Label Text="{Binding Phone}" VerticalOptions="Center" />
                                     </VerticalStackLayout>
 
-                                    <HorizontalStackLayout HorizontalOptions="Start">
+                                    <HorizontalStackLayout HorizontalOptions="End">
                                         <Button
                                             Margin="5"
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SosContactsViewModel}}, Path=CallContactCommand}"
@@ -71,11 +71,12 @@
                                             Text="{x:Static icons:IconFont.Edit}" />
                                         <Button
                                             Margin="5"
+                                            BackgroundColor="DarkRed"
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SosContactsViewModel}}, Path=DeleteContactCommand}"
                                             CommandParameter="{Binding .}"
                                             FontFamily="IconFont"
                                             Text="{x:Static icons:IconFont.Delete}"
-                                            TextColor="Red" />
+                                            TextColor="White" />
                                     </HorizontalStackLayout>
                                 </VerticalStackLayout>
                             </Frame>

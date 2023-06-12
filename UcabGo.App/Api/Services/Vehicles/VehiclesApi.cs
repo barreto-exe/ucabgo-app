@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UcabGo.App.Api.Tools;
 using UcabGo.App.Models;
 using UcabGo.App.Services;
 
@@ -14,26 +15,21 @@ namespace UcabGo.App.Api.Services.Vehicles
         {
         }
 
-
-        public Task<List<Vehicle>> GetVehicles()
+        public async Task<ApiResponse<List<Vehicle>>> GetVehicles()
         {
-            throw new NotImplementedException();
+            return await GetAsync<List<Vehicle>>(ApiRoutes.USER_VEHICLES);
         }
-        public Task<Vehicle> GetVehicle(int id)
+        public async Task<ApiResponse<Vehicle>> AddVehicle(Vehicle vehicle)
         {
-            throw new NotImplementedException();
+            return await PostAsync<Vehicle>(ApiRoutes.USER_VEHICLES, vehicle);
         }
-        public Task<Vehicle> AddVehicle(Vehicle vehicle)
+        public async Task<ApiResponse<Vehicle>> UpdateVehicle(Vehicle vehicle)
         {
-            throw new NotImplementedException();
+            return await PutAsync<Vehicle>(ApiRoutes.USER_VEHICLES, vehicle);
         }
-        public Task<Vehicle> UpdateVehicle(Vehicle vehicle)
+        public async Task<ApiResponse<Vehicle>> DeleteVehicle(int id)
         {
-            throw new NotImplementedException();
-        }
-        public Task<Vehicle> DeleteVehicle(int id)
-        {
-            throw new NotImplementedException();
+            return await DeleteAsync<Vehicle>($"{ApiRoutes.USER_VEHICLES}/{id}");
         }
     }
 }

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="UcabGo.App.Views.VehiclesAddView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:UcabGo.App.ViewModel"
+    Title="Añadir Contacto SOS"
+    x:DataType="viewmodel:VehiclesAddViewModel">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ScrollView Grid.Row="0" VerticalOptions="Start">
+            <VerticalStackLayout Margin="20" Spacing="25">
+                <Label Margin="0,0,0,-20" Text="Marca:" />
+                <Border>
+                    <Entry Placeholder="Chevrolet" Text="{Binding BrandEntry}" />
+                </Border>
+                <Label Margin="0,0,0,-20" Text="Modelo:" />
+                <Border>
+                    <Entry Placeholder="Spark" Text="{Binding ModelEntry}" />
+                </Border>
+                <Label Margin="0,0,0,-20" Text="Placa:" />
+                <Border>
+                    <Entry Placeholder="ABC123" Text="{Binding PlateEntry}" />
+                </Border>
+                <Label Margin="0,0,0,-20" Text="Color:" />
+                <Border>
+                    <Entry Placeholder="Gris" Text="{Binding ColorEntry}" />
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+        <Grid Grid.Row="1" Margin="20,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button
+                Grid.Column="0"
+                Margin="5"
+                BackgroundColor="Transparent"
+                Command="{Binding CancelCommand}"
+                HeightRequest="50"
+                Text="Cancelar"
+                TextColor="{StaticResource Primary}" />
+            <Button
+                Grid.Column="1"
+                Margin="5"
+                Command="{Binding SaveCommand}"
+                HeightRequest="50"
+                IsEnabled="{Binding IsButtonEnabled}"
+                Text="{Binding ButtonText}" />
+        </Grid>
+    </Grid>
+</ContentPage>

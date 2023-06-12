@@ -21,22 +21,11 @@ namespace UcabGo.App.Api.Services.SosContacts
         }
         public async Task<ApiResponse<SosContact>> AddSosContact(SosContact sosContact)
         {
-            var input = new
-            {
-                name = sosContact.Name,
-                phone = sosContact.Phone
-            };
-            return await PostAsync<SosContact>(ApiRoutes.SOS_CONTACTS, input);
+            return await PostAsync<SosContact>(ApiRoutes.SOS_CONTACTS, sosContact);
         }
         public async Task<ApiResponse<SosContact>> UpdateSosContact(SosContact sosContact)
         {
-            var input = new
-            {
-                id = sosContact.Id,
-                name = sosContact.Name,
-                phone = sosContact.Phone
-            };
-            return await PutAsync<SosContact>(ApiRoutes.SOS_CONTACTS, input);
+            return await PutAsync<SosContact>(ApiRoutes.SOS_CONTACTS, sosContact);
         }
         public async Task<ApiResponse<SosContact>> DeleteSosContact(int id)
         {

@@ -117,6 +117,8 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Fonts\MaterialIcons-Regular.ttf" />
+	  <None Remove="Resources\Images\add_car.svg" />
+	  <None Remove="Resources\Images\car_side.svg" />
 	  <None Remove="Resources\Images\driver.svg" />
 	  <None Remove="Resources\Images\order_ride.svg" />
 	  <None Remove="Resources\Images\sos.svg" />
@@ -146,6 +148,9 @@
 	  <Compile Update="Views\Documentation\TermsView.xaml.cs">
 	    <DependentUpon>TermsView.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\ProfileSettings\VehiclesAddView.xaml.cs">
+	    <DependentUpon>VehiclesAddView.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -167,6 +172,9 @@
 	  <MauiXaml Update="Views\ProfileSettings\ProfileView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\ProfileSettings\VehiclesAddView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\ProfileSettings\SosContactAddView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -177,6 +185,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ProfileSettings\SosContactsView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ProfileSettings\VehiclesView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

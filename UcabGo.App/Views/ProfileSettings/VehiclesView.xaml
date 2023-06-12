@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="UcabGo.App.Views.VehiclesView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:icons="clr-namespace:UcabGo.App.Utils"
+    xmlns:model="clr-namespace:UcabGo.App.Models"
+    xmlns:viewmodel="clr-namespace:UcabGo.App.ViewModel"
+    Title="Mis vehículos"
+    x:DataType="viewmodel:VehiclesViewModel">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ScrollView>
+            <VerticalStackLayout>
+
+                <Label
+                    Margin="10"
+                    HorizontalOptions="CenterAndExpand"
+                    IsVisible="{Binding IsRefreshing}"
+                    Text="Cargando..." />
+
+                <Image
+                    Grid.Row="0"
+                    Margin="20"
+                    HorizontalOptions="Center"
+                    IsVisible="{Binding IsEmpty}"
+                    MaximumWidthRequest="300"
+                    Source="add_car.png" />
+                <Label
+                    Grid.Row="0"
+                    Margin="20"
+                    HorizontalOptions="CenterAndExpand"
+                    HorizontalTextAlignment="Center"
+                    IsVisible="{Binding IsEmpty}"
+                    Text="¡Acá puedes agregar tus vehículos!" />
+
+                <CollectionView
+                    Grid.Row="0"
+                    Margin="20"
+                    ItemsSource="{Binding Vehicles}"
+                    SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Vehicle">
+                            <Frame Margin="0,10">
+                                <VerticalStackLayout Margin="1" Spacing="10">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="85" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid Grid.Column="0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <Image
+                                                Grid.Row="0"
+                                                HorizontalOptions="Start"
+                                                Source="car_side.png"
+                                                WidthRequest="60" />
+                                            <Label
+                                                Grid.Row="1"
+                                                FontAttributes="Bold"
+                                                FontSize="16"
+                                                HorizontalOptions="Start"
+                                                Text="{Binding Plate}" />
+                                        </Grid>
+
+                                        <Grid Grid.Column="1">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+
+                                            <Label
+                                                Grid.Row="0"
+                                                FontAttributes="Bold"
+                                                FontSize="18"
+                                                Text="{Binding Brand}" />
+                                            <Label
+                                                Grid.Row="1"
+                                                FontSize="16"
+                                                Text="{Binding Model}" />
+                                            <Label
+                                                Grid.Row="2"
+                                                FontSize="16"
+                                                Text="{Binding Color}" />
+                                        </Grid>
+                                    </Grid>
+
+                                    <HorizontalStackLayout HorizontalOptions="End">
+                                        <Button
+                                            Margin="5"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:VehiclesViewModel}}, Path=UpdateVehicleCommand}"
+                                            CommandParameter="{Binding .}"
+                                            FontFamily="IconFont"
+                                            Text="{x:Static icons:IconFont.Edit}" />
+                                        <Button
+                                            Margin="5"
+                                            BackgroundColor="DarkRed"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:VehiclesViewModel}}, Path=DeleteVehicleCommand}"
+                                            CommandParameter="{Binding .}"
+                                            FontFamily="IconFont"
+                                            Text="{x:Static icons:IconFont.Delete}"
+                                            TextColor="White" />
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </VerticalStackLayout>
+        </ScrollView>
+        <Button
+            Grid.Row="1"
+            Margin="20"
+            Command="{Binding AddVehicleCommand}"
+            HeightRequest="50"
+            Text="Agregar" />
+    </Grid>
+</ContentPage>
