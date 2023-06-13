@@ -18,6 +18,7 @@
                     Margin="20,0,0,0"
                     FontSize="Large"
                     Text="Ucabery"
+                    TextColor="White"
                     VerticalOptions="Center" />
             </HorizontalStackLayout>
         </Grid>

@@ -16,11 +16,11 @@
         </Grid.RowDefinitions>
         <ScrollView>
             <VerticalStackLayout>
-                <Label
+                <ActivityIndicator
                     Margin="10"
                     HorizontalOptions="CenterAndExpand"
-                    IsVisible="{Binding IsRefreshing}"
-                    Text="Cargando..." />
+                    IsRunning="{Binding IsRefreshing}"
+                    IsVisible="{Binding IsRefreshing}" />
 
                 <Image
                     Grid.Row="0"
@@ -36,7 +36,6 @@
                     HorizontalTextAlignment="Center"
                     IsVisible="{Binding IsEmpty}"
                     Text="¡Acá puedes agregar tus contactos de emergencia!" />
-
 
                 <CollectionView
                     Grid.Row="0"

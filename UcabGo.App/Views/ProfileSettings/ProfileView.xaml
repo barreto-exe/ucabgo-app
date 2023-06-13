@@ -9,6 +9,12 @@
     x:DataType="viewmodel:ProfileViewModel"
     BackgroundColor="{AppThemeBinding Light={StaticResource Gray100},
                                       Dark={StaticResource Gray900}}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding LogoutCommand}"
+            IconImageSource="logout_white_24dp.png"
+            Text="Salir" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Button">
@@ -17,7 +23,7 @@
                 <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}" />
                 <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource White}}" />
                 <Setter Property="FontSize" Value="Medium" />
-                <Setter Property="HeightRequest" Value="70" />
+                <Setter Property="HeightRequest" Value="60" />
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -71,6 +77,8 @@
                             Command="{Binding ChangePasswordCommand}"
                             CornerRadius="8"
                             Text="🔑    Cambiar contraseña" />
+                        <Button Command="{Binding MyHouseCommand}" Text="🏠    Mi dirección" />
+                        <Button Command="{Binding WalkingDistanceCommand}" Text="🚶    Distancia de caminata" />
                         <Button Command="{Binding ChangePhoneCommand}" Text="📞    Número de teléfono" />
                         <Button Command="{Binding SosContactsCommand}" Text="🆘    Contactos de emergencia" />
                         <Button Command="{Binding VehiclesCommand}" Text="🚗    Vehículos" />

@@ -29,6 +29,7 @@ namespace UcabGo.App.ViewModel
 
         public override async void OnAppearing()
         {
+            IsEmpty = false;
             await Refresh();
         }
 

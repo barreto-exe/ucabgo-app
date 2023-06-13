@@ -15,12 +15,11 @@
         </Grid.RowDefinitions>
         <ScrollView>
             <VerticalStackLayout>
-
-                <Label
+                <ActivityIndicator
                     Margin="10"
                     HorizontalOptions="CenterAndExpand"
-                    IsVisible="{Binding IsRefreshing}"
-                    Text="Cargando..." />
+                    IsRunning="{Binding IsRefreshing}"
+                    IsVisible="{Binding IsRefreshing}" />
 
                 <Image
                     Grid.Row="0"

@@ -39,6 +39,17 @@ namespace UcabGo.App.ViewModel
             //await navigation.NavigateToAsync<MyTripsView>();
         }
 
+        [RelayCommand]
+        async Task MyHouse()
+        {
+            //await navigation.NavigateToAsync<MyHomeView>();
+        }
+
+        [RelayCommand]
+        async Task WalkingDistance()
+        {
+            //await navigation.NavigateToAsync<WalkingDistanceView>();
+        }
 
         [RelayCommand]
         async Task Logout()
