@@ -23,15 +23,18 @@ namespace UcabGo.App.Api.Services
                 Culture = System.Globalization.CultureInfo.GetCultureInfo("en-US"),
             };
             this.settingsService = settingsService;
+            this.navigationService = navigationService;
+            
+            RefreshToken();
+        }
 
-            //Set token to client if token is not null
+        private void RefreshToken()
+        {
             var token = settingsService.AccessToken;
             if (!string.IsNullOrEmpty(token))
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             }
-
-            this.navigationService = navigationService;
         }
 
         protected async Task<ApiResponse<T>> GetAsync<T>(string url, object query = null)
@@ -51,6 +54,7 @@ namespace UcabGo.App.Api.Services
 
             try
             {
+                RefreshToken();
                 var response = await client.GetAsync(url);
                 return await GeneralResponse<T>(response);
             }
@@ -66,6 +70,7 @@ namespace UcabGo.App.Api.Services
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             try
             {
+                RefreshToken();
                 var response = await client.PostAsync(new Uri(url), content);
                 return await GeneralResponse<T>(response);
             }
@@ -81,6 +86,7 @@ namespace UcabGo.App.Api.Services
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             try
             {
+                RefreshToken();
                 var response = await client.PutAsync(new Uri(url), content);
                 return await GeneralResponse<T>(response);
             }
@@ -94,6 +100,7 @@ namespace UcabGo.App.Api.Services
         {
             try
             {
+                RefreshToken();
                 var response = await client.DeleteAsync(new Uri(url));
                 return await GeneralResponse<T>(response);
             }
