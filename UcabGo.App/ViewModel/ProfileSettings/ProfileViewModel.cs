@@ -48,7 +48,7 @@ namespace UcabGo.App.ViewModel
         [RelayCommand]
         async Task WalkingDistance()
         {
-            //await navigation.NavigateToAsync<WalkingDistanceView>();
+            await navigation.NavigateToAsync<WalkingDistanceView>();
         }
 
         [RelayCommand]

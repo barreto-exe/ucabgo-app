@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="UcabGo.App.Views.WalkingDistanceView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:UcabGo.App.ViewModel"
+    Title="Distancia de caminata"
+    x:DataType="viewmodel:WalkingDistanceViewModel">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ScrollView>
+            <VerticalStackLayout Margin="20">
+                <ActivityIndicator
+                    Margin="10"
+                    HorizontalOptions="CenterAndExpand"
+                    IsRunning="{Binding IsRefreshing}"
+                    IsVisible="{Binding IsRefreshing}" />
+                <Image
+                    Margin="20"
+                    HorizontalOptions="Center"
+                    MaximumWidthRequest="300"
+                    Source="walker.png" />
+                <Label
+                    Margin="20"
+                    HorizontalOptions="CenterAndExpand"
+                    HorizontalTextAlignment="Center"
+                    Text="Indica la distancia que estás dispuesto a caminar cuando solicites una cola. Mientras mayor sea, ¡tendrás más chances de recibir una cola!" />
+
+                <Label
+                    Margin="20"
+                    HorizontalOptions="CenterAndExpand"
+                    HorizontalTextAlignment="Center"
+                    Text="{Binding WalkingDistance, StringFormat='Estoy dispuesto a caminar {0} mt.'}" />
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        Grid.Column="0"
+                        Text="1 mt."
+                        VerticalOptions="Center" />
+                    <Slider
+                        Grid.Column="1"
+                        Margin="20"
+                        DragCompletedCommand="{Binding ValueUpdatedCommand}"
+                        Maximum="800"
+                        MaximumTrackColor="{StaticResource Primary}"
+                        Minimum="1"
+                        MinimumTrackColor="White"
+                        VerticalOptions="Center"
+                        Value="{Binding WalkingDistance}" />
+                    <Label
+                        Grid.Column="2"
+                        Text="800 mt."
+                        VerticalOptions="Center" />
+                </Grid>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Button
+            Grid.Row="1"
+            Margin="20"
+            Command="{Binding SaveCommand}"
+            HeightRequest="50"
+            IsEnabled="{Binding IsButtonEnabled}"
+            Text="{Binding ButtonText}" />
+    </Grid>
+</ContentPage>

@@ -191,6 +191,9 @@
 	  <MauiXaml Update="Views\Vehicles\VehiclesView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\ProfileSettings\WalkingDistanceView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionUcabGoAppHideInfoBar="True" /></VisualStudio></ProjectExtensions>
