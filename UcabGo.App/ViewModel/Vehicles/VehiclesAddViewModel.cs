@@ -70,9 +70,7 @@ namespace UcabGo.App.ViewModel
                 !string.IsNullOrEmpty(ColorEntry);
             if (!isValidInput)
             {
-                //Show error
-                //...
-
+                await Application.Current.MainPage.DisplayAlert("Error", "Debe llenar todos los campos", "Ok");
                 return;
             }
 
@@ -107,11 +105,6 @@ namespace UcabGo.App.ViewModel
             {
                 await navigation.GoBackAsync();
             }
-            else
-            {
-                //Show error
-                //...
-            }
         }
 
         private async Task UpdateVehicle()
@@ -128,10 +121,9 @@ namespace UcabGo.App.ViewModel
             {
                 await navigation.GoBackAsync();
             }
-            else
+            else if (apiResponse.Message == "VEHICLE_NOT_FOUND")
             {
-                //Show error
-                //...
+                await Application.Current.MainPage.DisplayAlert("Error", "El vehículo no existe", "Ok");
             }
         }
 
