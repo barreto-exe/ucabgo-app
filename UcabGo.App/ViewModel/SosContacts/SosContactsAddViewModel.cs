@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using UcabGo.App.Api.Services.SosContacts;
 using UcabGo.App.Models;
 using UcabGo.App.Services;
+using UcabGo.App.Utils;
 
 namespace UcabGo.App.ViewModel
 {
@@ -24,6 +25,9 @@ namespace UcabGo.App.ViewModel
         [ObservableProperty]
         SosContact contact;
 
+        [ObservableProperty]
+        private bool isErrorVisible;
+
         bool isEditing => Contact != null;
 
         readonly ISosContactsApi sosContactsApi;
@@ -37,6 +41,7 @@ namespace UcabGo.App.ViewModel
         {
             ButtonText = "Guardar";
             IsButtonEnabled = true;
+            IsErrorVisible = false;
 
             if (isEditing)
             {
@@ -53,15 +58,18 @@ namespace UcabGo.App.ViewModel
         [RelayCommand]
         async Task Save()
         {
-            bool isValid = IsValidPhone(PhoneEntry);
-            if (!isValid)
+            IsErrorVisible = false;
+
+            if (!PhoneEntry.IsValidPhone())
             {
-                //Show error
-                //...
+                IsErrorVisible = true;
+                return;
             }
 
             ButtonText = "Guardando...";
             IsButtonEnabled = false;
+
+            PhoneEntry = PhoneEntry.Trim();
 
             if (isEditing)
             {
@@ -89,11 +97,6 @@ namespace UcabGo.App.ViewModel
             {
                 await navigation.GoBackAsync();
             }
-            else
-            {
-                //Show error
-                //...
-            }
         }
 
         private async Task UpdateContact()
@@ -109,10 +112,13 @@ namespace UcabGo.App.ViewModel
             {
                 await navigation.GoBackAsync();
             }
-            else
+            else if (apiResponse.Message == "SOSCONTACT_NOT_FOUND")
             {
-                //Show error
-                //...
+                await Application.Current.MainPage.DisplayAlert(
+                    "Error",
+                    "No se pudo encontrar el contacto de emergencia",
+                    "Ok");
+                await navigation.GoBackAsync();
             }
         }
 
@@ -120,11 +126,6 @@ namespace UcabGo.App.ViewModel
         async Task Cancel()
         {
             await navigation.GoBackAsync();
-        }
-
-        public bool IsValidPhone(string phone)
-        {
-            return true;
         }
     }
 }

@@ -1,7 +1,9 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Text.RegularExpressions;
 using UcabGo.App.Api.Services.User;
 using UcabGo.App.Services;
+using UcabGo.App.Utils;
 
 namespace UcabGo.App.ViewModel
 {
@@ -15,6 +17,9 @@ namespace UcabGo.App.ViewModel
 
         [ObservableProperty]
         private bool isButtonEnabled;
+
+        [ObservableProperty]
+        private bool isErrorVisible;
 
         private readonly IUserApi phoneApi;
 
@@ -30,31 +35,27 @@ namespace UcabGo.App.ViewModel
             Phone = settings.User.Phone;
             ButtonText = "Guardar";
             IsButtonEnabled = true;
+            IsErrorVisible = false;
         }
 
-        public bool IsValidPhone(string phone)
-        {
-            return true;
-        }
 
         [RelayCommand]
         async Task ChangePhone()
         {
             //Hide all errors
-            //...
+            IsErrorVisible = false;
 
             //Validate fields
-            if (!IsValidPhone(Phone))
+            if (!Phone.IsValidPhone())
             {
-                //Show error
-                //...
-
+                IsErrorVisible = true;
                 return;
             }
 
-
             ButtonText = "Guardando...";
             IsButtonEnabled = false;
+
+            Phone = Phone.Trim();
 
             //Call api
             var apiResponse = await phoneApi.ChangePhoneAsync(Phone);

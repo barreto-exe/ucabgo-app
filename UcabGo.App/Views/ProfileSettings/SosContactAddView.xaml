@@ -21,6 +21,13 @@
                 <Border>
                     <Entry Placeholder="0412-1234567" Text="{Binding PhoneEntry}" />
                 </Border>
+                <Label
+                    Margin="0,-20,0,0"
+                    FontSize="12"
+                    HorizontalOptions="Start"
+                    IsVisible="{Binding IsErrorVisible}"
+                    Text="❌ Formato inválido. &#10;-Ingrese un número de teléfono venezolano válido."
+                    TextColor="Red" />
             </VerticalStackLayout>
         </ScrollView>
         <Grid Grid.Row="1" Margin="20,0">
