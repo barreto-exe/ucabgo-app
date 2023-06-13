@@ -6,7 +6,7 @@ namespace UcabGo.App.Api.Services.Vehicles
 {
     public class VehiclesApi : BaseRestJsonApi, IVehiclesApi
     {
-        public VehiclesApi(ISettingsService settingsService) : base(settingsService)
+        public VehiclesApi(ISettingsService settingsService, INavigationService navigationService) : base(settingsService, navigationService)
         {
         }
 

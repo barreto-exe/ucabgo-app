@@ -7,7 +7,7 @@ namespace UcabGo.App.Api.Services
 {
     public class AuthApi : BaseRestJsonApi, IAuthApi
     {
-        public AuthApi(ISettingsService settingsService) : base(settingsService)
+        public AuthApi(ISettingsService settingsService, INavigationService navigationService) : base(settingsService, navigationService)
         {
         }
 

@@ -5,7 +5,7 @@ namespace UcabGo.App.Api.Services.User
 {
     public class UserApi : BaseRestJsonApi, IUserApi
     {
-        public UserApi(ISettingsService settingsService) : base(settingsService)
+        public UserApi(ISettingsService settingsService, INavigationService navigationService) : base(settingsService, navigationService)
         {
         }
 

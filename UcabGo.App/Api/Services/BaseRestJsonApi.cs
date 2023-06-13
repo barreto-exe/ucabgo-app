@@ -12,8 +12,9 @@ namespace UcabGo.App.Api.Services
         readonly HttpClient client;
         readonly JsonSerializerSettings serializerSettings;
         readonly ISettingsService settingsService;
+        readonly INavigationService navigationService;
 
-        public BaseRestJsonApi(ISettingsService settingsService)
+        public BaseRestJsonApi(ISettingsService settingsService, INavigationService navigationService)
         {
             client = new HttpClient();
             serializerSettings = new()
@@ -29,6 +30,8 @@ namespace UcabGo.App.Api.Services
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             }
+
+            this.navigationService = navigationService;
         }
 
         protected async Task<ApiResponse<T>> GetAsync<T>(string url, object query = null)
@@ -51,9 +54,9 @@ namespace UcabGo.App.Api.Services
                 var response = await client.GetAsync(url);
                 return await GeneralResponse<T>(response);
             }
-            catch (HttpRequestException ex)
+            catch
             {
-                ToastNoInternetMessage();
+                await ToastNoInternetMessage();
                 return default;
             }
         }
@@ -66,9 +69,9 @@ namespace UcabGo.App.Api.Services
                 var response = await client.PostAsync(new Uri(url), content);
                 return await GeneralResponse<T>(response);
             }
-            catch (HttpRequestException ex)
+            catch
             {
-                ToastNoInternetMessage();
+                await ToastNoInternetMessage();
                 return default;
             }
         }
@@ -81,9 +84,9 @@ namespace UcabGo.App.Api.Services
                 var response = await client.PutAsync(new Uri(url), content);
                 return await GeneralResponse<T>(response);
             }
-            catch (HttpRequestException ex)
+            catch 
             {
-                ToastNoInternetMessage();
+                await ToastNoInternetMessage();
                 return default;
             }
         }
@@ -94,70 +97,100 @@ namespace UcabGo.App.Api.Services
                 var response = await client.DeleteAsync(new Uri(url));
                 return await GeneralResponse<T>(response);
             }
-            catch (HttpRequestException ex)
+            catch 
             {
-                ToastNoInternetMessage();
+                await ToastNoInternetMessage();
                 return default;
-            }
-        }
-
-        private static void ToastNoInternetMessage()
-        {
-            //Toast error message: "No se pudo conectar con el servidor"
-        }
-        private static void ToastInvalidInput()
-        {
-
-        }
-        private static void ToastMessage(HttpStatusCode code)
-        {
-            switch (code)
-            {
-                case HttpStatusCode.Unauthorized:
-                    //Toast error message: "No tienes permiso para realizar esta acción"
-                    break;
-
-                case HttpStatusCode.Forbidden:
-                    //Toast error message: "No tienes permiso para realizar esta acción"
-                    break;
-
-                case HttpStatusCode.NotFound:
-                    //Toast error message: "No se encontró el recurso"
-                    break;
-
-                case HttpStatusCode.InternalServerError:
-                    //Toast error message: "Error interno del servidor"
-                    break;
-
-                case HttpStatusCode.ServiceUnavailable:
-                    //Toast error message: "Servicio no disponible"
-                    break;
-
-                default:
-                    //Toast error message: "Error desconocido"
-                    break;
             }
         }
         private async Task<ApiResponse<T>> GeneralResponse<T>(HttpResponseMessage response)
         {
             string responseString = await response.Content.ReadAsStringAsync();
 
-            if (!response.IsSuccessStatusCode)
-            {
-                ToastMessage(response.StatusCode);
-            }
-
             if (responseString.Contains("INVALID_INPUT"))
             {
-                ToastInvalidInput();
+                await ToastInvalidInput();
                 return new ApiResponse<T>()
                 {
                     Data = default,
                     Message = "INVALID_INPUT",
                 };
             }
+            else if (!response.IsSuccessStatusCode)
+            {
+                await ToastMessage(response.StatusCode);
+            }
+
 
             return JsonConvert.DeserializeObject<ApiResponse<T>>(responseString, serializerSettings);
+        }
+
+        private async Task ToastNoInternetMessage()
+        {
+            var page = App.Current.MainPage;
+            await page.DisplayAlert("Error", "Parece que no tienes conexión a internet.", "Ok");
+
+            settingsService.AccessToken = string.Empty;
+            await navigationService.RestartSession();
+        }
+        private async Task ToastInvalidInput()
+        {
+            var page = App.Current.MainPage;
+            await page.DisplayAlert("Error", "Los datos ingresados no son válidos", "Ok");
+        }
+        private async Task ToastMessage(HttpStatusCode code)
+        {
+            var page = App.Current.MainPage;
+
+            switch (code)
+            {
+                case HttpStatusCode.Unauthorized:
+                    await page.DisplayAlert(
+                        "Error", 
+                        "Tu sesión ha caducado", 
+                        "Ok");
+
+                    settingsService.AccessToken = string.Empty;
+                    await navigationService.RestartSession();
+                    break;
+
+                case HttpStatusCode.Forbidden:
+                    await page.DisplayAlert(
+                        "Error", 
+                        "No tienes permiso para realizar esta acción", 
+                        "Ok");
+                    break;
+
+                case HttpStatusCode.NotFound:
+                    await page.DisplayAlert(
+                        "Error", 
+                        "No se encontró el recurso solicitado", 
+                        "Ok");
+                    break;
+
+                case HttpStatusCode.InternalServerError:
+                    await page.DisplayAlert(
+                        "Error", 
+                        "Ha ocurrido un error en el servidor. No es tu culpa, intentaremos solucionarlo en el menor tiempo posible.",
+                        "Ok");
+
+                    break;
+
+                case
+                HttpStatusCode.ServiceUnavailable:
+                    await page.DisplayAlert(
+                        "Error", 
+                        "El servidor no está disponible en este momento. Intenta más tarde.", 
+                        "Ok");
+                    break;
+
+                default:
+                    await page.DisplayAlert(
+                        "Error", 
+                        "Ha ocurrido un error inesperado. No es tu culpa, intentaremos solucionarlo en el menor tiempo posible.", 
+                        "Ok");
+                    break;
+            }
         }
     }
 }
