@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="UcabGo.App.Views.MapView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:icon="clr-namespace:UcabGo.App.Utils"
+    xmlns:maps="clr-namespace:Maui.GoogleMaps;assembly=Maui.GoogleMaps"
+    Title="Mapa">
+    <Grid>
+        <!--
+            Initial camara update:
+            Location: UCAB Guayana
+            Latitude: 8.296637
+            Longitude: -62.711752
+            Zoom: 20
+            Rotation: 20
+            Tilt: 10
+        -->
+        <maps:Map
+            x:Name="myMap"
+            InitialCameraUpdate="8.296637, -62.711752, 17, 15, 10"
+            MyLocationEnabled="True"
+            VerticalOptions="FillAndExpand"
+            ZIndex="1" />
+
+        <Button
+            Margin="20,30"
+            FontFamily="IconFont"
+            FontSize="Large"
+            HeightRequest="50"
+            HorizontalOptions="End"
+            Text="{x:Static icon:IconFont.My_location}"
+            VerticalOptions="End"
+            WidthRequest="50"
+            ZIndex="2">
+            <Button.Shadow>
+                <Shadow
+                    Opacity="0.4"
+                    Radius="20"
+                    Offset="2,5" />
+            </Button.Shadow>
+        </Button>
+    </Grid>
+</ContentPage>

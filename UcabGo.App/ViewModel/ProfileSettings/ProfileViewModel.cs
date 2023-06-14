@@ -42,7 +42,7 @@ namespace UcabGo.App.ViewModel
         [RelayCommand]
         async Task MyHouse()
         {
-            //await navigation.NavigateToAsync<MyHomeView>();
+            await navigation.NavigateToAsync<MapView>();
         }
 
         [RelayCommand]

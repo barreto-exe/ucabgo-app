@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net6.0-maccatalyst;net6.0-ios;net6.0-android</TargetFrameworks>
+		<TargetFrameworks>net7.0-ios;net7.0-android</TargetFrameworks>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net6.0-tizen</TargetFrameworks> -->
@@ -125,7 +125,7 @@
 	  <None Remove="Resources\Images\sos.svg" />
 	  <None Remove="Resources\Images\taxi.svg" />
 	  <None Remove="Resources\Images\walker.svg" />
-	  <None Remove="resources\raw\API.txt" />
+	  <None Remove="Resources\Raw\data.json" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -164,6 +164,9 @@
 	  <MauiXaml Update="Views\Documentation\HelpView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Map\MapView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\ProfileSettings\PasswordView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -194,6 +197,18 @@
 	  <MauiXaml Update="Views\ProfileSettings\WalkingDistanceView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-ios'">
+	  <PackageReference Include="Onion.Maui.GoogleMaps">
+	    <Version>5.0.1</Version>
+	  </PackageReference>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-android'">
+	  <PackageReference Include="Onion.Maui.GoogleMaps">
+	    <Version>5.0.1</Version>
+	  </PackageReference>
 	</ItemGroup>
 
 	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionUcabGoAppHideInfoBar="True" /></VisualStudio></ProjectExtensions>

@@ -18,6 +18,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(VehiclesView), typeof(VehiclesView));
         Routing.RegisterRoute(nameof(VehiclesAddView), typeof(VehiclesAddView));
         Routing.RegisterRoute(nameof(WalkingDistanceView), typeof(WalkingDistanceView));
+        Routing.RegisterRoute(nameof(MapView), typeof(MapView));
     }
 
     protected override async void OnParentSet()

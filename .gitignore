@@ -398,3 +398,5 @@ FodyWeavers.xsd
 *.sln.iml
 UcabGo.App/appsettings.json
 UcabGo.App/Resources/Raw/API.txt
+/UcabGo.App/Resources/Raw/data.json
+/UcabGo.App/Platforms/Android/AndroidManifest.xml

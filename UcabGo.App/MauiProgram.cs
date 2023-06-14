@@ -1,4 +1,7 @@
-﻿using UcabGo.App.Api.Interfaces;
+﻿#if !WINDOWS
+    using Maui.GoogleMaps.Hosting;
+#endif
+using UcabGo.App.Api.Interfaces;
 using UcabGo.App.Api.Services;
 using UcabGo.App.Api.Services.SosContacts;
 using UcabGo.App.Api.Services.User;
@@ -8,6 +11,7 @@ using UcabGo.App.Services;
 using UcabGo.App.Services.Navigation;
 using UcabGo.App.Services.Settings;
 using UcabGo.App.Shells;
+using UcabGo.App.Utils;
 using UcabGo.App.ViewModel;
 using UcabGo.App.Views;
 
@@ -20,6 +24,11 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
+#if ANDROID
+            .UseGoogleMaps()
+#elif IOS
+            .UseGoogleMaps(EnviromentVariables.GetValue("GoogleMapsApiKey"))
+#endif
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -32,7 +41,6 @@ public static class MauiProgram
         builder.Services.AddSingleton<IUserApi, UserApi>();
         builder.Services.AddSingleton<ISosContactsApi, SosContactsApi>();
         builder.Services.AddSingleton<IVehiclesApi, VehiclesApi>();
-
 
         //DI Services
         builder.Services.AddSingleton<INavigationService, NavigationService>();
@@ -54,7 +62,6 @@ public static class MauiProgram
         builder.Services.AddSingleton<VehiclesAddViewModel>();
         builder.Services.AddSingleton<WalkingDistanceViewModel>();
 
-
         //DI Views
         builder.Services.AddSingleton<LoginView>();
         builder.Services.AddSingleton<RoleSelectionView>();
@@ -69,12 +76,10 @@ public static class MauiProgram
         builder.Services.AddSingleton<VehiclesView>();
         builder.Services.AddSingleton<VehiclesAddView>();
         builder.Services.AddSingleton<WalkingDistanceView>();
+        builder.Services.AddSingleton<MapView>();
 
         //Setting the API URL
-        using var stream = FileSystem.OpenAppPackageFileAsync("API.txt").Result;
-        using var reader = new StreamReader(stream);
-        var apiUrl = reader.ReadToEnd();
-        ApiRoutes.BASE_URL = apiUrl;
+        ApiRoutes.BASE_URL = EnviromentVariables.GetValue("ApiUrl");
 
         return builder.Build();
     }
