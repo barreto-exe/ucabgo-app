@@ -81,6 +81,19 @@ public static class MauiProgram
         //Setting the API URL
         ApiRoutes.BASE_URL = EnviromentVariables.GetValue("ApiUrl");
 
+
+        //Removes the underline from the Entry
+        Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("NoUnderline", (h, v) =>
+        {
+#if ANDROID
+            h.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
+#endif
+#if WINDOWS
+            h.PlatformView.BorderThickness = new Microsoft.UI.Xaml.Thickness(0,0,0,0);
+#endif
+        });
+
+
         return builder.Build();
     }
 }

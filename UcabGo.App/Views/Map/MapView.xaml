@@ -10,33 +10,90 @@
         <!--
             Initial camara update:
             Location: UCAB Guayana
-            Latitude: 8.296637
+            Latitude: 8.299
             Longitude: -62.711752
-            Zoom: 20
-            Rotation: 20
+            Zoom: 16
+            Rotation: 0
             Tilt: 10
         -->
         <maps:Map
             x:Name="myMap"
-            InitialCameraUpdate="8.296637, -62.711752, 17, 15, 10"
+            InitialCameraUpdate="8.299, -62.711752, 16, 0, 10"
             MyLocationEnabled="True"
             VerticalOptions="FillAndExpand"
             ZIndex="1" />
 
+        <Grid
+            Margin="20"
+            HorizontalOptions="Center"
+            VerticalOptions="Start"
+            ZIndex="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Border Padding="0" BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray300}}">
+                <Border.Shadow>
+                    <Shadow
+                        Opacity="0.8"
+                        Radius="30"
+                        Offset="2,5" />
+                </Border.Shadow>
+                <SearchBar Placeholder="Buscar ubicación" TextColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource Black}}" />
+            </Border>
+
+            <Frame
+                Grid.Row="1"
+                Margin="2"
+                Padding="0">
+                <ListView x:Name="searchResults" BackgroundColor="Transparent">
+                    <ListView.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Item 1</x:String>
+                            <x:String>Item 2</x:String>
+                            <x:String>Item 3</x:String>
+                        </x:Array>
+                    </ListView.ItemsSource>
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray300}}">
+                                    <Label
+                                        Margin="10"
+                                        FontSize="Medium"
+                                        Text="{Binding}"
+                                        TextColor="{AppThemeBinding Dark={StaticResource Black},
+                                                                    Light={StaticResource Black}}" />
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Frame>
+
+        </Grid>
+
+
         <Button
-            Margin="20,30"
+            Margin="20"
+            BackgroundColor="{AppThemeBinding Dark=Black,
+                                              Light={StaticResource Primary}}"
             FontFamily="IconFont"
             FontSize="Large"
             HeightRequest="50"
             HorizontalOptions="End"
             Text="{x:Static icon:IconFont.My_location}"
+            TextColor="{AppThemeBinding Dark=White,
+                                        Light={StaticResource White}}"
             VerticalOptions="End"
             WidthRequest="50"
-            ZIndex="2">
+            ZIndex="3">
             <Button.Shadow>
                 <Shadow
-                    Opacity="0.4"
-                    Radius="20"
+                    Opacity="0.8"
+                    Radius="30"
                     Offset="2,5" />
             </Button.Shadow>
         </Button>
