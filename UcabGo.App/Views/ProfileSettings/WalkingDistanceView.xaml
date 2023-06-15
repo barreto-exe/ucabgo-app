@@ -30,7 +30,9 @@
                     Text="Indica la distancia que estás dispuesto a caminar cuando solicites una cola. Mientras mayor sea, ¡tendrás más chances de recibir una cola!" />
 
                 <Label
-                    Margin="20"
+                    Margin="20,40,20,20"
+                    FontAttributes="Bold"
+                    FontSize="16"
                     HorizontalOptions="CenterAndExpand"
                     HorizontalTextAlignment="Center"
                     Text="{Binding WalkingDistance, StringFormat='Estoy dispuesto a caminar {0} mt.'}" />
@@ -50,9 +52,7 @@
                         Margin="20"
                         DragCompletedCommand="{Binding ValueUpdatedCommand}"
                         Maximum="800"
-                        MaximumTrackColor="{StaticResource Primary}"
                         Minimum="1"
-                        MinimumTrackColor="White"
                         VerticalOptions="Center"
                         Value="{Binding WalkingDistance}" />
                     <Label

@@ -13,6 +13,10 @@
         </Grid.RowDefinitions>
         <ScrollView Grid.Row="0" VerticalOptions="Start">
             <VerticalStackLayout Margin="20" Spacing="25">
+                <Label Margin="0,0,0,-20" Text="Placa:" />
+                <Border>
+                    <Entry Placeholder="ABC123" Text="{Binding PlateEntry}" />
+                </Border>
                 <Label Margin="0,0,0,-20" Text="Marca:" />
                 <Border>
                     <Entry Placeholder="Chevrolet" Text="{Binding BrandEntry}" />
@@ -20,10 +24,6 @@
                 <Label Margin="0,0,0,-20" Text="Modelo:" />
                 <Border>
                     <Entry Placeholder="Spark" Text="{Binding ModelEntry}" />
-                </Border>
-                <Label Margin="0,0,0,-20" Text="Placa:" />
-                <Border>
-                    <Entry Placeholder="ABC123" Text="{Binding PlateEntry}" />
                 </Border>
                 <Label Margin="0,0,0,-20" Text="Color:" />
                 <Border>

@@ -28,19 +28,19 @@
             HorizontalOptions="Center"
             VerticalOptions="Start"
             ZIndex="2">
+            <Grid.Shadow>
+                <Shadow
+                    Opacity="0.8"
+                    Radius="30"
+                    Offset="2,5" />
+            </Grid.Shadow>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <Border Padding="0" BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray300}}">
-                <Border.Shadow>
-                    <Shadow
-                        Opacity="0.8"
-                        Radius="30"
-                        Offset="2,5" />
-                </Border.Shadow>
-                <SearchBar Placeholder="Buscar ubicación" TextColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource Black}}" />
+            <Border Padding="0" BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
+                <SearchBar Placeholder="Buscar ubicación" TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}" />
             </Border>
 
             <Frame
@@ -59,12 +59,12 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Grid BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray300}}">
+                                <Grid BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
                                     <Label
                                         Margin="10"
                                         FontSize="Medium"
                                         Text="{Binding}"
-                                        TextColor="{AppThemeBinding Dark={StaticResource Black},
+                                        TextColor="{AppThemeBinding Dark={StaticResource White},
                                                                     Light={StaticResource Black}}" />
                                 </Grid>
                             </ViewCell>
@@ -78,7 +78,7 @@
 
         <Button
             Margin="20"
-            BackgroundColor="{AppThemeBinding Dark=Black,
+            BackgroundColor="{AppThemeBinding Dark={StaticResource Primary},
                                               Light={StaticResource Primary}}"
             FontFamily="IconFont"
             FontSize="Large"
