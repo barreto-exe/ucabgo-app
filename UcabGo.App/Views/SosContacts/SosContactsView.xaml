@@ -8,7 +8,6 @@
     xmlns:viewmodel="clr-namespace:UcabGo.App.ViewModel"
     Title="Contactos SOS"
     x:DataType="viewmodel:SosContactsViewModel">
-    <!--  A crud with a modal panel to add a new contact with a swipe item for delete  -->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -46,14 +45,32 @@
                         <DataTemplate x:DataType="model:SosContact">
                             <Frame Margin="0,10">
                                 <VerticalStackLayout Margin="1">
-                                    <VerticalStackLayout Margin="5">
-                                        <Label
-                                            FontAttributes="Bold"
-                                            FontSize="Medium"
-                                            Text="{Binding Name}"
-                                            VerticalOptions="Center" />
-                                        <Label Text="{Binding Phone}" VerticalOptions="Center" />
-                                    </VerticalStackLayout>
+
+                                    <HorizontalStackLayout>
+                                        <Frame
+                                            Padding="0"
+                                            BackgroundColor="{StaticResource Secondary}"
+                                            CornerRadius="100"
+                                            HeightRequest="60"
+                                            WidthRequest="60">
+                                            <Label
+                                                FontFamily="IconFont"
+                                                FontSize="30"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding Initial}"
+                                                TextColor="White"
+                                                VerticalOptions="Center" />
+                                        </Frame>
+
+                                        <VerticalStackLayout Margin="15" VerticalOptions="Center">
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="Medium"
+                                                Text="{Binding Name}"
+                                                VerticalOptions="Center" />
+                                            <Label Text="{Binding Phone}" VerticalOptions="Center" />
+                                        </VerticalStackLayout>
+                                    </HorizontalStackLayout>
 
                                     <HorizontalStackLayout HorizontalOptions="End">
                                         <Button

@@ -2,8 +2,10 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Maui.GoogleMaps;
 using System.Collections.ObjectModel;
+using UcabGo.App.Api.Services.Destinations;
 using UcabGo.App.Api.Services.GoogleMaps;
 using UcabGo.App.Api.Services.Locations;
+using UcabGo.App.Api.Tools;
 using UcabGo.App.Models;
 using UcabGo.App.Services;
 using Location = Microsoft.Maui.Devices.Sensors.Location;
@@ -15,6 +17,9 @@ namespace UcabGo.App.ViewModel
     {
         readonly IGoogleMapsApi mapsService;
         readonly ILocationsApiService locationsApiService;
+        readonly IDestinationsService destinationsService;
+
+        readonly Position campusPosition = new(8.299886d, -62.712464d);
 
         Map map;
         public Map Map 
@@ -26,7 +31,7 @@ namespace UcabGo.App.ViewModel
                 map.MapClicked += Map_MapClicked;
 
                 DrawCampus();
-                SetMapOnCampus();
+                MoveCameraToCampus();
             }
         }
         SearchBar searchBar;
@@ -59,10 +64,11 @@ namespace UcabGo.App.ViewModel
 
         Pin pin;
 
-        public MapViewModel(ISettingsService settingsService, INavigationService navigation, IGoogleMapsApi mapsService, ILocationsApiService locationsApiService) : base(settingsService, navigation)
+        public MapViewModel(ISettingsService settingsService, INavigationService navigation, IGoogleMapsApi mapsService, ILocationsApiService locationsApiService, IDestinationsService destinationsService) : base(settingsService, navigation)
         {
             this.mapsService = mapsService; 
             this.locationsApiService = locationsApiService;
+            this.destinationsService = destinationsService;
             this.searchResults = new();
         }
         public override void OnAppearing()
@@ -86,12 +92,11 @@ namespace UcabGo.App.ViewModel
             }
             else
             {
-                SetMapOnCampus();
+                MoveCameraToCampus();
             }
         }
 
 
-        //Events
         private void Map_MapClicked(object sender, MapClickedEventArgs e)
         {
             pin = new Pin
@@ -233,14 +238,23 @@ namespace UcabGo.App.ViewModel
             {
                 Latitude = pin.Position.Latitude,
                 Longitude = pin.Position.Longitude,
+                Alias = "Casa",
                 Zone = zone,
                 Detail = detail,
             };
 
-            var response = await locationsApiService.PostUserHome(location);
-            if (response.Message == "HOME_UPDATED")
+            var taskMyHome = locationsApiService.PostUserHome(location);
+            var taskDriverDestination = destinationsService.AddDriverDestination(location);
+            
+            var responses = await Task.WhenAll(taskMyHome, taskDriverDestination);
+
+            var myHomeResponse = responses[0];
+            var driverDestinationResponse = responses[1];
+
+            if (myHomeResponse.Message == "HOME_UPDATED" && 
+                driverDestinationResponse.Message == "DESTINATION_CREATED")
             {
-                settings.Home = response.Data;
+                settings.Home = myHomeResponse.Data;
                 await Application.Current.MainPage.DisplayAlert("Éxito", "Ubicación guardada", "Aceptar");
                 await navigation.GoBackAsync();
             }
@@ -253,6 +267,10 @@ namespace UcabGo.App.ViewModel
             IsButtonEnabled = true;
         }
 
+        private void MoveCameraToCampus()
+        {
+            map.MoveToRegion(MapSpan.FromCenterAndRadius(campusPosition, Distance.FromKilometers(0.5)));
+        }
         private void SetMapOnCampus()
         {
             pin = new()
@@ -306,24 +324,6 @@ namespace UcabGo.App.ViewModel
         }
         private void DrawCampus()
         {
-            //The coordinates of the campus are:
-            //8.295203, -62.712272
-            //8.297396, -62.709854
-            //8.298067, -62.709864
-            //8.298469, -62.709638
-            //8.298696, -62.709724
-            //8.299402, -62.710098
-            //8.300754, -62.710833
-            //8.301193, -62.709328
-            //8.302388, -62.709542
-            //8.301965, -62.710951
-            //8.301633, -62.711809
-            //8.301132, -62.712760
-            //8.300564, -62.712958
-            //8.299417, -62.713092
-            //8.299067, -62.713178
-            //8.296013, -62.713944
-
             var polygon = new Polygon();
             polygon.Positions.Add(new Position(8.295203d, -62.712272d));
             polygon.Positions.Add(new Position(8.297396d, -62.709854d));
@@ -346,11 +346,18 @@ namespace UcabGo.App.ViewModel
             polygon.StrokeColor = color;
             polygon.StrokeWidth = 3f;
 
-            //Fill color the same green with 50% transparency
             polygon.FillColor = Color.FromRgba(0, 97, 37, 0.1);
+
+            polygon.IsClickable = true;
+            polygon.Clicked += async (sender, e) =>
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "No puedes seleccionar el campus como ubicación.", "Aceptar");
+                map.Pins.Clear();
+            };
 
             map.Polygons.Add(polygon);
         }
+
         private void SetPinOnMap(Pin pin)
         {
             map.Pins.Clear();

@@ -119,6 +119,7 @@
 	  <None Remove="Resources\Fonts\MaterialIcons-Regular.ttf" />
 	  <None Remove="Resources\Images\add_car.svg" />
 	  <None Remove="Resources\Images\car_side.svg" />
+	  <None Remove="Resources\Images\choose_gps.svg" />
 	  <None Remove="Resources\Images\driver.svg" />
 	  <None Remove="Resources\Images\logout_white_24dp.svg" />
 	  <None Remove="Resources\Images\order_ride.svg" />
@@ -140,6 +141,9 @@
 	  <Compile Update="Shells\SessionShell.xaml.cs">
 	    <DependentUpon>SessionShell.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\DestinationAddView.xaml.cs">
+	    <DependentUpon>DestinationAddView.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\Documentation\HelpView.xaml.cs">
 	    <DependentUpon>HelpView.xaml</DependentUpon>
 	  </Compile>
@@ -158,13 +162,19 @@
 	  <MauiXaml Update="Shells\SessionShell.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\DestinationAddView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\GiveRide\DestinationsListView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Documentation\AboutView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Documentation\HelpView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Map\MapView.xaml">
+	  <MauiXaml Update="Views\ProfileSettings\MapView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ProfileSettings\PasswordView.xaml">

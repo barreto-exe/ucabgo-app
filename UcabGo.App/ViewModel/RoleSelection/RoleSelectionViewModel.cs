@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.Input;
 using UcabGo.App.Services;
+using UcabGo.App.Views;
 
 namespace UcabGo.App.ViewModel
 {
@@ -9,6 +10,12 @@ namespace UcabGo.App.ViewModel
             ISettingsService settingsService, INavigationService navigationService) : base(settingsService, navigationService)
         {
             ValidateToken().Wait();
+        }
+
+        [RelayCommand]
+        async Task Driver()
+        {
+            await navigation.NavigateToAsync<DestinationsListView>();
         }
 
         [RelayCommand]

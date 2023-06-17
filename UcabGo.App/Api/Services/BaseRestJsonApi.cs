@@ -176,6 +176,9 @@ namespace UcabGo.App.Api.Services
 
             switch (code)
             {
+                case HttpStatusCode.BadRequest:
+                    break;
+
                 case HttpStatusCode.Unauthorized:
                     await page.DisplayAlert(
                         "Error", 
