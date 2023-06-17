@@ -24,7 +24,7 @@ namespace UcabGo.App.Api.Services
             };
             this.settingsService = settingsService;
             this.navigationService = navigationService;
-            
+
             RefreshToken();
         }
 
@@ -78,7 +78,7 @@ namespace UcabGo.App.Api.Services
                 queryString.Append('?');
                 foreach (var property in properties)
                 {
-                    if(property != null && property.GetValue(query) != null)
+                    if (property != null && property.GetValue(query) != null)
                     {
                         queryString.Append($"{property.Name.ToLower()}={property.GetValue(query)}&");
                     }
@@ -115,7 +115,7 @@ namespace UcabGo.App.Api.Services
                 var response = await client.PutAsync(new Uri(url), content);
                 return await GeneralResponse<T>(response);
             }
-            catch 
+            catch
             {
                 await ToastNoInternetMessage();
                 return default;
@@ -129,7 +129,7 @@ namespace UcabGo.App.Api.Services
                 var response = await client.DeleteAsync(new Uri(url));
                 return await GeneralResponse<T>(response);
             }
-            catch 
+            catch
             {
                 await ToastNoInternetMessage();
                 return default;
@@ -181,8 +181,8 @@ namespace UcabGo.App.Api.Services
 
                 case HttpStatusCode.Unauthorized:
                     await page.DisplayAlert(
-                        "Error", 
-                        "Tu sesión ha caducado", 
+                        "Error",
+                        "Tu sesión ha caducado",
                         "Aceptar");
 
                     settingsService.AccessToken = string.Empty;
@@ -191,21 +191,21 @@ namespace UcabGo.App.Api.Services
 
                 case HttpStatusCode.Forbidden:
                     await page.DisplayAlert(
-                        "Error", 
-                        "No tienes permiso para realizar esta acción", 
+                        "Error",
+                        "No tienes permiso para realizar esta acción",
                         "Aceptar");
                     break;
 
                 case HttpStatusCode.NotFound:
                     await page.DisplayAlert(
-                        "Error", 
-                        "No se encontró el recurso solicitado", 
+                        "Error",
+                        "No se encontró el recurso solicitado",
                         "Aceptar");
                     break;
 
                 case HttpStatusCode.InternalServerError:
                     await page.DisplayAlert(
-                        "Error", 
+                        "Error",
                         "Ha ocurrido un error en el servidor. No es tu culpa, intentaremos solucionarlo en el menor tiempo posible.",
                         "Aceptar");
 
@@ -214,15 +214,15 @@ namespace UcabGo.App.Api.Services
                 case
                 HttpStatusCode.ServiceUnavailable:
                     await page.DisplayAlert(
-                        "Error", 
-                        "El servidor no está disponible en este momento. Intenta más tarde.", 
+                        "Error",
+                        "El servidor no está disponible en este momento. Intenta más tarde.",
                         "Aceptar");
                     break;
 
                 default:
                     await page.DisplayAlert(
-                        "Error", 
-                        "Ha ocurrido un error inesperado. No es tu culpa, intentaremos solucionarlo en el menor tiempo posible.", 
+                        "Error",
+                        "Ha ocurrido un error inesperado. No es tu culpa, intentaremos solucionarlo en el menor tiempo posible.",
                         "Aceptar");
                     break;
             }

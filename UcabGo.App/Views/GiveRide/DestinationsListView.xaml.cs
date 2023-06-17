@@ -4,15 +4,15 @@ namespace UcabGo.App.Views;
 
 public partial class DestinationsListView : ContentPage
 {
-	public DestinationsListView(DestinationsListViewModel viewModel)
-	{
-		InitializeComponent();
+    public DestinationsListView(DestinationsListViewModel viewModel)
+    {
+        InitializeComponent();
 
-		BindingContext = viewModel;
-	}
+        BindingContext = viewModel;
+    }
 
-	protected override void OnAppearing()
-	{
+    protected override void OnAppearing()
+    {
         base.OnAppearing();
         (BindingContext as DestinationsListViewModel)?.OnAppearing();
     }

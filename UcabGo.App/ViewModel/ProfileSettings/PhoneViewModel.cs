@@ -1,6 +1,5 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Text.RegularExpressions;
 using UcabGo.App.Api.Services.User;
 using UcabGo.App.Services;
 using UcabGo.App.Utils;

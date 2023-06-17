@@ -6,8 +6,8 @@ namespace UcabGo.App.Api.Services.Destinations
     public interface IDestinationsService
     {
         Task<ApiResponse<IEnumerable<Location>>> GetDriverDestinations();
-        Task<ApiResponse<Location>>AddDriverDestination(Location location);
-        Task<ApiResponse<Location>>UpdateDriverDestination(Location location);
-        Task<ApiResponse<Location>>DeleteDriverDestination(Location location);
+        Task<ApiResponse<Location>> AddDriverDestination(Location location);
+        Task<ApiResponse<Location>> UpdateDriverDestination(Location location);
+        Task<ApiResponse<Location>> DeleteDriverDestination(Location location);
     }
 }

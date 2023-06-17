@@ -21,7 +21,7 @@ public class GoogleMapsApi : BaseRestJsonApi, IGoogleMapsApi
         };
         dynamic response = await GeneralGetAsync(ApiRoutes.GOOGLE_MAPS_GEOCODE_URL, input);
 
-        if(response.ToString().Contains("REQUEST_DENIED"))
+        if (response.ToString().Contains("REQUEST_DENIED"))
         {
             return null;
         }
@@ -52,8 +52,8 @@ public class GoogleMapsApi : BaseRestJsonApi, IGoogleMapsApi
 
             string name = component.long_name.ToString();
 
-            if (types.Any(t => excludedComponents.Contains(t)) || 
-                name.Length <= 3 || 
+            if (types.Any(t => excludedComponents.Contains(t)) ||
+                name.Length <= 3 ||
                 name.Contains('+')) continue;
 
             resultComponents.Add(component.long_name.ToString());

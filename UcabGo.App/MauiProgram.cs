@@ -7,7 +7,6 @@ using UcabGo.App.Api.Services.Locations;
 using UcabGo.App.Api.Services.SosContacts;
 using UcabGo.App.Api.Services.User;
 using UcabGo.App.Api.Services.Vehicles;
-using UcabGo.App.Api.Tools;
 using UcabGo.App.Services;
 using UcabGo.App.Services.Navigation;
 using UcabGo.App.Services.Settings;

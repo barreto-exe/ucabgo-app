@@ -2,7 +2,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using UcabGo.App.Api.Services.Destinations;
-using UcabGo.App.Models;
 using UcabGo.App.Services;
 using Location = UcabGo.App.Models.Location;
 

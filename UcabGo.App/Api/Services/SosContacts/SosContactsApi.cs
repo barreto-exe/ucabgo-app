@@ -5,7 +5,7 @@ using UcabGo.App.Services;
 namespace UcabGo.App.Api.Services.SosContacts
 {
     public class SosContactsApi : BaseRestJsonApi, ISosContactsApi
-    { 
+    {
         public SosContactsApi(ISettingsService settingsService, INavigationService navigationService) : base(settingsService, navigationService)
         {
         }

@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UcabGo.App.Api.Tools;
 using UcabGo.App.Services;
 using Location = UcabGo.App.Models.Location;

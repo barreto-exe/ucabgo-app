@@ -5,8 +5,6 @@ using System.Collections.ObjectModel;
 using UcabGo.App.Api.Services.Destinations;
 using UcabGo.App.Api.Services.GoogleMaps;
 using UcabGo.App.Api.Services.Locations;
-using UcabGo.App.Api.Tools;
-using UcabGo.App.Models;
 using UcabGo.App.Services;
 using Location = Microsoft.Maui.Devices.Sensors.Location;
 using Map = Maui.GoogleMaps.Map;
@@ -22,8 +20,8 @@ namespace UcabGo.App.ViewModel
         readonly Position campusPosition = new(8.299886d, -62.712464d);
 
         Map map;
-        public Map Map 
-        { 
+        public Map Map
+        {
             set
             {
                 map = value;
@@ -66,7 +64,7 @@ namespace UcabGo.App.ViewModel
 
         public MapViewModel(ISettingsService settingsService, INavigationService navigation, IGoogleMapsApi mapsService, ILocationsApiService locationsApiService, IDestinationsService destinationsService) : base(settingsService, navigation)
         {
-            this.mapsService = mapsService; 
+            this.mapsService = mapsService;
             this.locationsApiService = locationsApiService;
             this.destinationsService = destinationsService;
             this.searchResults = new();
@@ -80,12 +78,12 @@ namespace UcabGo.App.ViewModel
             ButtonText = "Guardar";
             IsButtonEnabled = true;
 
-            if(settings.Home != null)
+            if (settings.Home != null)
             {
-                map.InitialCameraUpdate = 
+                map.InitialCameraUpdate =
                     CameraUpdateFactory
                     .NewPositionZoom(
-                        new Position(settings.Home.Latitude, settings.Home.Longitude), 
+                        new Position(settings.Home.Latitude, settings.Home.Longitude),
                         16);
 
                 SetMapOnHome();
@@ -140,7 +138,7 @@ namespace UcabGo.App.ViewModel
                 Longitude = currentLocation?.Longitude,
             });
 
-            if(results != null)
+            if (results != null)
             {
                 SearchResults = new(results.Take(3));
             }
@@ -191,16 +189,16 @@ namespace UcabGo.App.ViewModel
             string zone = "";
             if (geocode.Components.Count() > 1)
             {
-                zone = 
+                zone =
                     await Application.Current.MainPage
                     .DisplayActionSheet(
                         "Indica la zona de tu destino",
-                        "Cancelar", 
-                        null, 
+                        "Cancelar",
+                        null,
                         opciones);
             }
 
-            if(zone == "Otro..." || string.IsNullOrEmpty(zone))
+            if (zone == "Otro..." || string.IsNullOrEmpty(zone))
             {
                 zone = await Application.Current.MainPage
                     .DisplayPromptAsync(
@@ -245,13 +243,13 @@ namespace UcabGo.App.ViewModel
 
             var taskMyHome = locationsApiService.PostUserHome(location);
             var taskDriverDestination = destinationsService.AddDriverDestination(location);
-            
+
             var responses = await Task.WhenAll(taskMyHome, taskDriverDestination);
 
             var myHomeResponse = responses[0];
             var driverDestinationResponse = responses[1];
 
-            if (myHomeResponse.Message == "HOME_UPDATED" && 
+            if (myHomeResponse.Message == "HOME_UPDATED" &&
                 driverDestinationResponse.Message == "DESTINATION_CREATED")
             {
                 settings.Home = myHomeResponse.Data;
