@@ -5,7 +5,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:icon="clr-namespace:UcabGo.App.Utils"
     xmlns:maps="clr-namespace:Maui.GoogleMaps;assembly=Maui.GoogleMaps"
-    Title="Mapa">
+    xmlns:model="clr-namespace:UcabGo.App.Api.Services.GoogleMaps"
+    xmlns:viewModel="clr-namespace:UcabGo.App.ViewModel"
+    Title="Seleccionar dirección"
+    x:DataType="viewModel:MapViewModel">
     <Grid>
         <!--
             Initial camara update:
@@ -16,12 +19,40 @@
             Rotation: 0
             Tilt: 10
         -->
-        <maps:Map
-            x:Name="myMap"
-            InitialCameraUpdate="8.299, -62.711752, 16, 0, 10"
-            MyLocationEnabled="True"
-            VerticalOptions="FillAndExpand"
-            ZIndex="1" />
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <maps:Map
+                x:Name="myMap"
+                MyLocationEnabled="True"
+                VerticalOptions="FillAndExpand"
+                ZIndex="1" />
+
+            <Grid Grid.Row="1" Margin="20,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    Grid.Column="0"
+                    Margin="5"
+                    BackgroundColor="Transparent"
+                    Command="{Binding CancelCommand}"
+                    HeightRequest="50"
+                    Text="Cancelar"
+                    TextColor="{StaticResource Primary}" />
+                <Button
+                    Grid.Column="1"
+                    Margin="5"
+                    Command="{Binding SaveCommand}"
+                    HeightRequest="50"
+                    IsEnabled="{Binding IsButtonEnabled}"
+                    Text="{Binding ButtonText}" />
+            </Grid>
+        </Grid>
+
 
         <Grid
             Margin="20"
@@ -40,46 +71,60 @@
             </Grid.RowDefinitions>
 
             <Border Padding="0" BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
-                <SearchBar Placeholder="Buscar ubicación" TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}" />
+                <SearchBar
+                    x:Name="searchBar"
+                    Placeholder="Buscar ubicación"
+                    SearchCommand="{Binding PerformSearchCommand}"
+                    SearchCommandParameter="{Binding SearchQuery}"
+                    Text="{Binding SearchQuery}"
+                    TextColor="{AppThemeBinding Dark={StaticResource White},
+                                                Light={StaticResource Black}}" />
             </Border>
 
             <Frame
                 Grid.Row="1"
                 Margin="2"
-                Padding="0">
-                <ListView x:Name="searchResults" BackgroundColor="Transparent">
-                    <ListView.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Item 1</x:String>
-                            <x:String>Item 2</x:String>
-                            <x:String>Item 3</x:String>
-                        </x:Array>
-                    </ListView.ItemsSource>
-
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <Grid BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
-                                    <Label
-                                        Margin="10"
-                                        FontSize="Medium"
-                                        Text="{Binding}"
-                                        TextColor="{AppThemeBinding Dark={StaticResource White},
-                                                                    Light={StaticResource Black}}" />
-                                </Grid>
-                            </ViewCell>
+                Padding="0"
+                IsVisible="{Binding IsResultsVisible}">
+                <CollectionView
+                    x:Name="searchResults"
+                    BackgroundColor="Transparent"
+                    ItemsSource="{Binding SearchResults}"
+                    SelectedItem="{Binding SelectedResult}"
+                    SelectionChangedCommand="{Binding PerformSelectionCommand}"
+                    SelectionMode="Single">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:PlaceDto">
+                            <VerticalStackLayout
+                                Padding="10"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource White},
+                                                                  Dark={StaticResource Black}}"
+                                VerticalOptions="CenterAndExpand">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="Small"
+                                    Text="{Binding Name}"
+                                    TextColor="{AppThemeBinding Dark={StaticResource White},
+                                                                Light={StaticResource Black}}" />
+                                <Label
+                                    FontSize="12"
+                                    Text="{Binding Address}"
+                                    TextColor="{AppThemeBinding Dark={StaticResource White},
+                                                                Light={StaticResource Black}}" />
+                            </VerticalStackLayout>
                         </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </Frame>
 
         </Grid>
 
 
         <Button
-            Margin="20"
+            Margin="25,80"
             BackgroundColor="{AppThemeBinding Dark={StaticResource Primary},
                                               Light={StaticResource Primary}}"
+            Command="{Binding GoToCurrentLocationCommand}"
             FontFamily="IconFont"
             FontSize="Large"
             HeightRequest="50"

@@ -1,8 +1,8 @@
-﻿#if !WINDOWS
-    using Maui.GoogleMaps.Hosting;
-#endif
+﻿using Maui.GoogleMaps.Hosting;
 using UcabGo.App.Api.Interfaces;
 using UcabGo.App.Api.Services;
+using UcabGo.App.Api.Services.GoogleMaps;
+using UcabGo.App.Api.Services.Locations;
 using UcabGo.App.Api.Services.SosContacts;
 using UcabGo.App.Api.Services.User;
 using UcabGo.App.Api.Services.Vehicles;
@@ -41,6 +41,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<IUserApi, UserApi>();
         builder.Services.AddSingleton<ISosContactsApi, SosContactsApi>();
         builder.Services.AddSingleton<IVehiclesApi, VehiclesApi>();
+        builder.Services.AddSingleton<IGoogleMapsApi, GoogleMapsApi>();
+        builder.Services.AddSingleton<ILocationsApiService, LocationsApiService>();
 
         //DI Services
         builder.Services.AddSingleton<INavigationService, NavigationService>();
@@ -61,6 +63,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<VehiclesViewModel>();
         builder.Services.AddSingleton<VehiclesAddViewModel>();
         builder.Services.AddSingleton<WalkingDistanceViewModel>();
+        builder.Services.AddSingleton<MapViewModel>();
 
         //DI Views
         builder.Services.AddSingleton<LoginView>();
@@ -77,10 +80,6 @@ public static class MauiProgram
         builder.Services.AddSingleton<VehiclesAddView>();
         builder.Services.AddSingleton<WalkingDistanceView>();
         builder.Services.AddSingleton<MapView>();
-
-        //Setting the API URL
-        ApiRoutes.BASE_URL = EnviromentVariables.GetValue("ApiUrl");
-
 
         //Removes the underline from the Entry
         Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("NoUnderline", (h, v) =>

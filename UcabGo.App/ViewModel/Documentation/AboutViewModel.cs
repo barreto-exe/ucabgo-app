@@ -1,4 +1,4 @@
-namespace UcabGo.App.ViewModel.Documentation
+namespace UcabGo.App.ViewModel
 {
     public class AboutViewModel
     {

@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using UcabGo.App.Api.Models;
+using Location = UcabGo.App.Models.Location;
 
 namespace UcabGo.App.Services.Settings
 {
@@ -8,6 +9,7 @@ namespace UcabGo.App.Services.Settings
         //Default values for settings
         private readonly string AccessTokenDefault = string.Empty;
         private readonly User UserDefault = null;
+        private readonly Location HomeDefault = null;
 
         //Getters and setters for settings
         public string AccessToken
@@ -21,6 +23,11 @@ namespace UcabGo.App.Services.Settings
             set => SetValue(nameof(User), value);
         }
         public bool IsLoggedIn => !string.IsNullOrWhiteSpace(AccessToken);
+        public Location Home
+        {
+            get => GetValueOrDefault(nameof(Home), HomeDefault);
+            set => SetValue(nameof(Home), value);
+        }
 
         //Methods for settings
         public void SetValue(string key, object value)

@@ -39,18 +39,7 @@ namespace UcabGo.App.Api.Services
 
         protected async Task<ApiResponse<T>> GetAsync<T>(string url, object query = null)
         {
-            //Add query parameters to url with object reflection
-            if (query != null)
-            {
-                var properties = query.GetType().GetProperties();
-                var queryString = new StringBuilder();
-                queryString.Append('?');
-                foreach (var property in properties)
-                {
-                    queryString.Append($"{property.Name}={property.GetValue(query)}&");
-                }
-                url += queryString.ToString().TrimEnd('&');
-            }
+            url = AppendQueryFilters(url, query);
 
             try
             {
@@ -64,6 +53,42 @@ namespace UcabGo.App.Api.Services
                 return default;
             }
         }
+        protected async Task<object> GeneralGetAsync(string url, object query = null)
+        {
+            url = AppendQueryFilters(url, query);
+            try
+            {
+                var response = await client.GetAsync(url);
+                string responseString = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject(responseString, serializerSettings);
+            }
+            catch
+            {
+                await ToastNoInternetMessage();
+                return default;
+            }
+        }
+        private static string AppendQueryFilters(string url, object query)
+        {
+            //Add query parameters to url with object reflection
+            if (query != null)
+            {
+                var properties = query.GetType().GetProperties();
+                var queryString = new StringBuilder();
+                queryString.Append('?');
+                foreach (var property in properties)
+                {
+                    if(property != null && property.GetValue(query) != null)
+                    {
+                        queryString.Append($"{property.Name.ToLower()}={property.GetValue(query)}&");
+                    }
+                }
+                url += queryString.ToString().TrimEnd('&');
+            }
+
+            return url;
+        }
+
         protected async Task<ApiResponse<T>> PostAsync<T>(string url, object data)
         {
             var json = JsonConvert.SerializeObject(data, serializerSettings);
@@ -135,7 +160,7 @@ namespace UcabGo.App.Api.Services
         private async Task ToastNoInternetMessage()
         {
             var page = App.Current.MainPage;
-            await page.DisplayAlert("Error", "Parece que no tienes conexión a internet.", "Ok");
+            await page.DisplayAlert("Error", "Parece que no tienes conexión a internet.", "Aceptar");
 
             settingsService.AccessToken = string.Empty;
             await navigationService.RestartSession();
@@ -143,7 +168,7 @@ namespace UcabGo.App.Api.Services
         private async Task ToastInvalidInput()
         {
             var page = App.Current.MainPage;
-            await page.DisplayAlert("Error", "Los datos ingresados no son válidos", "Ok");
+            await page.DisplayAlert("Error", "Los datos ingresados no son válidos", "Aceptar");
         }
         private async Task ToastMessage(HttpStatusCode code)
         {
@@ -155,7 +180,7 @@ namespace UcabGo.App.Api.Services
                     await page.DisplayAlert(
                         "Error", 
                         "Tu sesión ha caducado", 
-                        "Ok");
+                        "Aceptar");
 
                     settingsService.AccessToken = string.Empty;
                     await navigationService.RestartSession();
@@ -165,21 +190,21 @@ namespace UcabGo.App.Api.Services
                     await page.DisplayAlert(
                         "Error", 
                         "No tienes permiso para realizar esta acción", 
-                        "Ok");
+                        "Aceptar");
                     break;
 
                 case HttpStatusCode.NotFound:
                     await page.DisplayAlert(
                         "Error", 
                         "No se encontró el recurso solicitado", 
-                        "Ok");
+                        "Aceptar");
                     break;
 
                 case HttpStatusCode.InternalServerError:
                     await page.DisplayAlert(
                         "Error", 
                         "Ha ocurrido un error en el servidor. No es tu culpa, intentaremos solucionarlo en el menor tiempo posible.",
-                        "Ok");
+                        "Aceptar");
 
                     break;
 
@@ -188,14 +213,14 @@ namespace UcabGo.App.Api.Services
                     await page.DisplayAlert(
                         "Error", 
                         "El servidor no está disponible en este momento. Intenta más tarde.", 
-                        "Ok");
+                        "Aceptar");
                     break;
 
                 default:
                     await page.DisplayAlert(
                         "Error", 
                         "Ha ocurrido un error inesperado. No es tu culpa, intentaremos solucionarlo en el menor tiempo posible.", 
-                        "Ok");
+                        "Aceptar");
                     break;
             }
         }

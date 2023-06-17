@@ -117,7 +117,7 @@ namespace UcabGo.App.ViewModel
                 await Application.Current.MainPage.DisplayAlert(
                     "Error",
                     "No se pudo encontrar el contacto de emergencia",
-                    "Ok");
+                    "Aceptar");
                 await navigation.GoBackAsync();
             }
         }

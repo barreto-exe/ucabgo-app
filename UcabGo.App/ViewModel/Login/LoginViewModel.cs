@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using System.Text.RegularExpressions;
 using UcabGo.App.Api.Interfaces;
+using UcabGo.App.Api.Services.Locations;
 using UcabGo.App.Services;
 
 namespace UcabGo.App.ViewModel;
@@ -9,6 +10,7 @@ namespace UcabGo.App.ViewModel;
 public partial class LoginViewModel : ViewModelBase
 {
     readonly IAuthApi authService;
+    readonly ILocationsApiService locationsApiService;
 
     [ObservableProperty]
     string email;
@@ -30,10 +32,13 @@ public partial class LoginViewModel : ViewModelBase
 
     public LoginViewModel(
         IAuthApi authService,
+        ILocationsApiService locationsApiService,
         ISettingsService settingsService,
         INavigationService navigationService) : base(settingsService, navigationService)
     {
         this.authService = authService;
+        this.locationsApiService = locationsApiService;
+
         isEnabled = true;
 
 #if DEBUG
@@ -61,6 +66,9 @@ public partial class LoginViewModel : ViewModelBase
         {
             settings.User = loginData.User;
             settings.AccessToken = loginData.Token;
+
+            var homeLocation = (await locationsApiService.GetUserHome()).Data;
+            settings.Home = homeLocation;
 
             await navigation.RestartSession();
         }
