@@ -42,7 +42,20 @@ namespace UcabGo.App.ViewModel
         [RelayCommand]
         async Task MyHouse()
         {
-            await navigation.NavigateToAsync<MapView>();
+            var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+            if (status != PermissionStatus.Granted)
+            {
+                status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+            }
+
+            if (status == PermissionStatus.Granted)
+            {
+                await navigation.NavigateToAsync<MapView>();
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Es necesario que aceptes los permisos de ubicación para poder continuar", "Aceptar");
+            }
         }
 
         [RelayCommand]
