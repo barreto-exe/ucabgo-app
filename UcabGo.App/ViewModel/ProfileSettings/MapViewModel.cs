@@ -6,7 +6,7 @@ using UcabGo.App.Api.Services.Destinations;
 using UcabGo.App.Api.Services.GoogleMaps;
 using UcabGo.App.Api.Services.Locations;
 using UcabGo.App.Services;
-using Location = Microsoft.Maui.Devices.Sensors.Location;
+using UcabGo.App.Utils;
 using Map = Maui.GoogleMaps.Map;
 
 namespace UcabGo.App.ViewModel
@@ -17,7 +17,18 @@ namespace UcabGo.App.ViewModel
         readonly ILocationsApiService locationsApiService;
         readonly IDestinationsService destinationsService;
 
-        readonly Position campusPosition = new(8.299886d, -62.712464d);
+        [ObservableProperty]
+        string searchQuery;
+        [ObservableProperty]
+        ObservableCollection<PlaceDto> searchResults;
+        [ObservableProperty]
+        PlaceDto selectedResult;
+        [ObservableProperty]
+        bool isResultsVisible;
+        [ObservableProperty]
+        string buttonText;
+        [ObservableProperty]
+        bool isButtonEnabled;
 
         Map map;
         public Map Map
@@ -25,13 +36,13 @@ namespace UcabGo.App.ViewModel
             set
             {
                 map = value;
-
                 map.MapClicked += Map_MapClicked;
 
-                DrawCampus();
-                MoveCameraToCampus();
+                map.DrawCampus();
+                map.MoveCameraToCampus();
             }
         }
+
         SearchBar searchBar;
         public SearchBar SearchBar
         {
@@ -42,25 +53,17 @@ namespace UcabGo.App.ViewModel
             }
         }
 
-        [ObservableProperty]
-        string searchQuery;
+        Pin currentPin;
+        public Pin CurrentPin
+        {
+            get => currentPin; 
+            private set
+            {
+                currentPin = value;
+                map.SetPinOnMap(currentPin);
+            }
+        }
 
-        [ObservableProperty]
-        ObservableCollection<PlaceDto> searchResults;
-
-        [ObservableProperty]
-        PlaceDto selectedResult;
-
-        [ObservableProperty]
-        bool isResultsVisible;
-
-        [ObservableProperty]
-        string buttonText;
-
-        [ObservableProperty]
-        bool isButtonEnabled;
-
-        Pin pin;
 
         public MapViewModel(ISettingsService settingsService, INavigationService navigation, IGoogleMapsApi mapsService, ILocationsApiService locationsApiService, IDestinationsService destinationsService) : base(settingsService, navigation)
         {
@@ -90,24 +93,13 @@ namespace UcabGo.App.ViewModel
             }
             else
             {
-                MoveCameraToCampus();
+                map.MoveCameraToCampus();
             }
         }
 
-
         private void Map_MapClicked(object sender, MapClickedEventArgs e)
         {
-            pin = new Pin
-            {
-                Type = PinType.Place,
-                Label = $"Ubicación seleccionada",
-                Position = e.Point,
-                Rotation = 0f,
-                Tag = "id_selected",
-                IsVisible = true
-            };
-
-            SetPinOnMap(pin);
+            CurrentPin = MapHelper.GetSelectedPositionPin(e.Point);
         }
         private async void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -121,15 +113,11 @@ namespace UcabGo.App.ViewModel
 
             UpdateSearchResults();
         }
-        private void UpdateSearchResults()
-        {
-            IsResultsVisible = SearchResults?.Count > 0 && !string.IsNullOrEmpty(SearchQuery);
-        }
 
         [RelayCommand]
         async Task PerformSearch()
         {
-            var currentLocation = await CurrentLocation();
+            var currentLocation = await MapHelper.CurrentLocation();
 
             var results = await mapsService.GetPlaces(new GooglePlaceFilter
             {
@@ -149,7 +137,7 @@ namespace UcabGo.App.ViewModel
         async Task PerformSelection()
         {
             IsResultsVisible = false;
-            pin = new()
+            CurrentPin = new()
             {
                 Type = PinType.Place,
                 Label = SelectedResult.Name,
@@ -159,13 +147,13 @@ namespace UcabGo.App.ViewModel
                 Tag = "id_selected",
                 IsVisible = true
             };
-            SetPinOnMap(pin);
         }
         [RelayCommand]
         async Task GoToCurrentLocation()
         {
             await SetMapOnCurrentLocation();
         }
+
         [RelayCommand]
         async Task Cancel()
         {
@@ -174,7 +162,7 @@ namespace UcabGo.App.ViewModel
         [RelayCommand]
         async Task Save()
         {
-            if (pin == null)
+            if (CurrentPin == null)
             {
                 await Application.Current.MainPage.DisplayAlert("Error", "Debe seleccionar una ubicación", "Aceptar");
                 return;
@@ -183,7 +171,9 @@ namespace UcabGo.App.ViewModel
             ButtonText = "Guardando...";
             IsButtonEnabled = false;
 
-            var geocode = await mapsService.GetGeocode(pin.Position.Latitude, pin.Position.Longitude);
+            var geocode = await mapsService.GetGeocode(
+                CurrentPin.Position.Latitude, 
+                CurrentPin.Position.Longitude);
             var opciones = geocode.Components.Append("Otro...").ToArray();
 
             string zone = "";
@@ -234,8 +224,8 @@ namespace UcabGo.App.ViewModel
 
             var location = new Models.Location
             {
-                Latitude = pin.Position.Latitude,
-                Longitude = pin.Position.Longitude,
+                Latitude = CurrentPin.Position.Latitude,
+                Longitude = CurrentPin.Position.Longitude,
                 Alias = "Casa",
                 Zone = zone,
                 Detail = detail,
@@ -265,114 +255,25 @@ namespace UcabGo.App.ViewModel
             IsButtonEnabled = true;
         }
 
-        private void MoveCameraToCampus()
-        {
-            map.MoveToRegion(MapSpan.FromCenterAndRadius(campusPosition, Distance.FromKilometers(0.5)));
-        }
-        private void SetMapOnCampus()
-        {
-            pin = new()
-            {
-                Type = PinType.Place,
-                Label = "UCAB Guayana",
-                Address = "Puerto Ordaz, Bolívar, Venezuela",
-                Position = new Position(8.29727428d, -62.71308436d),
-                Rotation = 0f,
-                Tag = "id_ucab",
-                IsVisible = true
-            };
-            SetPinOnMap(pin);
-        }
         private async Task SetMapOnCurrentLocation()
         {
-            var currentLocation = await CurrentLocation();
-
+            var currentLocation = await MapHelper.CurrentLocation();
             if (currentLocation == null)
             {
                 return;
             }
 
-            pin = new()
-            {
-                Type = PinType.Place,
-                Label = "Ubicación actual",
-                Position = new Position(currentLocation.Latitude, currentLocation.Longitude),
-                Rotation = 0f,
-                Tag = "id_current",
-                IsVisible = true
-            };
+            var position = new Position(currentLocation.Latitude, currentLocation.Longitude);
 
-            SetPinOnMap(pin);
+            CurrentPin = MapHelper.GetCurrentPositionPin(position);
         }
         private void SetMapOnHome()
         {
-            var home = settings.Home;
-
-            pin = new()
-            {
-                Type = PinType.Place,
-                Label = "Casa",
-                Address = home.Zone,
-                Position = new Position(home.Latitude, home.Longitude),
-                Rotation = 0f,
-                Tag = "id_home",
-                IsVisible = true
-            };
-            SetPinOnMap(pin);
+            CurrentPin = MapHelper.GetHomePin(settings.Home);
         }
-        private void DrawCampus()
+        private void UpdateSearchResults()
         {
-            var polygon = new Polygon();
-            polygon.Positions.Add(new Position(8.295203d, -62.712272d));
-            polygon.Positions.Add(new Position(8.297396d, -62.709854d));
-            polygon.Positions.Add(new Position(8.298067d, -62.709864d));
-            polygon.Positions.Add(new Position(8.298469d, -62.709638d));
-            polygon.Positions.Add(new Position(8.298696d, -62.709724d));
-            polygon.Positions.Add(new Position(8.299402d, -62.710098d));
-            polygon.Positions.Add(new Position(8.300754d, -62.710833d));
-            polygon.Positions.Add(new Position(8.301193d, -62.709328d));
-            polygon.Positions.Add(new Position(8.302388d, -62.709542d));
-            polygon.Positions.Add(new Position(8.301965d, -62.710951d));
-            polygon.Positions.Add(new Position(8.301633d, -62.711809d));
-            polygon.Positions.Add(new Position(8.301132d, -62.712760d));
-            polygon.Positions.Add(new Position(8.300564d, -62.712958d));
-            polygon.Positions.Add(new Position(8.299417d, -62.713092d));
-            polygon.Positions.Add(new Position(8.299067d, -62.713178d));
-            polygon.Positions.Add(new Position(8.296013d, -62.713944d));
-
-            Color color = Colors.Green;
-            polygon.StrokeColor = color;
-            polygon.StrokeWidth = 3f;
-
-            polygon.FillColor = Color.FromRgba(0, 97, 37, 0.1);
-
-            polygon.IsClickable = true;
-            polygon.Clicked += async (sender, e) =>
-            {
-                await Application.Current.MainPage.DisplayAlert("Error", "No puedes seleccionar el campus como ubicación.", "Aceptar");
-                map.Pins.Clear();
-            };
-
-            map.Polygons.Add(polygon);
-        }
-
-        private void SetPinOnMap(Pin pin)
-        {
-            map.Pins.Clear();
-            map.Pins.Add(pin);
-            map.MoveToRegion(MapSpan.FromCenterAndRadius(pin.Position, Distance.FromKilometers(0.5)));
-        }
-        async Task<Location> CurrentLocation()
-        {
-            var location =
-                await Geolocation.GetLocationAsync() ??
-                await Geolocation.GetLastKnownLocationAsync();
-
-            if (location == null)
-            {
-                await Application.Current.MainPage.DisplayAlert("Error", "No se pudo obtener la ubicación actual", "Aceptar");
-            }
-            return location;
+            IsResultsVisible = SearchResults?.Count > 0 && !string.IsNullOrEmpty(SearchQuery);
         }
     }
 }
