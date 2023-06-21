@@ -60,14 +60,14 @@
                         FontAttributes="Bold"
                         FontSize="Large"
                         HorizontalOptions="Center"
-                        Text="Luis Barreto"
+                        Text="{Binding Username}"
                         VerticalOptions="Center" />
                     <!--  Email  -->
                     <Label
                         FontAttributes="Bold"
                         FontSize="Small"
                         HorizontalOptions="Center"
-                        Text="luis@mail.com"
+                        Text="{Binding Email}"
                         VerticalOptions="Center" />
                 </VerticalStackLayout>
 

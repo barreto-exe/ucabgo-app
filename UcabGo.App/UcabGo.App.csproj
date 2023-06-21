@@ -146,7 +146,7 @@
 	  <Compile Update="Shells\SessionShell.xaml.cs">
 	    <DependentUpon>SessionShell.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\DestinationAddView.xaml.cs">
+	  <Compile Update="Views\GiveRide\DestinationAddView.xaml.cs">
 	    <DependentUpon>DestinationAddView.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\Documentation\HelpView.xaml.cs">
@@ -167,7 +167,7 @@
 	  <MauiXaml Update="Shells\SessionShell.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\DestinationAddView.xaml">
+	  <MauiXaml Update="Views\GiveRide\DestinationAddView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\GiveRide\DestinationsListView.xaml">

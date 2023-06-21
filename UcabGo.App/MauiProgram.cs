@@ -66,6 +66,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<WalkingDistanceViewModel>();
         builder.Services.AddSingleton<MapViewModel>();
         builder.Services.AddSingleton<DestinationsListViewModel>();
+        builder.Services.AddSingleton<DestinationAddViewModel>();
+
 
         //DI Views
         builder.Services.AddSingleton<LoginView>();
@@ -83,6 +85,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<WalkingDistanceView>();
         builder.Services.AddSingleton<MapView>();
         builder.Services.AddSingleton<DestinationsListView>();
+        builder.Services.AddSingleton<DestinationAddView>();
+        
 
         //Removes the underline from the Entry
         Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("NoUnderline", (h, v) =>

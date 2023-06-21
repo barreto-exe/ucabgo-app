@@ -1,3 +1,4 @@
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using UcabGo.App.Services;
 using UcabGo.App.Views;
@@ -6,10 +7,17 @@ namespace UcabGo.App.ViewModel
 {
     public partial class ProfileViewModel : ViewModelBase
     {
+        [ObservableProperty]
+        string username;
+        [ObservableProperty]
+        string email;
+
         public ProfileViewModel(
             ISettingsService settingsService,
             INavigationService navigationService) : base(settingsService, navigationService)
         {
+            username = settingsService.User.Name + " " + settingsService.User.LastName;
+            email = settingsService.User.Email;
         }
 
         [RelayCommand]

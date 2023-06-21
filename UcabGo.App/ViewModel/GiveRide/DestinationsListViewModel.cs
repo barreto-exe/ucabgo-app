@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using UcabGo.App.Api.Services.Destinations;
 using UcabGo.App.Services;
+using UcabGo.App.Views;
 using Location = UcabGo.App.Models.Location;
 
 namespace UcabGo.App.ViewModel
@@ -54,12 +55,12 @@ namespace UcabGo.App.ViewModel
         [RelayCommand]
         async Task Add()
         {
-            //await navigation.NavigateToAsync<DestinationAddView>();
+            await navigation.NavigateToAsync<DestinationAddView>();
         }
         [RelayCommand]
         async Task Start(Location destination)
         {
-            //await navigation.NavigateToAsync<DestinationUpdateView>(destination);
+            //await navigation.NavigateToAsync<StartRideView>(destination);
         }
         [RelayCommand]
         async Task Delete(Location destination)
