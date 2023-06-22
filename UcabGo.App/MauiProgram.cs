@@ -99,6 +99,16 @@ public static class MauiProgram
 #endif
         });
 
+        //Removes the underline from the Picker control
+        Microsoft.Maui.Handlers.PickerHandler.Mapper.AppendToMapping("NoUnderline", (h, v) =>
+        {
+#if ANDROID
+            h.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
+#endif
+#if WINDOWS
+            h.PlatformView.BorderThickness = new Microsoft.UI.Xaml.Thickness(0,0,0,0);
+#endif
+        });
 
         return builder.Build();
     }

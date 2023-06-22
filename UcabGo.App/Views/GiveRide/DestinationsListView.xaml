@@ -9,122 +9,190 @@
     Title="Modo conductor"
     x:DataType="viewmodel:DestinationsListViewModel">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <ScrollView>
-            <VerticalStackLayout>
+        <Grid ZIndex="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ScrollView>
+                <VerticalStackLayout>
 
-                <Grid>
-                    <VerticalStackLayout Margin="20" ZIndex="1">
-                        <Label
-                            FontAttributes="Bold"
-                            FontSize="Medium"
-                            HorizontalOptions="StartAndExpand"
-                            HorizontalTextAlignment="Start"
-                            Text="{Binding Greeting}" />
-                        <Label
-                            FontSize="Medium"
-                            HorizontalOptions="StartAndExpand"
-                            HorizontalTextAlignment="Start"
-                            Text="¿A dónde te diriges hoy?" />
-                        <Image HorizontalOptions="CenterAndExpand" Source="choose_gps.png" />
-                    </VerticalStackLayout>
+                    <Grid>
+                        <VerticalStackLayout Margin="20" ZIndex="1">
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="Medium"
+                                HorizontalOptions="StartAndExpand"
+                                HorizontalTextAlignment="Start"
+                                Text="{Binding Greeting}" />
+                            <Label
+                                FontSize="Medium"
+                                HorizontalOptions="StartAndExpand"
+                                HorizontalTextAlignment="Start"
+                                Text="¿A dónde te diriges hoy?" />
+                            <Image HorizontalOptions="CenterAndExpand" Source="choose_gps.png" />
+                        </VerticalStackLayout>
 
+                    </Grid>
+
+
+                    <ActivityIndicator
+                        Margin="10"
+                        HorizontalOptions="CenterAndExpand"
+                        IsRunning="{Binding IsRefreshing}"
+                        IsVisible="{Binding IsRefreshing}" />
+
+                    <CollectionView
+                        Grid.Row="0"
+                        Margin="20,0"
+                        ItemsSource="{Binding Destinations}"
+                        SelectionMode="Single">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="model:Location">
+                                <Frame Margin="0,10">
+                                    <Grid Margin="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.ColumnSpan="2"
+                                            FontAttributes="Bold"
+                                            FontSize="Medium"
+                                            LineBreakMode="TailTruncation"
+                                            Text="{Binding Alias}" />
+                                        <Label
+                                            Grid.Row="1"
+                                            FontSize="Default"
+                                            LineBreakMode="TailTruncation"
+                                            Text="{Binding Zone}" />
+                                        <Label
+                                            Grid.Row="2"
+                                            FontSize="Default"
+                                            LineBreakMode="TailTruncation"
+                                            Text="{Binding Detail}" />
+
+
+                                        <HorizontalStackLayout
+                                            Grid.RowSpan="3"
+                                            Grid.Column="1"
+                                            Spacing="5"
+                                            VerticalOptions="End">
+                                            <Button
+                                                BackgroundColor="DarkRed"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DestinationsListViewModel}}, Path=DeleteCommand}"
+                                                CommandParameter="{Binding .}"
+                                                FontFamily="IconFont"
+                                                Text="{x:Static icons:IconFont.Delete}"
+                                                TextColor="White">
+                                                <Button.Triggers>
+                                                    <DataTrigger
+                                                        Binding="{Binding Alias}"
+                                                        TargetType="Button"
+                                                        Value="UCAB Guayana">
+                                                        <Setter Property="IsVisible" Value="false" />
+                                                    </DataTrigger>
+                                                    <DataTrigger
+                                                        Binding="{Binding Alias}"
+                                                        TargetType="Button"
+                                                        Value="Casa">
+                                                        <Setter Property="IsVisible" Value="false" />
+                                                    </DataTrigger>
+                                                </Button.Triggers>
+                                            </Button>
+                                            <Button
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DestinationsListViewModel}}, Path=StartCommand}"
+                                                CommandParameter="{Binding .}"
+                                                FontFamily="IconFont"
+                                                Text="{x:Static icons:IconFont.Navigation}" />
+                                        </HorizontalStackLayout>
+
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </ScrollView>
+            <Button
+                Grid.Row="1"
+                Margin="20"
+                Command="{Binding AddCommand}"
+                HeightRequest="50"
+                Text="Agregar destino" />
+        </Grid>
+
+        <!--<BoxView
+            BackgroundColor="Gray"
+            Opacity="0.5"
+            ZIndex="1" />-->
+
+        <Border
+            Margin="18"
+            Padding="20"
+            IsVisible="true"
+            VerticalOptions="Center"
+            ZIndex="2">
+            <Border.Shadow>
+                <Shadow
+                    Opacity="1"
+                    Radius="100"
+                    Offset="3,5" />
+            </Border.Shadow>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <VerticalStackLayout
+                    Grid.Row="0"
+                    Margin="0,20"
+                    Spacing="10">
+
+                    <Label FontAttributes="Bold" Text="Seleccione su vehículo" />
+                    <Border>
+                        <Picker />
+                    </Border>
+
+                    <Label
+                        Margin="0,20,0,0"
+                        FontAttributes="Bold"
+                        Text="Indique asientos disponibles" />
+                    <Border>
+                        <Entry Keyboard="Numeric" Placeholder="Asientos disponibles" />
+                    </Border>
+                </VerticalStackLayout>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button
+                        Grid.Column="0"
+                        Margin="0,0,5,0"
+                        BackgroundColor="Transparent"
+                        HeightRequest="50"
+                        Text="Cancelar"
+                        TextColor="{StaticResource Primary}" />
+                    <Button
+                        Grid.Column="1"
+                        Margin="5,0,0,0"
+                        HeightRequest="50"
+                        Text="Iniciar viaje" />
                 </Grid>
 
-
-                <ActivityIndicator
-                    Margin="10"
-                    HorizontalOptions="CenterAndExpand"
-                    IsRunning="{Binding IsRefreshing}"
-                    IsVisible="{Binding IsRefreshing}" />
-
-                <CollectionView
-                    Grid.Row="0"
-                    Margin="20,0"
-                    ItemsSource="{Binding Destinations}"
-                    SelectionMode="Single">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="model:Location">
-                            <Frame Margin="0,10">
-                                <Grid Margin="1">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-
-                                    <Label
-                                        Grid.Row="0"
-                                        Grid.ColumnSpan="2"
-                                        FontAttributes="Bold"
-                                        FontSize="Medium"
-                                        LineBreakMode="TailTruncation"
-                                        Text="{Binding Alias}" />
-                                    <Label
-                                        Grid.Row="1"
-                                        FontSize="Default"
-                                        LineBreakMode="TailTruncation"
-                                        Text="{Binding Zone}" />
-                                    <Label
-                                        Grid.Row="2"
-                                        FontSize="Default"
-                                        LineBreakMode="TailTruncation"
-                                        Text="{Binding Detail}" />
-
-
-                                    <HorizontalStackLayout
-                                        Grid.RowSpan="3"
-                                        Grid.Column="1"
-                                        Spacing="5"
-                                        VerticalOptions="End">
-                                        <Button
-                                            BackgroundColor="DarkRed"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DestinationsListViewModel}}, Path=DeleteCommand}"
-                                            CommandParameter="{Binding .}"
-                                            FontFamily="IconFont"
-                                            Text="{x:Static icons:IconFont.Delete}"
-                                            TextColor="White">
-                                            <Button.Triggers>
-                                                <DataTrigger
-                                                    Binding="{Binding Alias}"
-                                                    TargetType="Button"
-                                                    Value="UCAB Guayana">
-                                                    <Setter Property="IsVisible" Value="false" />
-                                                </DataTrigger>
-                                                <DataTrigger
-                                                    Binding="{Binding Alias}"
-                                                    TargetType="Button"
-                                                    Value="Casa">
-                                                    <Setter Property="IsVisible" Value="false" />
-                                                </DataTrigger>
-                                            </Button.Triggers>
-                                        </Button>
-                                        <Button
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DestinationsListViewModel}}, Path=StartCommand}"
-                                            CommandParameter="{Binding .}"
-                                            FontFamily="IconFont"
-                                            Text="{x:Static icons:IconFont.Navigation}" />
-                                    </HorizontalStackLayout>
-
-                                </Grid>
-                            </Frame>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </VerticalStackLayout>
-        </ScrollView>
-        <Button
-            Grid.Row="1"
-            Margin="20"
-            Command="{Binding AddCommand}"
-            HeightRequest="50"
-            Text="Agregar destino" />
+            </Grid>
+        </Border>
     </Grid>
 </ContentPage>
