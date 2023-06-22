@@ -15,6 +15,14 @@
     <Color x:Key="Gray600">#404040</Color>
     <Color x:Key="Gray900">#212121</Color>
     <Color x:Key="Gray950">#141414</Color>
+    <Color x:Key="Gray100_50">#80E1E1E1</Color>
+    <Color x:Key="Gray200_50">#80C8C8C8</Color>
+    <Color x:Key="Gray300_50">#80ACACAC</Color>
+    <Color x:Key="Gray400_50">#80919191</Color>
+    <Color x:Key="Gray500_50">#806E6E6E</Color>
+    <Color x:Key="Gray600_50">#80404040</Color>
+    <Color x:Key="Gray900_50">#80212121</Color>
+    <Color x:Key="Gray950_50">#80141414</Color>
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}" />
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}" />
     <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}" />

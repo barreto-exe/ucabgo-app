@@ -46,7 +46,7 @@
                         Grid.Row="0"
                         Margin="20,0"
                         ItemsSource="{Binding Destinations}"
-                        SelectionMode="Single">
+                        SelectionMode="None">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="model:Location">
                                 <Frame Margin="0,10">
@@ -108,7 +108,7 @@
                                                 </Button.Triggers>
                                             </Button>
                                             <Button
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DestinationsListViewModel}}, Path=StartCommand}"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DestinationsListViewModel}}, Path=ConfigureCommand}"
                                                 CommandParameter="{Binding .}"
                                                 FontFamily="IconFont"
                                                 Text="{x:Static icons:IconFont.Navigation}" />
@@ -129,23 +129,21 @@
                 Text="Agregar destino" />
         </Grid>
 
-        <!--<BoxView
-            BackgroundColor="Gray"
-            Opacity="0.5"
-            ZIndex="1" />-->
+        <BoxView
+            BackgroundColor="{AppThemeBinding Light={StaticResource Gray900_50},
+                                              Dark={StaticResource Gray500_50}}"
+            IsVisible="{Binding IsModalVisible}"
+            ZIndex="1" />
 
-        <Border
-            Margin="18"
+        <Frame
+            Margin="20"
             Padding="20"
-            IsVisible="true"
+            BackgroundColor="{AppThemeBinding Light={StaticResource Gray100},
+                                              Dark={StaticResource Gray950}}"
+            HasShadow="True"
+            IsVisible="{Binding IsModalVisible}"
             VerticalOptions="Center"
-            ZIndex="2">
-            <Border.Shadow>
-                <Shadow
-                    Opacity="1"
-                    Radius="100"
-                    Offset="3,5" />
-            </Border.Shadow>
+            ZIndex="1">
 
             <Grid>
                 <Grid.RowDefinitions>
@@ -158,17 +156,47 @@
                     Margin="0,20"
                     Spacing="10">
 
-                    <Label FontAttributes="Bold" Text="Seleccione su vehículo" />
-                    <Border>
-                        <Picker />
-                    </Border>
+                    <Label FontAttributes="Bold" Text="Indique asientos disponibles" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0">
+                            <Entry
+                                HeightRequest="40"
+                                Keyboard="Numeric"
+                                Placeholder="Asientos"
+                                Text="{Binding SeatQuantity}" />
+                        </Border>
+
+                        <Button
+                            Grid.Column="1"
+                            Margin="3"
+                            Command="{Binding RemoveSeatCommand}"
+                            FontFamily="IconFont"
+                            Text="{x:Static icons:IconFont.Arrow_downward}" />
+                        <Button
+                            Grid.Column="2"
+                            Margin="3"
+                            Command="{Binding AddSeatCommand}"
+                            FontFamily="IconFont"
+                            Text="{x:Static icons:IconFont.Arrow_upward}" />
+
+                    </Grid>
 
                     <Label
                         Margin="0,20,0,0"
                         FontAttributes="Bold"
-                        Text="Indique asientos disponibles" />
+                        Text="Seleccione su vehículo" />
                     <Border>
-                        <Entry Keyboard="Numeric" Placeholder="Asientos disponibles" />
+                        <Picker
+                            HeightRequest="40"
+                            ItemDisplayBinding="{Binding Name}"
+                            ItemsSource="{Binding Vehicles}"
+                            SelectedItem="{Binding SelectedVehicle}" />
                     </Border>
                 </VerticalStackLayout>
 
@@ -182,17 +210,19 @@
                         Grid.Column="0"
                         Margin="0,0,5,0"
                         BackgroundColor="Transparent"
+                        Command="{Binding CancelCommand}"
                         HeightRequest="50"
                         Text="Cancelar"
                         TextColor="{StaticResource Primary}" />
                     <Button
                         Grid.Column="1"
                         Margin="5,0,0,0"
+                        Command="{Binding StartCommand}"
                         HeightRequest="50"
                         Text="Iniciar viaje" />
                 </Grid>
 
             </Grid>
-        </Border>
+        </Frame>
     </Grid>
 </ContentPage>
