@@ -2,9 +2,11 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using UcabGo.App.Api.Services.Destinations;
+using UcabGo.App.Api.Services.Driver;
 using UcabGo.App.Api.Services.Vehicles;
 using UcabGo.App.Models;
 using UcabGo.App.Services;
+using UcabGo.App.Utils;
 using UcabGo.App.Views;
 using Location = UcabGo.App.Models.Location;
 
@@ -14,6 +16,7 @@ namespace UcabGo.App.ViewModel
     {
         readonly IDestinationsService destinationsService;
         readonly IVehiclesApi vehiclesApi;
+        readonly IDriverApi driverApi;
 
         [ObservableProperty]
         ObservableCollection<Location> destinations;
@@ -38,10 +41,11 @@ namespace UcabGo.App.ViewModel
 
         Location SelectedDestination { get; set; }
 
-        public DestinationsListViewModel(ISettingsService settingsService, INavigationService navigation, IDestinationsService destinationsService, IVehiclesApi vehiclesApi) : base(settingsService, navigation)
+        public DestinationsListViewModel(ISettingsService settingsService, INavigationService navigation, IDestinationsService destinationsService, IVehiclesApi vehiclesApi, IDriverApi driverApi) : base(settingsService, navigation)
         {
             this.destinationsService = destinationsService;
             this.vehiclesApi = vehiclesApi;
+            this.driverApi = driverApi;
 
             destinations = new();
             vehicles = new();
@@ -101,9 +105,37 @@ namespace UcabGo.App.ViewModel
         [RelayCommand]
         async Task Start()
         {
-            //Display test message
-            await Application.Current.MainPage.DisplayAlert("Test", 
-                $"Ride {SelectedDestination.Alias} - {SeatQuantity} started", "Ok");
+            var currentLocation = await MapHelper.GetCurrentLocation();
+            if(currentLocation == null)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "No se pudo obtener la ubicación actual.", "Aceptar");
+                return;
+            }
+
+            var apiResponse = await driverApi.CreateRide(new RideCreateInput
+            {
+                Vehicle = SelectedVehicle.Id,
+                SeatQuantity = SeatQuantity,
+                Destination = SelectedDestination.Id,
+                LatitudeOrigin = currentLocation.Latitude,
+                LongitudeOrigin = currentLocation.Longitude,
+            });
+
+            if(apiResponse?.Message == "RIDE_CREATED")
+            {
+                await navigation.NavigateToAsync<ActiveRiderView>();
+            }
+            else
+            {
+                switch(apiResponse?.Message)
+                {
+                    case "ACTIVE_RIDE_FOUND":
+                    case "SEAT_LIMIT_REACHED":
+                    case "VEHICLE_NOT_FOUND":
+                    case "DESTINATION_NOT_FOUND":
+                        throw new NotImplementedException();
+                }
+            }
         }
         [RelayCommand]
         void AddSeat()

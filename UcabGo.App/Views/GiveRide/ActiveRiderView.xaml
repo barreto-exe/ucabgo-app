@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="UcabGo.App.Views.ActiveRiderView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:icons="clr-namespace:UcabGo.App.Utils"
+    xmlns:model="clr-namespace:UcabGo.App.Models"
+    xmlns:viewmodel="clr-namespace:UcabGo.App.ViewModel"
+    Title="Cola en curso"
+    x:DataType="viewmodel:ActiveRiderViewModel"
+    BackgroundColor="{AppThemeBinding Light={StaticResource Gray100},
+                                      Dark={StaticResource Gray900}}">
+    <Grid>
+        <ActivityIndicator
+            HorizontalOptions="CenterAndExpand"
+            IsRunning="True"
+            IsVisible="{Binding IsLoading}"
+            VerticalOptions="Start" />
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ScrollView IsVisible="{Binding IsDataVisible}">
+                <VerticalStackLayout Padding="10">
+
+                    <Button
+                        Command="{Binding RefreshCommand}"
+                        IsVisible="False"
+                        Text="Refresh" />
+
+
+                    <!--  Vehicle card  -->
+                    <Border Margin="10">
+                        <Grid
+                            Margin="1"
+                            Padding="5"
+                            ColumnDefinitions="50, *"
+                            HeightRequest="40">
+
+                            <Image
+                                Margin="0,0,10,0"
+                                HorizontalOptions="Center"
+                                Source="car_side.png"
+                                WidthRequest="40" />
+                            <Label
+                                Grid.Column="1"
+                                FontAttributes="Bold"
+                                FontSize="16"
+                                Text="{Binding Ride.Vehicle.Name}"
+                                VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+
+
+                    <!--  Ride info card  -->
+                    <Border Margin="10,0">
+                        <Grid
+                            Margin="1"
+                            Padding="5"
+                            ColumnDefinitions="50, *"
+                            HeightRequest="40">
+
+                            <Label
+                                Margin="0,0,10,0"
+                                FontAttributes="Bold"
+                                FontFamily="IconFont"
+                                FontSize="22"
+                                HorizontalOptions="Center"
+                                Text="{x:Static icons:IconFont.Location_pin}"
+                                TextColor="IndianRed"
+                                VerticalOptions="Center" />
+                            <Label
+                                Grid.Column="1"
+                                FontAttributes="Bold"
+                                FontSize="16"
+                                Text="{Binding Ride.Destination.Alias}"
+                                VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+
+                    <BoxView
+                        Margin="25,20"
+                        BackgroundColor="Black"
+                        HeightRequest="1"
+                        HorizontalOptions="FillAndExpand" />
+
+
+                    <Grid Margin="15,0" ColumnDefinitions="*, 60">
+                        <VerticalStackLayout Spacing="10">
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="Medium"
+                                Text="Pasajeros:"
+                                VerticalOptions="Center" />
+
+                            <Label Text="Quedan 3 asientos disponibles." VerticalOptions="Center" />
+                        </VerticalStackLayout>
+
+                        <!--  Botón con icono de mensaje  -->
+                        <Button
+                            Grid.Column="1"
+                            FontFamily="IconFont"
+                            FontSize="Large"
+                            Text="{x:Static icons:IconFont.Message}" />
+                    </Grid>
+
+                    <Image
+                        Margin="30"
+                        HorizontalOptions="Center"
+                        IsVisible="True"
+                        MaximumWidthRequest="250"
+                        Source="searching.png" />
+
+                    <CollectionView
+                        Grid.Row="0"
+                        Margin="20"
+                        IsVisible="False"
+                        ItemsSource="{Binding Ride.Passengers}"
+                        SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="model:Passenger">
+                                <Frame Margin="0,10">
+                                    <VerticalStackLayout Margin="1">
+
+                                        <HorizontalStackLayout>
+                                            <Frame
+                                                Padding="0"
+                                                BackgroundColor="{StaticResource Secondary}"
+                                                CornerRadius="100"
+                                                HeightRequest="60"
+                                                WidthRequest="60">
+                                                <Label
+                                                    FontFamily="IconFont"
+                                                    FontSize="30"
+                                                    HorizontalOptions="Center"
+                                                    Text="{Binding Initial}"
+                                                    TextColor="White"
+                                                    VerticalOptions="Center" />
+                                            </Frame>
+
+                                            <VerticalStackLayout Margin="15" VerticalOptions="Center">
+                                                <Label
+                                                    FontAttributes="Bold"
+                                                    FontSize="Medium"
+                                                    Text="{Binding User.CompleteName}"
+                                                    VerticalOptions="Center" />
+                                                <Label Text="{Binding User.Email}" VerticalOptions="Center" />
+                                            </VerticalStackLayout>
+                                        </HorizontalStackLayout>
+
+                                        <HorizontalStackLayout HorizontalOptions="End">
+                                            <Button
+                                                Margin="5"
+                                                FontFamily="IconFont"
+                                                Text="{x:Static icons:IconFont.Check}" />
+                                            <!--  Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SosContactsViewModel}}, Path=DeleteContactCommand}"  -->
+                                            <Button
+                                                Margin="5"
+                                                BackgroundColor="DarkRed"
+                                                CommandParameter="{Binding .}"
+                                                FontFamily="IconFont"
+                                                Text="{x:Static icons:IconFont.Delete}"
+                                                TextColor="White" />
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <Grid Grid.Row="1" Margin="20,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    Grid.Column="0"
+                    Margin="5"
+                    BackgroundColor="DarkRed"
+                    Command="{Binding CancelRideCommand}"
+                    FontAttributes="Bold"
+                    FontFamily="IconFont"
+                    FontSize="Large"
+                    HeightRequest="50"
+                    Text="{x:Static icons:IconFont.Remove_circle_outline}"
+                    TextColor="White" />
+                <Button
+                    Grid.Column="1"
+                    Margin="5"
+                    HeightRequest="50"
+                    Text="Completar cola" />
+            </Grid>
+        </Grid>
+    </Grid>
+</ContentPage>

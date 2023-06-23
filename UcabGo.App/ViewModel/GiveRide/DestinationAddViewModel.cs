@@ -105,7 +105,7 @@ namespace UcabGo.App.ViewModel
         [RelayCommand]
         async Task PerformSearch()
         {
-            var currentLocation = await MapHelper.CurrentLocation();
+            var currentLocation = await MapHelper.GetCurrentLocation();
 
             var results = await mapsService.GetPlaces(new GooglePlaceFilter
             {
@@ -257,7 +257,7 @@ namespace UcabGo.App.ViewModel
 
         private async Task SetMapOnCurrentLocation()
         {
-            var currentLocation = await MapHelper.CurrentLocation();
+            var currentLocation = await MapHelper.GetCurrentLocation();
             if (currentLocation == null)
             {
                 return;

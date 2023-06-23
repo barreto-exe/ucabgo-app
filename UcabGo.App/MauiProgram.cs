@@ -2,6 +2,7 @@
 using UcabGo.App.Api.Interfaces;
 using UcabGo.App.Api.Services;
 using UcabGo.App.Api.Services.Destinations;
+using UcabGo.App.Api.Services.Driver;
 using UcabGo.App.Api.Services.GoogleMaps;
 using UcabGo.App.Api.Services.Locations;
 using UcabGo.App.Api.Services.SosContacts;
@@ -44,6 +45,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IGoogleMapsApi, GoogleMapsApi>();
         builder.Services.AddSingleton<ILocationsApiService, LocationsApiService>();
         builder.Services.AddSingleton<IDestinationsService, DestinationsService>();
+        builder.Services.AddSingleton<IDriverApi, DriverApi>();
 
         //DI Services
         builder.Services.AddSingleton<INavigationService, NavigationService>();
@@ -67,6 +69,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<MapViewModel>();
         builder.Services.AddSingleton<DestinationsListViewModel>();
         builder.Services.AddSingleton<DestinationAddViewModel>();
+        builder.Services.AddSingleton<ActiveRiderViewModel>();
 
 
         //DI Views
@@ -86,6 +89,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<MapView>();
         builder.Services.AddSingleton<DestinationsListView>();
         builder.Services.AddSingleton<DestinationAddView>();
+        builder.Services.AddSingleton<ActiveRiderView>();
         
 
         //Removes the underline from the Entry

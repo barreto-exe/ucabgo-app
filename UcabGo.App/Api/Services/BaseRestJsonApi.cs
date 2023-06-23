@@ -91,8 +91,13 @@ namespace UcabGo.App.Api.Services
 
         protected async Task<ApiResponse<T>> PostAsync<T>(string url, object data)
         {
-            var json = JsonConvert.SerializeObject(data, serializerSettings);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            StringContent content = null;
+            if(data != null)
+            {
+                var json = JsonConvert.SerializeObject(data, serializerSettings);
+                content = new StringContent(json, Encoding.UTF8, "application/json");
+            }
+
             try
             {
                 RefreshToken();
@@ -105,10 +110,15 @@ namespace UcabGo.App.Api.Services
                 return default;
             }
         }
-        protected async Task<ApiResponse<T>> PutAsync<T>(string url, object data)
+        protected async Task<ApiResponse<T>> PutAsync<T>(string url, object data = null)
         {
-            var json = JsonConvert.SerializeObject(data, serializerSettings);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            StringContent content = null;
+            if (data != null)
+            {
+                var json = JsonConvert.SerializeObject(data, serializerSettings);
+                content = new StringContent(json, Encoding.UTF8, "application/json");
+            }
+
             try
             {
                 RefreshToken();

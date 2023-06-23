@@ -17,7 +17,7 @@ namespace UcabGo.App.Utils
         /// <summary>
         /// Obtains the current location of the device. If it can't, it will return the last known location. If it can't, it will return null.
         /// </summary>
-        public static async Task<Location> CurrentLocation()
+        public static async Task<Location> GetCurrentLocation()
         {
             var location =
                 await Geolocation.GetLocationAsync() ??

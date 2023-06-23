@@ -17,5 +17,6 @@ namespace UcabGo.App.Api.Tools
         public static string LOCATIONS { get => BASE_URL + "user/locations"; }
         public static string HOME { get => BASE_URL + "user/home"; }
         public static string DESTINATIONS { get => BASE_URL + "user/destinations"; }
+        public static string DRIVER { get => BASE_URL + "driver"; }
     }
 }
