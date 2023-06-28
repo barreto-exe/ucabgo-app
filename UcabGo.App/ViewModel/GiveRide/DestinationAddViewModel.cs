@@ -241,7 +241,7 @@ namespace UcabGo.App.ViewModel
             };
 
             var response = await destinationsService.AddDriverDestination(destination);
-            if (response.Message == "DESTINATION_CREATED")
+            if (response.Message == "LOCATION_CREATED")
             {
                 await Application.Current.MainPage.DisplayAlert("Éxito", "Destino guardado correctamente.", "Aceptar");
                 await navigation.GoBackAsync();

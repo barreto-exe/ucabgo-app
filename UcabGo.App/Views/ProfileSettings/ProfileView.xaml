@@ -32,7 +32,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ScrollView HorizontalOptions="Center">
+        <ScrollView x:Name="scrollview" HorizontalOptions="Center">
             <VerticalStackLayout>
                 <VerticalStackLayout Margin="10">
                     <!--  Circulo imagen de perfil  -->

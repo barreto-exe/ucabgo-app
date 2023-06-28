@@ -18,10 +18,6 @@ namespace UcabGo.App.Api.Services.Destinations
         {
             return await PostAsync<Location>(ApiRoutes.DESTINATIONS, location);
         }
-        public async Task<ApiResponse<Location>> UpdateDriverDestination(Location location)
-        {
-            return await PutAsync<Location>(ApiRoutes.DESTINATIONS, location);
-        }
         public async Task<ApiResponse<Location>> DeleteDriverDestination(Location location)
         {
             return await DeleteAsync<Location>(ApiRoutes.DESTINATIONS + "/" + location.Id);

@@ -72,8 +72,7 @@ namespace UcabGo.App.ViewModel
             await Task.WhenAll(taskDestinations, taskVehicles);
 
             var destinations = await taskDestinations;
-
-            if (destinations?.Message == "DESTINATIONS_FOUND")
+            if (destinations?.Message == "LOCATIONS_FOUND")
             {
                 foreach (var destination in destinations.Data)
                 {
@@ -161,7 +160,7 @@ namespace UcabGo.App.ViewModel
         async Task Delete(Location destination)
         {
             var apiResponse = await destinationsService.DeleteDriverDestination(destination);
-            if (apiResponse?.Message == "DESTINATION_DELETED")
+            if (apiResponse?.Message == "LOCATION_DELETED")
             {
                 Destinations.Remove(destination);
             }

@@ -14,7 +14,7 @@ namespace UcabGo.App.Api.Tools
         public static string USER_VEHICLES { get => BASE_URL + "user/vehicles"; }
         public static string WALKING_DISTANCE { get => BASE_URL + "user/walking-distance"; }
         public static string SOS_CONTACTS { get => BASE_URL + "user/sos-contacts"; }
-        public static string LOCATIONS { get => BASE_URL + "user/locations"; }
+        public static string DEFAULT_LOCATIONS { get => BASE_URL + "user/default-locations"; }
         public static string HOME { get => BASE_URL + "user/home"; }
         public static string DESTINATIONS { get => BASE_URL + "user/destinations"; }
         public static string DRIVER { get => BASE_URL + "driver"; }

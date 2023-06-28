@@ -231,16 +231,9 @@ namespace UcabGo.App.ViewModel
                 Detail = detail,
             };
 
-            var taskMyHome = locationsApiService.PostUserHome(location);
-            var taskDriverDestination = destinationsService.AddDriverDestination(location);
+            var myHomeResponse = await locationsApiService.PostUserHome(location);
 
-            var responses = await Task.WhenAll(taskMyHome, taskDriverDestination);
-
-            var myHomeResponse = responses[0];
-            var driverDestinationResponse = responses[1];
-
-            if (myHomeResponse.Message == "HOME_UPDATED" &&
-                driverDestinationResponse.Message == "DESTINATION_CREATED")
+            if (myHomeResponse.Message == "HOME_UPDATED")
             {
                 settings.Home = myHomeResponse.Data;
                 await Application.Current.MainPage.DisplayAlert("Éxito", "Ubicación guardada", "Aceptar");

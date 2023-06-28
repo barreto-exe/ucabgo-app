@@ -9,4 +9,12 @@ public partial class ProfileView : ContentPage
         InitializeComponent();
         BindingContext = viewModel;
     }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        (BindingContext as ProfileViewModel)?.OnAppearing();
+
+        scrollview.ScrollToAsync(0, 0, false);
+    }   
 }

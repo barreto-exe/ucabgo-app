@@ -15,9 +15,9 @@ namespace UcabGo.App.Api.Services.Locations
             return await GetAsync<Location>(ApiRoutes.HOME);
         }
 
-        public async Task<ApiResponse<IEnumerable<Location>>> GetUserLocations()
+        public async Task<ApiResponse<IEnumerable<Location>>> GetUserDefaultLocations()
         {
-            return await GetAsync<IEnumerable<Location>>(ApiRoutes.LOCATIONS);
+            return await GetAsync<IEnumerable<Location>>(ApiRoutes.DEFAULT_LOCATIONS);
         }
 
         public async Task<ApiResponse<Location>> PostUserHome(Location location)

@@ -42,7 +42,7 @@ public partial class LoginViewModel : ViewModelBase
         isEnabled = true;
 
 #if DEBUG
-        email = "luis@est.ucab.edu.ve";
+        email = "luisbarr1@est.ucab.edu.ve";
         password = "Good-1234";
 #endif
     }

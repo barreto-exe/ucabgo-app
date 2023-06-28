@@ -7,7 +7,6 @@ namespace UcabGo.App.Api.Services.Destinations
     {
         Task<ApiResponse<IEnumerable<Location>>> GetDriverDestinations();
         Task<ApiResponse<Location>> AddDriverDestination(Location location);
-        Task<ApiResponse<Location>> UpdateDriverDestination(Location location);
         Task<ApiResponse<Location>> DeleteDriverDestination(Location location);
     }
 }
