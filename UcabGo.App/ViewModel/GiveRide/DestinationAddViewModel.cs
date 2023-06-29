@@ -77,9 +77,6 @@ namespace UcabGo.App.ViewModel
             IsResultsVisible = false;
             ButtonText = "Guardar";
             IsButtonEnabled = true;
-            
-
-            //Center in Ciudad Guayana
         }
 
 

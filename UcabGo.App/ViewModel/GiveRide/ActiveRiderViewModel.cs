@@ -66,6 +66,13 @@ namespace UcabGo.App.ViewModel
         [RelayCommand]
         async Task CancelRide()
         {
+            //Are you sure?
+            var accept = await Application.Current.MainPage.DisplayAlert("Confirmación", "¿Está seguro que desea cancelar el viaje?", "Aceptar", "Cancelar");
+            if(!accept)
+            {
+                return;
+            }
+
             var response = await driverApi.CancelRide(Ride.Id);
             if(response?.Message == "RIDE_CANCELED")
             {
