@@ -66,7 +66,7 @@ namespace UcabGo.App.ViewModel
             Destinations.Clear();
             IsRefreshing = true;
 
-            var taskDestinations = destinationsService.GetDriverDestinations();
+            var taskDestinations = destinationsService.GetDestinations();
             var taskVehicles = vehiclesApi.GetVehicles();
 
             await Task.WhenAll(taskDestinations, taskVehicles);
@@ -159,7 +159,7 @@ namespace UcabGo.App.ViewModel
         [RelayCommand]
         async Task Delete(Location destination)
         {
-            var apiResponse = await destinationsService.DeleteDriverDestination(destination);
+            var apiResponse = await destinationsService.DeleteDestination(destination);
             if (apiResponse?.Message == "LOCATION_DELETED")
             {
                 Destinations.Remove(destination);

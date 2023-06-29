@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="UcabGo.App.Views.SelectDestinationView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:icon="clr-namespace:UcabGo.App.Utils"
+    xmlns:maps="clr-namespace:Maui.GoogleMaps;assembly=Maui.GoogleMaps"
+    xmlns:model="clr-namespace:UcabGo.App.Api.Services.GoogleMaps"
+    xmlns:viewModel="clr-namespace:UcabGo.App.ViewModel"
+    Title="Seleccionar destino"
+    x:DataType="viewModel:SelectDestinationViewModel">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <maps:Map
+                x:Name="myMap"
+                MyLocationEnabled="True"
+                VerticalOptions="FillAndExpand"
+                ZIndex="1" />
+
+            <Grid Grid.Row="1" Margin="20,0">
+                <Grid.ColumnDefinitions>
+                    <!--<ColumnDefinition Width="*" />-->
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <!--<Button
+                    Grid.Column="0"
+                    Margin="5"
+                    BackgroundColor="Transparent"
+                    Command="{Binding CancelCommand}"
+                    HeightRequest="50"
+                    Text="Cancelar"
+                    TextColor="{StaticResource Primary}" />-->
+                <Button
+                    Grid.Column="1"
+                    Margin="5"
+                    Command="{Binding SaveCommand}"
+                    HeightRequest="50"
+                    IsEnabled="{Binding IsButtonEnabled}"
+                    Text="{Binding ButtonText}" />
+            </Grid>
+        </Grid>
+
+
+        <Grid
+            Margin="20"
+            HorizontalOptions="Center"
+            VerticalOptions="Start"
+            ZIndex="2">
+            <Grid.Shadow>
+                <Shadow
+                    Opacity="0.8"
+                    Radius="30"
+                    Offset="2,5" />
+            </Grid.Shadow>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Border Padding="0" BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
+                <SearchBar
+                    x:Name="searchBar"
+                    Placeholder="Buscar ubicación"
+                    SearchCommand="{Binding PerformSearchCommand}"
+                    SearchCommandParameter="{Binding SearchQuery}"
+                    Text="{Binding SearchQuery}"
+                    TextColor="{AppThemeBinding Dark={StaticResource White},
+                                                Light={StaticResource Black}}" />
+            </Border>
+
+            <Frame
+                Grid.Row="1"
+                Margin="2"
+                Padding="0"
+                IsVisible="{Binding IsResultsVisible}">
+                <CollectionView
+                    x:Name="searchResults"
+                    BackgroundColor="Transparent"
+                    ItemsSource="{Binding SearchResults}"
+                    SelectedItem="{Binding SelectedResult}"
+                    SelectionChangedCommand="{Binding PerformSelectionCommand}"
+                    SelectionMode="Single">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:PlaceDto">
+                            <VerticalStackLayout
+                                Padding="10"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource White},
+                                                                  Dark={StaticResource Black}}"
+                                VerticalOptions="CenterAndExpand">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="Small"
+                                    Text="{Binding Name}"
+                                    TextColor="{AppThemeBinding Dark={StaticResource White},
+                                                                Light={StaticResource Black}}" />
+                                <Label
+                                    FontSize="12"
+                                    Text="{Binding Address}"
+                                    TextColor="{AppThemeBinding Dark={StaticResource White},
+                                                                Light={StaticResource Black}}" />
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Frame>
+        </Grid>
+
+        <Grid Margin="0,0,0,80" ColumnDefinitions="*,*">
+            <ImageButton
+                Grid.Column="0"
+                Margin="25,20,10,0"
+                Background="{StaticResource Gray500}"
+                Command="{Binding HomeClickedCommand}"
+                CornerRadius="8"
+                HeightRequest="50"
+                Source="home_button.png"
+                VerticalOptions="End">
+                <ImageButton.Shadow>
+                    <Shadow
+                        Opacity="0.8"
+                        Radius="10"
+                        Offset="2,4" />
+                </ImageButton.Shadow>
+            </ImageButton>
+
+            <ImageButton
+                Grid.Column="1"
+                Margin="10,20,25,0"
+                Background="{StaticResource Primary}"
+                Command="{Binding CampusClickedCommand}"
+                CornerRadius="8"
+                HeightRequest="50"
+                Source="ucab_button.png"
+                VerticalOptions="End">
+                <ImageButton.Shadow>
+                    <Shadow
+                        Opacity="0.8"
+                        Radius="10"
+                        Offset="2,4" />
+                </ImageButton.Shadow>
+            </ImageButton>
+        </Grid>
+
+
+    </Grid>
+</ContentPage>

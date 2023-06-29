@@ -24,6 +24,9 @@ namespace UcabGo.App.ViewModel
         [ObservableProperty]
         bool isDataVisible;
 
+        [ObservableProperty]
+        string avaliableSeatsText;
+
         public ActiveRiderViewModel(ISettingsService settingsService, INavigationService navigation, IDriverApi driverApi) : base(settingsService, navigation)
         {
             this.driverApi = driverApi;
@@ -44,6 +47,7 @@ namespace UcabGo.App.ViewModel
             IsLoading = true;
             IsDataVisible = false;
 
+            bool close = false;
             var rides = await driverApi.GetRides(onlyAvailable: true);
             if(rides?.Message == "RIDES_FOUND")
             {
@@ -51,12 +55,29 @@ namespace UcabGo.App.ViewModel
                 if(activeRide != null)
                 {
                     Ride = activeRide;
+
+                    //Set avaliable seats text
+                    AvaliableSeatsText = Ride.AvailableSeats switch
+                    {
+                        0 => "No hay asientos disponibles.",
+                        1 => "1 asiento disponible.",
+                        _ => $"{Ride.AvailableSeats} asientos disponibles.",
+                    };
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Error", "No hay cola activa.", "Aceptar");
-                    await navigation.GoBackAsync();
+                    close = true;
                 }
+            }
+            else
+            {
+                close = true;
+            }
+
+            if(close)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "No hay cola activa.", "Aceptar");
+                await navigation.GoBackAsync();
             }
 
             IsLoading = false;

@@ -10,15 +10,15 @@ namespace UcabGo.App.Api.Services.Destinations
         {
         }
 
-        public async Task<ApiResponse<IEnumerable<Location>>> GetDriverDestinations()
+        public async Task<ApiResponse<IEnumerable<Location>>> GetDestinations()
         {
             return await GetAsync<IEnumerable<Location>>(ApiRoutes.DESTINATIONS);
         }
-        public async Task<ApiResponse<Location>> AddDriverDestination(Location location)
+        public async Task<ApiResponse<Location>> AddDestination(Location location)
         {
             return await PostAsync<Location>(ApiRoutes.DESTINATIONS, location);
         }
-        public async Task<ApiResponse<Location>> DeleteDriverDestination(Location location)
+        public async Task<ApiResponse<Location>> DeleteDestination(Location location)
         {
             return await DeleteAsync<Location>(ApiRoutes.DESTINATIONS + "/" + location.Id);
         }

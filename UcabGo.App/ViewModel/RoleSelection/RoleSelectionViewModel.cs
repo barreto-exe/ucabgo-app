@@ -32,6 +32,11 @@ namespace UcabGo.App.ViewModel
         {
             await navigation.NavigateToAsync<DestinationsListView>();
         }
+        [RelayCommand]
+        async Task Passenger()
+        {
+            await navigation.NavigateToAsync<SelectDestinationView>();
+        }
 
         [RelayCommand]
         async Task Logout()

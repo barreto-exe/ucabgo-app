@@ -201,6 +201,9 @@
 	  <MauiXaml Update="Views\GiveRide\StartRideView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\AskRide\SelectDestinationView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Vehicles\VehiclesAddView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

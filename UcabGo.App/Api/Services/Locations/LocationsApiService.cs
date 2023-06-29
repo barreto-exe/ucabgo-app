@@ -24,5 +24,11 @@ namespace UcabGo.App.Api.Services.Locations
         {
             return await PostAsync<Location>(ApiRoutes.HOME, location);
         }
+
+        public async Task<Location> GetUserCampus()
+        {
+            var response = await GetUserDefaultLocations();
+            return response?.Data?.FirstOrDefault(x => x.Alias == "UCAB Guayana");
+        }
     }
 }

@@ -7,6 +7,7 @@ namespace UcabGo.App.Api.Services.Locations
     {
         Task<ApiResponse<Location>> PostUserHome(Location location);
         Task<ApiResponse<Location>> GetUserHome();
+        Task<Location> GetUserCampus();
         Task<ApiResponse<IEnumerable<Location>>> GetUserDefaultLocations();
     }
 }

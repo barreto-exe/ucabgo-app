@@ -70,6 +70,9 @@ public partial class LoginViewModel : ViewModelBase
             var homeLocation = (await locationsApiService.GetUserHome()).Data;
             settings.Home = homeLocation;
 
+            var campusLocation = await locationsApiService.GetUserCampus();
+            settings.Campus = campusLocation;
+
             await navigation.RestartSession();
         }
         else if (message == "WRONG_CREDENTIALS")

@@ -9,6 +9,7 @@ namespace UcabGo.App.Services
         User User { get; set; }
         bool IsLoggedIn { get; }
         Location Home { get; set; }
+        Location Campus { get; set; }
 
         protected T GetValueOrDefault<T>(string key, T defaultValue);
         protected void SetValue(string key, object value);

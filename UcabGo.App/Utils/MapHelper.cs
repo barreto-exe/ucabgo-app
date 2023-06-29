@@ -32,8 +32,11 @@ namespace UcabGo.App.Utils
         public static void SetPinOnMap(this Map map, Pin pin)
         {
             map.Pins.Clear();
-            map.Pins.Add(pin);
-            map.MoveToRegion(MapSpan.FromCenterAndRadius(pin.Position, Distance.FromKilometers(0.5)));
+            if(pin != null)
+            {
+                map.Pins.Add(pin);
+                map.MoveToRegion(MapSpan.FromCenterAndRadius(pin.Position, Distance.FromKilometers(0.5)));
+            }
         }
         
         public static Pin GetHomePin(Models.Location home)
@@ -98,8 +101,8 @@ namespace UcabGo.App.Utils
             return pin;
         }
 
-        
-        public static void DrawCampus(this Map map)
+
+        private static Polygon BuildCampusPolygon()
         {
             var polygon = new Polygon();
             polygon.Positions.Add(new Position(8.295203d, -62.712272d));
@@ -124,16 +127,38 @@ namespace UcabGo.App.Utils
             polygon.StrokeWidth = 3f;
 
             polygon.FillColor = Color.FromRgba(0, 97, 37, 0.1);
-
+            
             polygon.IsClickable = true;
+
+            return polygon;
+        }
+        public static void DrawCampus(this Map map, bool allowPinInside = false)
+        {
+            var polygon = BuildCampusPolygon();
+
+            if(!allowPinInside)
+            {
+                polygon.Clicked += async (sender, e) =>
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "No puedes seleccionar el campus como ubicación.", "Aceptar");
+                    map.Pins.Clear();
+                };
+            }
+
+            map.Polygons.Add(polygon);
+        }
+        public static void DrawCampus(this Map map, Func<Task> action)
+        {
+            var polygon = BuildCampusPolygon();
+
             polygon.Clicked += async (sender, e) =>
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "No puedes seleccionar el campus como ubicación.", "Aceptar");
-                map.Pins.Clear();
+                await action();
             };
 
             map.Polygons.Add(polygon);
         }
+
         public static void MoveCameraToCampus(this Map map)
         {
             map.MoveToRegion(

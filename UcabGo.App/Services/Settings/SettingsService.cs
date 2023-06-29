@@ -10,6 +10,7 @@ namespace UcabGo.App.Services.Settings
         private readonly string AccessTokenDefault = string.Empty;
         private readonly User UserDefault = null;
         private readonly Location HomeDefault = null;
+        private readonly Location CampusDefault = null;
 
         //Getters and setters for settings
         public string AccessToken
@@ -27,6 +28,11 @@ namespace UcabGo.App.Services.Settings
         {
             get => GetValueOrDefault(nameof(Home), HomeDefault);
             set => SetValue(nameof(Home), value);
+        }
+        public Location Campus
+        {
+            get => GetValueOrDefault(nameof(Campus), CampusDefault);
+            set => SetValue(nameof(Campus), value);
         }
 
         //Methods for settings

@@ -95,7 +95,7 @@
                                 Text="Pasajeros:"
                                 VerticalOptions="Center" />
 
-                            <Label Text="Quedan 3 asientos disponibles." VerticalOptions="Center" />
+                            <Label Text="{Binding AvaliableSeatsText}" VerticalOptions="Center" />
                         </VerticalStackLayout>
 
                         <!--  Botón con icono de mensaje  -->

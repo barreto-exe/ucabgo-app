@@ -2,7 +2,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Maui.GoogleMaps;
 using System.Collections.ObjectModel;
-using UcabGo.App.Api.Services.Destinations;
 using UcabGo.App.Api.Services.GoogleMaps;
 using UcabGo.App.Api.Services.Locations;
 using UcabGo.App.Services;
@@ -15,7 +14,6 @@ namespace UcabGo.App.ViewModel
     {
         readonly IGoogleMapsApi mapsService;
         readonly ILocationsApiService locationsApiService;
-        readonly IDestinationsService destinationsService;
 
         [ObservableProperty]
         string searchQuery;
@@ -65,11 +63,10 @@ namespace UcabGo.App.ViewModel
         }
 
 
-        public MapViewModel(ISettingsService settingsService, INavigationService navigation, IGoogleMapsApi mapsService, ILocationsApiService locationsApiService, IDestinationsService destinationsService) : base(settingsService, navigation)
+        public MapViewModel(ISettingsService settingsService, INavigationService navigation, IGoogleMapsApi mapsService, ILocationsApiService locationsApiService) : base(settingsService, navigation)
         {
             this.mapsService = mapsService;
             this.locationsApiService = locationsApiService;
-            this.destinationsService = destinationsService;
             this.searchResults = new();
         }
         public override void OnAppearing()
