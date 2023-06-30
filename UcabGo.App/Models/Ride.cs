@@ -21,6 +21,14 @@ namespace UcabGo.App.Models
         public DateTime? TimeStarted { get; set; }
         public DateTime? TimeEnded { get; set; }
         public DateTime? TimeCanceled { get; set; }
+        public bool IsStarted
+        {
+            get => TimeStarted.HasValue && !TimeEnded.HasValue && !TimeCanceled.HasValue;
+        }
+        public bool IsEnded
+        {
+            get => TimeEnded.HasValue || TimeCanceled.HasValue;
+        }
         public IEnumerable<Passenger> Passengers { get; set; }
     }
 }

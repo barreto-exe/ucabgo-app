@@ -27,7 +27,7 @@
 
                     <Button
                         Command="{Binding RefreshCommand}"
-                        IsVisible="False"
+                        IsVisible="false"
                         Text="Refresh" />
 
 
@@ -95,7 +95,7 @@
                                 Text="Pasajeros:"
                                 VerticalOptions="Center" />
 
-                            <Label Text="Quedan 3 asientos disponibles." VerticalOptions="Center" />
+                            <Label Text="{Binding SeatsText}" VerticalOptions="Center" />
                         </VerticalStackLayout>
 
                         <!--  Botón con icono de mensaje  -->
@@ -109,15 +109,15 @@
                     <Image
                         Margin="30"
                         HorizontalOptions="Center"
-                        IsVisible="True"
+                        IsVisible="{Binding IsPassengersEmpty}"
                         MaximumWidthRequest="250"
                         Source="searching.png" />
 
                     <CollectionView
                         Grid.Row="0"
                         Margin="20"
-                        IsVisible="False"
-                        ItemsSource="{Binding Ride.Passengers}"
+                        IsVisible="{Binding IsPassengersVisible}"
+                        ItemsSource="{Binding Passengers}"
                         SelectionMode="None">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="model:Passenger">
@@ -150,20 +150,32 @@
                                             </VerticalStackLayout>
                                         </HorizontalStackLayout>
 
-                                        <HorizontalStackLayout HorizontalOptions="End">
+                                        <Grid ColumnDefinitions="*,Auto,Auto">
+                                            <Label
+                                                Grid.Column="0"
+                                                Margin="5"
+                                                FontSize="Small"
+                                                HorizontalOptions="End"
+                                                IsVisible="{Binding IsWaiting}"
+                                                Text="¿Aceptar cola?"
+                                                VerticalOptions="Center" />
+
                                             <Button
+                                                Grid.Column="1"
                                                 Margin="5"
                                                 FontFamily="IconFont"
+                                                IsVisible="{Binding IsWaiting}"
                                                 Text="{x:Static icons:IconFont.Check}" />
                                             <!--  Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SosContactsViewModel}}, Path=DeleteContactCommand}"  -->
                                             <Button
+                                                Grid.Column="2"
                                                 Margin="5"
                                                 BackgroundColor="DarkRed"
                                                 CommandParameter="{Binding .}"
                                                 FontFamily="IconFont"
                                                 Text="{x:Static icons:IconFont.Delete}"
                                                 TextColor="White" />
-                                        </HorizontalStackLayout>
+                                        </Grid>
                                     </VerticalStackLayout>
                                 </Frame>
                             </DataTemplate>
@@ -186,13 +198,15 @@
                     FontFamily="IconFont"
                     FontSize="Large"
                     HeightRequest="50"
+                    IsEnabled="{Binding IsCancelButtonEnabled}"
                     Text="{x:Static icons:IconFont.Remove_circle_outline}"
                     TextColor="White" />
                 <Button
                     Grid.Column="1"
                     Margin="5"
+                    Command="{Binding StartCompleteRideCommand}"
                     HeightRequest="50"
-                    Text="Completar cola" />
+                    Text="{Binding ButtonText}" />
             </Grid>
         </Grid>
     </Grid>

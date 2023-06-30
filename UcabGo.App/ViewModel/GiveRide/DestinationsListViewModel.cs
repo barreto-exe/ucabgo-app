@@ -130,10 +130,17 @@ namespace UcabGo.App.ViewModel
                 switch(apiResponse?.Message)
                 {
                     case "ACTIVE_RIDE_FOUND":
+                        await Application.Current.MainPage.DisplayAlert("Error", "Ya tienes un viaje activo.", "Aceptar");
+                        await navigation.NavigateToAsync<ActiveRiderView>();
+                        break;
                     case "SEAT_LIMIT_REACHED":
+                        await Application.Current.MainPage.DisplayAlert("Error", "Excediste el límite de asientos.", "Aceptar");
+                        break;
                     case "VEHICLE_NOT_FOUND":
+                        await Application.Current.MainPage.DisplayAlert("Error", "No se encontró el vehículo.", "Aceptar");
+                        break;
                     case "DESTINATION_NOT_FOUND":
-                        throw new NotImplementedException();
+                        break;
                 }
             }
         }
