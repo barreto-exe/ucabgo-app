@@ -17,5 +17,10 @@ namespace UcabGo.App.Models
         public DateTime? TimeIgnored { get; set; }
         public DateTime? TimeCancelled { get; set; }
         public DateTime? TimeFinished { get; set; }
+
+        public bool IsWaiting { get => TimeAccepted == null; }
+        public bool IsAccepted { get => TimeAccepted != null; }
+        public bool IsNotShowed { get => TimeIgnored != null || TimeCancelled != null || TimeFinished != null; }
+        public bool IsShowed { get => TimeIgnored == null && TimeCancelled == null && TimeFinished == null; }
     }
 }
