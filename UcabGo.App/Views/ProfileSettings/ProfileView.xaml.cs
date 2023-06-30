@@ -16,5 +16,5 @@ public partial class ProfileView : ContentPage
         (BindingContext as ProfileViewModel)?.OnAppearing();
 
         scrollview.ScrollToAsync(0, 0, false);
-    }   
+    }
 }

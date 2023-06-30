@@ -92,7 +92,7 @@ namespace UcabGo.App.Api.Services
         protected async Task<ApiResponse<T>> PostAsync<T>(string url, object data)
         {
             StringContent content = null;
-            if(data != null)
+            if (data != null)
             {
                 var json = JsonConvert.SerializeObject(data, serializerSettings);
                 content = new StringContent(json, Encoding.UTF8, "application/json");

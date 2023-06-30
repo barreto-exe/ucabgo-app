@@ -1,5 +1,4 @@
 using Maui.GoogleMaps;
-using UcabGo.App.Services;
 using Map = Maui.GoogleMaps.Map;
 
 namespace UcabGo.App.Utils
@@ -32,13 +31,24 @@ namespace UcabGo.App.Utils
         public static void SetPinOnMap(this Map map, Pin pin)
         {
             map.Pins.Clear();
-            if(pin != null)
+            if (pin != null)
             {
                 map.Pins.Add(pin);
                 map.MoveToRegion(MapSpan.FromCenterAndRadius(pin.Position, Distance.FromKilometers(0.5)));
             }
+
+            /* Unmerged change from project 'UcabGo.App (net7.0-ios)'
+            Before:
+                    }
+
+                    public static Pin GetHomePin(Models.Location home)
+            After:
+                    }
+
+                    public static Pin GetHomePin(Models.Location home)
+            */
         }
-        
+
         public static Pin GetHomePin(Models.Location home)
         {
             var pin = new Pin
@@ -127,7 +137,7 @@ namespace UcabGo.App.Utils
             polygon.StrokeWidth = 3f;
 
             polygon.FillColor = Color.FromRgba(0, 97, 37, 0.1);
-            
+
             polygon.IsClickable = true;
 
             return polygon;
@@ -136,7 +146,7 @@ namespace UcabGo.App.Utils
         {
             var polygon = BuildCampusPolygon();
 
-            if(!allowPinInside)
+            if (!allowPinInside)
             {
                 polygon.Clicked += async (sender, e) =>
                 {
@@ -162,7 +172,7 @@ namespace UcabGo.App.Utils
         public static void MoveCameraToCampus(this Map map)
         {
             map.MoveToRegion(
-                MapSpan.FromCenterAndRadius(CampusCameraPosition, 
+                MapSpan.FromCenterAndRadius(CampusCameraPosition,
                 Distance.FromKilometers(0.5)));
         }
     }

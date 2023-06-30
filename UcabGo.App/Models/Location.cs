@@ -13,10 +13,10 @@
         {
             get
             {
-                if(Alias.ToLower().Contains("casa")) return "🏠 " + Alias;
-                if(Alias.ToLower().Contains("trabajo")) return "🏢 " + Alias;
-                if(Alias.ToLower().Contains("universidad")) return "🏫 " + Alias;
-                if(Alias.ToLower().Contains("ucab")) return "🔰 " + Alias;
+                if (Alias.ToLower().Contains("casa")) return "🏠 " + Alias;
+                if (Alias.ToLower().Contains("trabajo")) return "🏢 " + Alias;
+                if (Alias.ToLower().Contains("universidad")) return "🏫 " + Alias;
+                if (Alias.ToLower().Contains("ucab")) return "🔰 " + Alias;
 
                 return "📍 " + Alias;
             }

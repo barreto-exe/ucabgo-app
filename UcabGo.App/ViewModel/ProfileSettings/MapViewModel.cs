@@ -54,7 +54,7 @@ namespace UcabGo.App.ViewModel
         Pin currentPin;
         public Pin CurrentPin
         {
-            get => currentPin; 
+            get => currentPin;
             private set
             {
                 currentPin = value;
@@ -169,7 +169,7 @@ namespace UcabGo.App.ViewModel
             IsButtonEnabled = false;
 
             var geocode = await mapsService.GetGeocode(
-                CurrentPin.Position.Latitude, 
+                CurrentPin.Position.Latitude,
                 CurrentPin.Position.Longitude);
             var opciones = geocode.Components.Append("Otro...").ToArray();
 

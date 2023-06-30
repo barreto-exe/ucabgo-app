@@ -1,11 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UcabGo.App.Api.Services.Rides;
 using UcabGo.App.Models;
 using UcabGo.App.Services;
@@ -63,7 +58,7 @@ namespace UcabGo.App.ViewModel
             IsRefreshing = true;
 
             bool goingToCampus = SelectedDestination.Alias.ToLower().Contains("ucab");
-            var response = await ridesApi.GetMatchingRides(SelectedDestination, Convert.ToInt32(settings.User.WalkingDistance) , goingToCampus);
+            var response = await ridesApi.GetMatchingRides(SelectedDestination, Convert.ToInt32(settings.User.WalkingDistance), goingToCampus);
 
             if (response?.Message == "RIDES_FOUND")
             {

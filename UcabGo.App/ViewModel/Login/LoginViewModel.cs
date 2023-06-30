@@ -4,7 +4,6 @@ using System.Text.RegularExpressions;
 using UcabGo.App.Api.Interfaces;
 using UcabGo.App.Api.Services.Locations;
 using UcabGo.App.Services;
-using UcabGo.App.Views;
 
 namespace UcabGo.App.ViewModel;
 

@@ -4,15 +4,15 @@ namespace UcabGo.App.Views;
 
 public partial class RidesAvailableView : ContentPage
 {
-	public RidesAvailableView(RidesAvailableViewModel viewModel)
-	{
-		InitializeComponent();
+    public RidesAvailableView(RidesAvailableViewModel viewModel)
+    {
+        InitializeComponent();
 
-		BindingContext = viewModel;
-	}
+        BindingContext = viewModel;
+    }
 
-	protected override void OnAppearing()
-	{
+    protected override void OnAppearing()
+    {
         base.OnAppearing();
         (BindingContext as RidesAvailableViewModel)?.OnAppearing();
     }

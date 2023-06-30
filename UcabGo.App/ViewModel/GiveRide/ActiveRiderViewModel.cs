@@ -1,12 +1,6 @@
-using Android.Text;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UcabGo.App.Api.Services.Driver;
 using UcabGo.App.Models;
 using UcabGo.App.Services;
@@ -70,15 +64,15 @@ namespace UcabGo.App.ViewModel
 
             bool close = false;
             var rides = await driverApi.GetRides(onlyAvailable: true);
-            if(rides?.Message == "RIDES_FOUND")
+            if (rides?.Message == "RIDES_FOUND")
             {
                 var activeRide = rides.Data.FirstOrDefault(x => x.IsAvailable);
-                if(activeRide != null)
+                if (activeRide != null)
                 {
                     Ride = activeRide;
 
                     //Set avaliable seats text
-                    AvaliableSeatsText = Ride.AvailableSeats switch
+                    SeatsText = Ride.AvailableSeats switch
                     {
                         0 => "No hay asientos disponibles.",
                         1 => "1 asiento disponible.",
@@ -95,14 +89,14 @@ namespace UcabGo.App.ViewModel
                 close = true;
             }
 
-            if(close)
+            if (close)
             {
                 await Application.Current.MainPage.DisplayAlert("Error", "No hay cola activa.", "Aceptar");
                 await navigation.GoBackAsync();
             }
 
             var passengers = await driverApi.GetPassengers(Ride.Id);
-            if(passengers?.Message == "PASSENGERS_FOUND")
+            if (passengers?.Message == "PASSENGERS_FOUND")
             {
                 passengers.Data = passengers.Data
                     .Where(x => x.IsShowed)
@@ -142,16 +136,16 @@ namespace UcabGo.App.ViewModel
         [RelayCommand]
         async Task CancelRide()
         {
-            bool confirm = await Application.Current.MainPage.DisplayAlert("Confirmaci�n", "�Est� seguro que desea cancelar el viaje?", "Aceptar", "Cancelar");
-            if(!confirm)
+            bool confirm = await Application.Current.MainPage.DisplayAlert("Confirmación", "¿Desea cancelar el viaje?", "Aceptar", "Cancelar");
+            if (!confirm)
             {
                 return;
             }
 
             var response = await driverApi.CancelRide(Ride.Id);
-            if(response?.Message == "RIDE_CANCELED")
+            if (response?.Message == "RIDE_CANCELED")
             {
-                await Application.Current.MainPage.DisplayAlert("�xito", "El viaje ha sido cancelado.", "Aceptar");
+                await Application.Current.MainPage.DisplayAlert("Éxito", "El viaje ha sido cancelado.", "Aceptar");
                 await navigation.GoBackAsync();
             }
             else
@@ -163,7 +157,7 @@ namespace UcabGo.App.ViewModel
         [RelayCommand]
         async Task StartCompleteRide()
         {
-            if(!Ride.IsStarted)
+            if (!Ride.IsStarted)
             {
                 await StartRide();
             }
@@ -175,13 +169,13 @@ namespace UcabGo.App.ViewModel
 
         async Task StartRide()
         {
-            if(!Ride.Passengers.Any())
+            if (!Ride.Passengers.Any())
             {
                 await Application.Current.MainPage.DisplayAlert("Error", "No hay pasajeros en el viaje.", "Aceptar");
                 return;
             }
 
-            bool confirm = await Application.Current.MainPage.DisplayAlert("Confirmaci�n", "�Est� seguro que desea empezar el viaje?", "Aceptar", "Cancelar");
+            bool confirm = await Application.Current.MainPage.DisplayAlert("Confirmación", "¿Desea empezar el viaje?", "Aceptar", "Cancelar");
             if (!confirm)
             {
                 return;
@@ -201,7 +195,7 @@ namespace UcabGo.App.ViewModel
         }
         async Task CompleteRide()
         {
-            bool confirm = await Application.Current.MainPage.DisplayAlert("Confirmaci�n", "�Est� seguro que desea finalizar el viaje?", "Aceptar", "Cancelar");
+            bool confirm = await Application.Current.MainPage.DisplayAlert("Confirmaci�n", "¿Desea finalizar el viaje?", "Aceptar", "Cancelar");
             if (!confirm)
             {
                 return;
@@ -209,7 +203,7 @@ namespace UcabGo.App.ViewModel
             var response = await driverApi.CompleteRide(Ride.Id);
             if (response?.Message == "RIDE_COMPLETED")
             {
-                await Application.Current.MainPage.DisplayAlert("�xito", "El viaje ha sido completado.", "Aceptar");
+                await Application.Current.MainPage.DisplayAlert("Éxito", "El viaje ha sido completado.", "Aceptar");
                 await navigation.GoBackAsync();
             }
             else

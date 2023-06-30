@@ -1,4 +1,3 @@
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using UcabGo.App.Api.Services.Driver;
 using UcabGo.App.Services;
@@ -21,7 +20,7 @@ namespace UcabGo.App.ViewModel
             base.OnAppearing();
 
             var rides = await driverApi.GetRides(onlyAvailable: true);
-            if(rides?.Data?.Count > 0)
+            if (rides?.Data?.Count > 0)
             {
                 await navigation.NavigateToAsync<ActiveRiderView>();
             }

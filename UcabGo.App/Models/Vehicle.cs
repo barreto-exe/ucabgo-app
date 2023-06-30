@@ -10,6 +10,6 @@ namespace UcabGo.App.Models
         public string Plate { get; set; }
         public string Color { get; set; }
         public User Owner { get; set; }
-        public string Name { get => $"{Plate} - {Brand} {Model}";}
+        public string Name { get => $"{Plate} - {Brand} {Model}"; }
     }
 }

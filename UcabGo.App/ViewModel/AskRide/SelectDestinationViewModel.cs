@@ -1,11 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Maui.GoogleMaps;
-using Microsoft.Maui.ApplicationModel.Communication;
 using System.Collections.ObjectModel;
 using UcabGo.App.Api.Services.Destinations;
 using UcabGo.App.Api.Services.GoogleMaps;
-using UcabGo.App.Api.Services.Locations;
 using UcabGo.App.Services;
 using UcabGo.App.Utils;
 using UcabGo.App.Views;

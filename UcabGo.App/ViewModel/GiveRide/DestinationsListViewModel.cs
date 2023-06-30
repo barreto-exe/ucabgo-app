@@ -56,7 +56,7 @@ namespace UcabGo.App.ViewModel
             Greeting = $"Hola, {settings.User.Name}.";
             IsModalVisible = false;
             SeatQuantity = 1;
-            
+
             await Refresh();
         }
 
@@ -81,7 +81,7 @@ namespace UcabGo.App.ViewModel
             }
 
             var vehicles = await taskVehicles;
-            if(vehicles?.Message == "VEHICLES_FOUND" && vehicles.Data.Any())
+            if (vehicles?.Message == "VEHICLES_FOUND" && vehicles.Data.Any())
             {
                 Vehicles = new(vehicles.Data);
                 SelectedVehicle = Vehicles[0];
@@ -105,7 +105,7 @@ namespace UcabGo.App.ViewModel
         async Task Start()
         {
             var currentLocation = await MapHelper.GetCurrentLocation();
-            if(currentLocation == null)
+            if (currentLocation == null)
             {
                 await Application.Current.MainPage.DisplayAlert("Error", "No se pudo obtener la ubicación actual.", "Aceptar");
                 return;
@@ -120,13 +120,13 @@ namespace UcabGo.App.ViewModel
                 LongitudeOrigin = currentLocation.Longitude,
             });
 
-            if(apiResponse?.Message == "RIDE_CREATED")
+            if (apiResponse?.Message == "RIDE_CREATED")
             {
                 await navigation.NavigateToAsync<ActiveRiderView>();
             }
             else
             {
-                switch(apiResponse?.Message)
+                switch (apiResponse?.Message)
                 {
                     case "ACTIVE_RIDE_FOUND":
                         await Application.Current.MainPage.DisplayAlert("Error", "Ya tienes un viaje activo.", "Aceptar");

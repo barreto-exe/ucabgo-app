@@ -4,10 +4,10 @@ namespace UcabGo.App.Views;
 
 public partial class SelectDestinationView : ContentPage
 {
-	public SelectDestinationView(SelectDestinationViewModel viewModel)
-	{
-		InitializeComponent();
-		BindingContext = viewModel;
+    public SelectDestinationView(SelectDestinationViewModel viewModel)
+    {
+        InitializeComponent();
+        BindingContext = viewModel;
 
         viewModel.Map = myMap;
         viewModel.SearchBar = searchBar;
@@ -18,8 +18,8 @@ public partial class SelectDestinationView : ContentPage
         myMap.UiSettings.TiltGesturesEnabled = true;
     }
 
-	protected override void OnAppearing()
-	{
+    protected override void OnAppearing()
+    {
         base.OnAppearing();
         (BindingContext as SelectDestinationViewModel)?.OnAppearing();
     }

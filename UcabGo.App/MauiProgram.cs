@@ -96,7 +96,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<ActiveRiderView>();
         builder.Services.AddSingleton<SelectDestinationView>();
         builder.Services.AddSingleton<RidesAvailableView>();
-        
+
 
         //Removes the underline from the Entry
         Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("NoUnderline", (h, v) =>
