@@ -16,8 +16,12 @@ namespace UcabGo.App.ViewModel
             ISettingsService settingsService,
             INavigationService navigationService) : base(settingsService, navigationService)
         {
-            username = settingsService.User.Name + " " + settingsService.User.LastName;
-            email = settingsService.User.Email;
+        }
+
+        public override void OnAppearing()
+        {
+            Username = settings.User.Name + " " + settings.User.LastName;
+            Email = settings.User.Email;
         }
 
         [RelayCommand]

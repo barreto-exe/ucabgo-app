@@ -1,12 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Maui.GoogleMaps;
+using Microsoft.Maui.ApplicationModel.Communication;
 using System.Collections.ObjectModel;
 using UcabGo.App.Api.Services.Destinations;
 using UcabGo.App.Api.Services.GoogleMaps;
 using UcabGo.App.Api.Services.Locations;
 using UcabGo.App.Services;
 using UcabGo.App.Utils;
+using UcabGo.App.Views;
 using Map = Maui.GoogleMaps.Map;
 
 namespace UcabGo.App.ViewModel
@@ -38,7 +40,6 @@ namespace UcabGo.App.ViewModel
                 map.MapClicked += Map_MapClicked;
 
                 map.DrawCampus(CampusClicked);
-                map.MoveCameraToCampus();
             }
         }
 
@@ -88,6 +89,10 @@ namespace UcabGo.App.ViewModel
                 //cameraUpdate = CameraUpdateFactory.NewCameraPosition(new CameraPosition(new Position(location.Latitude, location.Longitude), 13, 0, 0));
                 mapSpan = MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromKilometers(1));
                 map.MoveToRegion(mapSpan);
+            }
+            else
+            {
+                map.MoveCameraToCampus();
             }
         }
         private void Map_MapClicked(object sender, MapClickedEventArgs e)
@@ -198,7 +203,7 @@ namespace UcabGo.App.ViewModel
             ButtonText = "Enviando...";
             IsButtonEnabled = false;
 
-            Models.Location location;
+            Models.Location location = null;
             if (CurrentPin.Tag.ToString() != "id_home" && CurrentPin.Tag.ToString() != "id_campus")
             {
                 var geocode = await mapsService.GetGeocode(
@@ -281,8 +286,13 @@ namespace UcabGo.App.ViewModel
                 location = settings.Campus;
             }
 
-            //Navigate to next page with location
-            //await navigation.NavigateToAsync<RidesAvailableView>(location);
+            var parameters = new Dictionary<string, object>
+            {
+                { "destination", location }
+            };
+
+            await navigation.GoBackAsync();
+            await navigation.NavigateToAsync<RidesAvailableView>(parameters);
 
             ButtonText = "Enviar";
             IsButtonEnabled = true;

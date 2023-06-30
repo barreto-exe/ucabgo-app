@@ -1,4 +1,4 @@
-namespace UcabGo.App.Models
+﻿namespace UcabGo.App.Models
 {
     public class Location
     {
@@ -9,5 +9,17 @@ namespace UcabGo.App.Models
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public bool IsHome { get; set; }
+        public string AliasEmoji
+        {
+            get
+            {
+                if(Alias.ToLower().Contains("casa")) return "🏠 " + Alias;
+                if(Alias.ToLower().Contains("trabajo")) return "🏢 " + Alias;
+                if(Alias.ToLower().Contains("universidad")) return "🏫 " + Alias;
+                if(Alias.ToLower().Contains("ucab")) return "🔰 " + Alias;
+
+                return "📍 " + Alias;
+            }
+        }
     }
 }

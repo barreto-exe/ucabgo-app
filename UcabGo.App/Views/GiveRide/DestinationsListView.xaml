@@ -16,7 +16,6 @@
             </Grid.RowDefinitions>
             <ScrollView>
                 <VerticalStackLayout>
-
                     <Grid>
                         <VerticalStackLayout Margin="20" ZIndex="1">
                             <Label
@@ -49,8 +48,8 @@
                         SelectionMode="None">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="model:Location">
-                                <Frame Margin="0,10">
-                                    <Grid Margin="1">
+                                <Border Margin="0,10">
+                                    <Grid Margin="10">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="Auto" />
@@ -61,13 +60,20 @@
                                             <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
 
+                                        <!--  ImageButton that covers the whole grid  -->
+                                        <ImageButton
+                                            Grid.RowSpan="3"
+                                            Grid.ColumnSpan="2"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DestinationsListViewModel}}, Path=ConfigureCommand}"
+                                            CommandParameter="{Binding .}" />
+
                                         <Label
                                             Grid.Row="0"
                                             Grid.ColumnSpan="2"
                                             FontAttributes="Bold"
                                             FontSize="Medium"
                                             LineBreakMode="TailTruncation"
-                                            Text="{Binding Alias}" />
+                                            Text="{Binding AliasEmoji}" />
                                         <Label
                                             Grid.Row="1"
                                             FontSize="Default"
@@ -107,15 +113,15 @@
                                                     </DataTrigger>
                                                 </Button.Triggers>
                                             </Button>
-                                            <Button
+                                            <!--<Button
                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DestinationsListViewModel}}, Path=ConfigureCommand}"
                                                 CommandParameter="{Binding .}"
                                                 FontFamily="IconFont"
-                                                Text="{x:Static icons:IconFont.Navigation}" />
+                                                Text="{x:Static icons:IconFont.Navigation}" />-->
                                         </HorizontalStackLayout>
 
                                     </Grid>
-                                </Frame>
+                                </Border>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>

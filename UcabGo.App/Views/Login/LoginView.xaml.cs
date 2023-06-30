@@ -9,5 +9,11 @@ public partial class LoginView : ContentPage
         InitializeComponent();
         BindingContext = viewModel;
     }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        (BindingContext as LoginViewModel)?.OnAppearing();
+    }
 }
 

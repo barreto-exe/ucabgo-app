@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="UcabGo.App.Views.RidesAvailableView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:icons="clr-namespace:UcabGo.App.Utils"
+    xmlns:model="clr-namespace:UcabGo.App.Models"
+    xmlns:vm="clr-namespace:UcabGo.App.ViewModel"
+    Title="Modo pasajero"
+    x:DataType="vm:RidesAvailableViewModel">
+    <ScrollView>
+        <VerticalStackLayout>
+
+            <VerticalStackLayout Margin="20">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Medium"
+                    HorizontalOptions="StartAndExpand"
+                    HorizontalTextAlignment="Start"
+                    Text="{Binding Greeting}" />
+                <Label
+                    FontSize="Medium"
+                    HorizontalOptions="StartAndExpand"
+                    HorizontalTextAlignment="Start"
+                    Text="¡Las siguientes personas están ofreciendo cola!" />
+                <Image HorizontalOptions="CenterAndExpand" Source="park_gps.png" />
+            </VerticalStackLayout>
+
+            <ActivityIndicator
+                Margin="10"
+                HorizontalOptions="CenterAndExpand"
+                IsRunning="{Binding IsRefreshing}"
+                IsVisible="{Binding IsRefreshing}" />
+
+            <CollectionView
+                Grid.Row="0"
+                Margin="20,0"
+                ItemsSource="{Binding Rides}"
+                SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:RideMatching">
+                        <Border Margin="10,0">
+                            <Grid Margin="10" ColumnDefinitions="*,Auto">
+                                <VerticalStackLayout>
+                                    <Label
+                                        Margin="0,0,0,10"
+                                        FontAttributes="Bold"
+                                        FontSize="Medium"
+                                        Text="{Binding Ride.Driver.CompleteName}" />
+                                    <Grid ColumnDefinitions="Auto, *" HorizontalOptions="Start">
+                                        <Label
+                                            Margin="0,0,10,0"
+                                            FontAttributes="Bold"
+                                            FontFamily="IconFont"
+                                            FontSize="22"
+                                            HorizontalOptions="Center"
+                                            Text="{x:Static icons:IconFont.Event_seat}"
+                                            TextColor="{StaticResource Primary}"
+                                            VerticalOptions="Center" />
+                                        <Label
+                                            Grid.Column="1"
+                                            FontSize="16"
+                                            Text="{Binding Ride.AvailableSeatsText}"
+                                            VerticalOptions="Center" />
+                                    </Grid>
+                                    <Grid ColumnDefinitions="Auto, *" HorizontalOptions="Start">
+                                        <Label
+                                            Margin="0,0,10,0"
+                                            FontAttributes="Bold"
+                                            FontFamily="IconFont"
+                                            FontSize="22"
+                                            HorizontalOptions="Center"
+                                            Text="{x:Static icons:IconFont.Pin_drop}"
+                                            TextColor="{StaticResource Primary}"
+                                            VerticalOptions="Center" />
+                                        <Label
+                                            Grid.Column="1"
+                                            FontSize="16"
+                                            Text="{Binding Ride.Destination.Detail}"
+                                            VerticalOptions="Center" />
+                                    </Grid>
+                                </VerticalStackLayout>
+
+                                <HorizontalStackLayout Grid.Column="1">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontFamily="IconFont"
+                                        FontSize="Medium"
+                                        Text="{x:Static icons:IconFont.Manage_search}"
+                                        TextColor="IndianRed"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="Medium"
+                                        Text="{Binding MatchingPercentageText}"
+                                        TextColor="IndianRed"
+                                        VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+
+    </ScrollView>
+</ContentPage>

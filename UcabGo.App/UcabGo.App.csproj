@@ -128,6 +128,7 @@
 	  <None Remove="Resources\Images\driver.svg" />
 	  <None Remove="Resources\Images\logout_white_24dp.svg" />
 	  <None Remove="Resources\Images\order_ride.svg" />
+	  <None Remove="Resources\Images\park_gps.svg" />
 	  <None Remove="Resources\Images\searching.svg" />
 	  <None Remove="Resources\Images\sos.svg" />
 	  <None Remove="Resources\Images\taxi.svg" />
@@ -202,6 +203,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\AskRide\SelectDestinationView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AskRide\RidesAvailableView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Vehicles\VehiclesAddView.xaml">
