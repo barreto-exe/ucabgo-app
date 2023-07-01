@@ -15,8 +15,12 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
+
+
+            <!--  Initial camera update in ciudad guayana  -->
             <maps:Map
                 x:Name="myMap"
+                InitialCameraUpdate="8.299, -62.711752, 16, 0, 10"
                 MyLocationEnabled="True"
                 VerticalOptions="FillAndExpand"
                 ZIndex="1" />

@@ -22,8 +22,8 @@ namespace UcabGo.App.Models
             get => AvailableSeats switch
             {
                 0 => "No hay asientos disponibles.",
-                1 => "1 asiento disponible.",
-                _ => $"{AvailableSeats} asientos disponibles.",
+                1 => "1 asiento.",
+                _ => $"{AvailableSeats} asientos.",
             };
         }
         public float LatitudeOrigin { get; set; }

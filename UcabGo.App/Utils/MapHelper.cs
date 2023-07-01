@@ -36,17 +36,6 @@ namespace UcabGo.App.Utils
                 map.Pins.Add(pin);
                 map.MoveToRegion(MapSpan.FromCenterAndRadius(pin.Position, Distance.FromKilometers(0.5)));
             }
-
-            /* Unmerged change from project 'UcabGo.App (net7.0-ios)'
-            Before:
-                    }
-
-                    public static Pin GetHomePin(Models.Location home)
-            After:
-                    }
-
-                    public static Pin GetHomePin(Models.Location home)
-            */
         }
 
         public static Pin GetHomePin(Models.Location home)

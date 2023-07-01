@@ -29,6 +29,11 @@ namespace UcabGo.App.ViewModel
         [ObservableProperty]
         bool isModalVisible;
 
+        [ObservableProperty]
+        bool noRidesFound;
+
+        [ObservableProperty]
+        bool ridesFound;
 
         public RidesAvailableViewModel(ISettingsService settingsService, INavigationService navigation, IRidesApi ridesApi) : base(settingsService, navigation)
         {
@@ -56,16 +61,27 @@ namespace UcabGo.App.ViewModel
         {
             Rides.Clear();
             IsRefreshing = true;
+            RidesFound = false;
+            NoRidesFound = false;
 
             bool goingToCampus = SelectedDestination.Alias.ToLower().Contains("ucab");
             var response = await ridesApi.GetMatchingRides(SelectedDestination, Convert.ToInt32(settings.User.WalkingDistance), goingToCampus);
 
             if (response?.Message == "RIDES_FOUND")
             {
-                Rides = new(response.Data);
+                Rides = new(response.Data.Where(x => x.Ride.SeatQuantity > 0));
             }
 
+            RidesFound = Rides?.Count > 0;
+            NoRidesFound = !RidesFound;
             IsRefreshing = false;
+        }
+
+        [RelayCommand]
+        async Task SelectRide(RideMatching ride)
+        {
+            //Confirm message
+            var response = await Application.Current.MainPage.DisplayAlert("Confirmar", $"¿Desea solicitar el viaje de {ride.Ride.Driver.Name}?", "Sí", "No");
         }
     }
 }
