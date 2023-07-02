@@ -1,3 +1,4 @@
+using CommunityToolkit.Mvvm.Input;
 using UcabGo.App.Api.Services.Driver;
 using UcabGo.App.Api.Services.SosContacts;
 using UcabGo.App.Api.Services.Vehicles;
@@ -40,7 +41,7 @@ namespace UcabGo.App.ViewModel
 
                 await Task.WhenAll(ridesTask, contactsTask, vehiclesTask);
 
-                var rides = await ridesTask
+                var rides = await ridesTask;
                 if (rides?.Data?.Count > 0)
                 {
                     await navigation.NavigateToAsync<ActiveRiderView>();
@@ -120,10 +121,10 @@ namespace UcabGo.App.ViewModel
                 var option =
                     await Application.Current.MainPage
                     .DisplayActionSheet(
-                        "Por favor, complete la siguiente información antes de continuar:",
+                        "Por favor, complete la siguiente información:",
                         "Cancelar",
                         null,
-                        options);
+                        options.ToArray());
 
                 switch(option){
                     case "Mi dirección de casa":
@@ -145,11 +146,10 @@ namespace UcabGo.App.ViewModel
                         return false;
                 }
 
+                return false;
             }
                 
             return true;
-
-
         }
     }
 }
