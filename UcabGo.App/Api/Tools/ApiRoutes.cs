@@ -19,5 +19,6 @@ namespace UcabGo.App.Api.Tools
         public static string DESTINATIONS { get => BASE_URL + "user/destinations"; }
         public static string DRIVER { get => BASE_URL + "driver"; }
         public static string RIDES_MATCHING { get => BASE_URL + "rides/matching"; }
+        public static string PASSENGER { get => BASE_URL + "passenger"; }
     }
 }

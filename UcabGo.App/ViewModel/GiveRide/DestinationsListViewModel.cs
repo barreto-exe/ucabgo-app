@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using UcabGo.App.Api.Services.Destinations;
 using UcabGo.App.Api.Services.Driver;
+using UcabGo.App.Api.Services.Driver.Inputs;
 using UcabGo.App.Api.Services.Vehicles;
 using UcabGo.App.Models;
 using UcabGo.App.Services;
@@ -74,10 +75,8 @@ namespace UcabGo.App.ViewModel
             var destinations = await taskDestinations;
             if (destinations?.Message == "LOCATIONS_FOUND")
             {
-                foreach (var destination in destinations.Data)
-                {
-                    Destinations.Add(destination);
-                }
+                //Order the Destinations arbitrarily. First the one with alias "Ucab", then the one with "Casa", then the others.
+                Destinations = new(destinations.Data.OrderBy(d => d.Alias.ToLower().Contains("ucab") ? 0 : d.Alias.ToLower().Contains("casa") ? 1 : 2));
             }
 
             var vehicles = await taskVehicles;

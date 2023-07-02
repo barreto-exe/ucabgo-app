@@ -5,6 +5,8 @@ using UcabGo.App.Api.Services.Destinations;
 using UcabGo.App.Api.Services.Driver;
 using UcabGo.App.Api.Services.GoogleMaps;
 using UcabGo.App.Api.Services.Locations;
+using UcabGo.App.Api.Services.Passenger;
+using UcabGo.App.Api.Services.PassengerService;
 using UcabGo.App.Api.Services.Rides;
 using UcabGo.App.Api.Services.SosContacts;
 using UcabGo.App.Api.Services.User;
@@ -48,6 +50,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IDestinationsService, DestinationsService>();
         builder.Services.AddSingleton<IDriverApi, DriverApi>();
         builder.Services.AddSingleton<IRidesApi, RidesApi>();
+        builder.Services.AddSingleton<IPassengerApi, PassengerApi>();
 
 
         //DI Services

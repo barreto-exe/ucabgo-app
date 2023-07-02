@@ -57,6 +57,8 @@ namespace UcabGo.App.ViewModel
                 user.WalkingDistance = WalkingDistance;
                 settings.User = user;
 
+                await Application.Current.MainPage.DisplayAlert("Éxito", "La distancia de caminata se ha actualizado correctamente.", "Aceptar");
+
                 await navigation.GoBackAsync();
             }
             else

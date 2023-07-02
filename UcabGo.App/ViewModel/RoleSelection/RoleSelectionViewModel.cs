@@ -19,10 +19,24 @@ namespace UcabGo.App.ViewModel
         {
             base.OnAppearing();
 
-            var rides = await driverApi.GetRides(onlyAvailable: true);
-            if (rides?.Data?.Count > 0)
+            var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+            if (status != PermissionStatus.Granted)
             {
-                await navigation.NavigateToAsync<ActiveRiderView>();
+                status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+            }
+
+            if (status == PermissionStatus.Granted)
+            {
+                var rides = await driverApi.GetRides(onlyAvailable: true);
+                if (rides?.Data?.Count > 0)
+                {
+                    await navigation.NavigateToAsync<ActiveRiderView>();
+                }
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Es necesario que aceptes los permisos de ubicación para poder continuar. Actívalos cuando la app lo solicite, o puedes hacerlo manualmente en la configuración de tu dispositivo.", "Aceptar");
+                await Logout();
             }
         }
 

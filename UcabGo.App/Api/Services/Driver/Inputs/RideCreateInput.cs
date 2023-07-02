@@ -1,4 +1,4 @@
-namespace UcabGo.App.Api.Services.Driver
+namespace UcabGo.App.Api.Services.Driver.Inputs
 {
     public class RideCreateInput
     {

@@ -1,6 +1,8 @@
+using UcabGo.App.Api.Services.Driver.Inputs;
 using UcabGo.App.Api.Tools;
 using UcabGo.App.Models;
 using UcabGo.App.Services;
+using PassengerModel = UcabGo.App.Models.Passenger;
 
 namespace UcabGo.App.Api.Services.Driver
 {
@@ -47,9 +49,9 @@ namespace UcabGo.App.Api.Services.Driver
             };
             return PutAsync<Ride>($"{ApiRoutes.DRIVER}/rides/cancel", input);
         }
-        public async Task<ApiResponse<List<Passenger>>> GetPassengers(int rideId)
+        public async Task<ApiResponse<List<PassengerModel>>> GetPassengers(int rideId)
         {
-            return await GetAsync<List<Passenger>>($"{ApiRoutes.DRIVER}/{rideId}/passengers");
+            return await GetAsync<List<PassengerModel>>($"{ApiRoutes.DRIVER}/{rideId}/passengers");
         }
         public async Task<ApiResponse<Ride>> AcceptPassenger(int rideId, int passengerId)
         {

@@ -63,6 +63,9 @@ namespace UcabGo.App.ViewModel
                 var user = settings.User;
                 user.Phone = Phone;
                 settings.User = user;
+
+                await Application.Current.MainPage.DisplayAlert("Éxito", "Número de teléfono actualizado.", "Aceptar");
+
                 await navigation.GoBackAsync();
             }
             else
