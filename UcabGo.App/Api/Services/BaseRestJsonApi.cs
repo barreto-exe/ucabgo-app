@@ -207,10 +207,10 @@ namespace UcabGo.App.Api.Services
                     break;
 
                 case HttpStatusCode.NotFound:
-                    await page.DisplayAlert(
-                        "Error",
-                        "No se encontró el recurso solicitado",
-                        "Aceptar");
+                    //await page.DisplayAlert(
+                    //    "Error",
+                    //    "No se encontró el recurso solicitado",
+                    //    "Aceptar");
                     break;
 
                 case HttpStatusCode.InternalServerError:

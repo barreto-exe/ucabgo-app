@@ -62,57 +62,32 @@ namespace UcabGo.App.ViewModel
             IsLoading = true;
             IsDataVisible = false;
 
-            bool close = false;
+            bool closeView = false;
             var rides = await driverApi.GetRides(onlyAvailable: true);
             if (rides?.Message == "RIDES_FOUND")
             {
-                var activeRide = rides.Data.FirstOrDefault(x => x.IsAvailable);
+                var activeRide = rides.Data.FirstOrDefault();
                 if (activeRide != null)
                 {
                     Ride = activeRide;
-
-                    //Set avaliable seats text
-                    SeatsText = Ride.AvailableSeats switch
-                    {
-                        0 => "No hay asientos disponibles.",
-                        1 => "1 asiento disponible.",
-                        _ => $"{Ride.AvailableSeats} asientos disponibles.",
-                    };
                 }
                 else
                 {
-                    close = true;
+                    closeView = true;
                 }
             }
             else
             {
-                close = true;
+                closeView = true;
             }
 
-            if (close)
+            if (closeView)
             {
                 await Application.Current.MainPage.DisplayAlert("Error", "No hay cola activa.", "Aceptar");
                 await navigation.GoBackAsync();
             }
 
-            var passengers = await driverApi.GetPassengers(Ride.Id);
-            if (passengers?.Message == "PASSENGERS_FOUND")
-            {
-                passengers.Data = passengers.Data
-                    .Where(x => x.IsShowed)
-                    .OrderBy(x => x.TimeAccepted)
-                    .ThenBy(x => x.TimeSolicited)
-                    .ToList();
-                Passengers = new(passengers.Data);
-            }
-
-            int seats = Ride?.AvailableSeats ?? 0;
-            string seatsText = seats switch
-            {
-                0 => "No quedan asientos disponibles.",
-                1 => "1 asiento disponible.",
-                _ => $"{seats} asientos disponibles.",
-            };
+            await UpdatePassengers();
 
             string acceptText;
             if (!Ride.IsStarted)
@@ -124,13 +99,36 @@ namespace UcabGo.App.ViewModel
                 acceptText = "Finalizar viaje";
             }
 
-            SeatsText = seatsText;
             ButtonText = acceptText;
             IsCancelButtonEnabled = !Ride.IsStarted;
             IsLoading = false;
             IsDataVisible = true;
+        }
+
+        private async Task UpdatePassengers()
+        {
+            var passengers = await driverApi.GetPassengers(Ride.Id);
+            if (passengers?.Message == "PASSENGERS_FOUND")
+            {
+                passengers.Data = passengers.Data
+                    .Where(x => x.IsActive)
+                    .OrderBy(x => x.TimeAccepted)
+                    .ThenBy(x => x.TimeSolicited)
+                    .ToList();
+                Passengers = new(passengers.Data);
+            }
+
             IsPassengersVisible = Passengers.Any();
             IsPassengersEmpty = !Passengers.Any();
+
+            Ride.AvailableSeats = Ride.SeatQuantity - Passengers.Where(x => x.IsAccepted && x.IsActive).Count();
+            int seats = Ride.AvailableSeats > 0 ? Ride.AvailableSeats : 0;
+            SeatsText = seats switch
+            {
+                0 => "No quedan asientos disponibles.",
+                1 => "1 asiento disponible.",
+                _ => $"{seats} asientos disponibles.",
+            };
         }
 
         [RelayCommand]
@@ -145,7 +143,6 @@ namespace UcabGo.App.ViewModel
             var response = await driverApi.CancelRide(Ride.Id);
             if (response?.Message == "RIDE_CANCELED")
             {
-                await Application.Current.MainPage.DisplayAlert("Éxito", "El viaje ha sido cancelado.", "Aceptar");
                 await navigation.GoBackAsync();
             }
             else
@@ -167,9 +164,123 @@ namespace UcabGo.App.ViewModel
             }
         }
 
+        [RelayCommand]
+        async Task AcceptPassenger(Passenger passenger)
+        {
+            bool confirm = await Application.Current.MainPage.DisplayAlert("Confirmación", "¿Desea aceptar al pasajero?", "Aceptar", "Cancelar");
+            if (!confirm)
+            {
+                return;
+            }
+
+            string message;
+            var response = await driverApi.AcceptPassenger(Ride.Id, passenger.Id);
+            if (response?.Message == "PASSENGER_ACCEPTED")
+            {
+                message = string.Empty;
+            }
+            else if (response?.Message == "PASSENGER_NOT_FOUND")
+            {
+                message = "El pasajero no se encuentra en la cola.";
+            }
+            else if (response?.Message == "REQUEST_NOT_AVAILABLE_OR_ACCEPTED")
+            {
+                message = "El pasajero ya ha sido aceptado.";
+            }
+            else
+            {
+                message = "No se pudo aceptar al pasajero.";
+            }
+                
+            if (!string.IsNullOrEmpty(message))
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", message, "Aceptar");
+            }
+            await UpdatePassengers();
+        }
+
+        [RelayCommand]
+        async Task CancelPassenger(Passenger passenger)
+        {
+            bool confirm = await Application.Current.MainPage.DisplayAlert("Confirmación", "¿Desea rechazar al pasajero?", "Aceptar", "Cancelar");
+            if (!confirm)
+            {
+                return;
+            }
+
+            if(passenger.IsWaiting)
+            {
+                await IgnorePassengerApi(passenger);
+            }
+            else if(passenger.IsAccepted)
+            {
+                await CancelPassengerApi(passenger);
+            }
+        }
+        private async Task CancelPassengerApi(Passenger passenger)
+        {
+            string message;
+            var response = await driverApi.CancelPassenger(Ride.Id, passenger.Id);
+            if (response?.Message == "PASSENGER_CANCELLED")
+            {
+                message = string.Empty;
+            }
+            else if (response?.Message == "REQUEST_ALREADY_CANCELED_OR_NOT_ACCEPTED")
+            {
+                message = "El pasajero ya ha sido cancelado.";
+            }
+            else
+            {
+                message = "No se pudo cancelar al pasajero.";
+            }
+            
+            if (!string.IsNullOrEmpty(message))
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", message, "Aceptar");
+            }
+            await UpdatePassengers();
+        }
+        private async Task IgnorePassengerApi(Passenger passenger)
+        {
+            string message;
+            var response = await driverApi.IgnorePassenger(Ride.Id, passenger.Id);
+            if (response?.Message == "PASSENGER_IGNORED")
+            {
+                message = string.Empty;
+            }
+            else if (response?.Message == "REQUEST_NOT_AVAILABLE_OR_ACCEPTED")
+            {
+                message = "El pasajero ya ha sido aceptado.";
+            }
+            else
+            {
+                message = "No se pudo ignorar al pasajero.";
+            }
+
+            if (!string.IsNullOrEmpty(message))
+            {
+                await Application.Current.MainPage.DisplayAlert("Éxito", message, "Aceptar");
+            }
+            await UpdatePassengers();
+        }
+
+        [RelayCommand]
+        async Task CallSosContacts()
+        {
+            var contact = await Application.Current.MainPage.DisplayActionSheet("Contactar a", "Cancelar", null, settings.SosContacts.Select(x => x.Name).ToArray());
+            if(!contact.Equals("Cancelar") && !string.IsNullOrEmpty(contact))
+            {
+                if (PhoneDialer.Default.IsSupported)
+                {
+                    var contactSelected = settings.SosContacts.FirstOrDefault(x => x.Name.Equals(contact));
+                    PhoneDialer.Default.Open(contactSelected.Phone);
+                }
+            }
+        }
+
         async Task StartRide()
         {
-            if (!Ride.Passengers.Any())
+            if (!Passengers.Any(x => x.IsAccepted && x.IsActive))
             {
                 await Application.Current.MainPage.DisplayAlert("Error", "No hay pasajeros en el viaje.", "Aceptar");
                 return;
@@ -184,6 +295,9 @@ namespace UcabGo.App.ViewModel
             var response = await driverApi.StartRide(Ride.Id);
             if (response?.Message == "RIDE_STARTED")
             {
+                await Application.Current.MainPage.DisplayAlert("Éxito", "El viaje ha comenzado.", "Aceptar");
+
+                Ride = response.Data;
                 IsRideStarted = true;
                 IsCancelButtonEnabled = false;
                 ButtonText = "Finalizar viaje";
@@ -195,7 +309,7 @@ namespace UcabGo.App.ViewModel
         }
         async Task CompleteRide()
         {
-            bool confirm = await Application.Current.MainPage.DisplayAlert("Confirmaci�n", "¿Desea finalizar el viaje?", "Aceptar", "Cancelar");
+            bool confirm = await Application.Current.MainPage.DisplayAlert("Confirmación", "¿Desea finalizar el viaje?", "Aceptar", "Cancelar");
             if (!confirm)
             {
                 return;
@@ -203,7 +317,7 @@ namespace UcabGo.App.ViewModel
             var response = await driverApi.CompleteRide(Ride.Id);
             if (response?.Message == "RIDE_COMPLETED")
             {
-                await Application.Current.MainPage.DisplayAlert("Éxito", "El viaje ha sido completado.", "Aceptar");
+                //TODO - Go to rating page
                 await navigation.GoBackAsync();
             }
             else

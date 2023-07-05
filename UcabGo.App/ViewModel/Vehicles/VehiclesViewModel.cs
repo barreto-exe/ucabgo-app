@@ -42,12 +42,14 @@ namespace UcabGo.App.ViewModel
             var vehicles = await vehiclesApi.GetVehicles();
             if (vehicles?.Message == "VEHICLES_FOUND")
             {
-                IsEmpty = vehicles.Data.Count == 0;
+                IsEmpty = !vehicles.Data.Any();
 
                 foreach (var vehicle in vehicles.Data)
                 {
                     Vehicles.Add(vehicle);
                 }
+
+                settings.Vehicles = vehicles.Data;
             }
 
             IsRefreshing = false;

@@ -67,24 +67,15 @@ namespace UcabGo.App.ViewModel
             Destinations.Clear();
             IsRefreshing = true;
 
-            var taskDestinations = destinationsService.GetDestinations();
-            var taskVehicles = vehiclesApi.GetVehicles();
-
-            await Task.WhenAll(taskDestinations, taskVehicles);
-
-            var destinations = await taskDestinations;
+            var destinations = await destinationsService.GetDestinations();
             if (destinations?.Message == "LOCATIONS_FOUND")
             {
                 //Order the Destinations arbitrarily. First the one with alias "Ucab", then the one with "Casa", then the others.
                 Destinations = new(destinations.Data.OrderBy(d => d.Alias.ToLower().Contains("ucab") ? 0 : d.Alias.ToLower().Contains("casa") ? 1 : 2));
             }
 
-            var vehicles = await taskVehicles;
-            if (vehicles?.Message == "VEHICLES_FOUND" && vehicles.Data.Any())
-            {
-                Vehicles = new(vehicles.Data);
-                SelectedVehicle = Vehicles[0];
-            }
+            Vehicles = new(settings.Vehicles);
+            SelectedVehicle = Vehicles[0];
 
             IsRefreshing = false;
         }

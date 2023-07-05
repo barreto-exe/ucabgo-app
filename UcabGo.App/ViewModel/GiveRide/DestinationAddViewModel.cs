@@ -166,7 +166,8 @@ namespace UcabGo.App.ViewModel
                         "Alias",
                         message: "Indica un alias para el destino.",
                         cancel: "Cancelar",
-                        placeholder: "Ej: Casa, Trabajo...");
+                        placeholder: "Ej: Casa, Trabajo...",
+                        accept: "Aceptar");
             if (alias == "Cancelar" || string.IsNullOrEmpty(alias))
             {
                 await Application.Current.MainPage.DisplayAlert("Error", "Debe indicar el alias.", "Aceptar");
@@ -201,7 +202,8 @@ namespace UcabGo.App.ViewModel
                         "Zona",
                         message: "Indica la zona de tu destino.",
                         cancel: "Cancelar",
-                        placeholder: "Ej: Alta Vista, Unare...");
+                        placeholder: "Ej: Alta Vista, Unare...",
+                        accept: "Aceptar");
             }
 
             if (zone == "Cancelar" || string.IsNullOrEmpty(zone))
@@ -218,6 +220,7 @@ namespace UcabGo.App.ViewModel
                         "Detalle",
                         message: "Punto de referencia o información extra para el conductor.",
                         cancel: "Cancelar",
+                        accept: "Aceptar",
                         placeholder: "Ej: Al final de la calle.");
             if (detail == "Cancelar" || string.IsNullOrEmpty(detail))
             {

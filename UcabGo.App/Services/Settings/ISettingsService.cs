@@ -1,4 +1,5 @@
 ﻿using UcabGo.App.Api.Models;
+using UcabGo.App.Models;
 using Location = UcabGo.App.Models.Location;
 
 namespace UcabGo.App.Services
@@ -10,6 +11,8 @@ namespace UcabGo.App.Services
         bool IsLoggedIn { get; }
         Location Home { get; set; }
         Location Campus { get; set; }
+        IEnumerable<Vehicle> Vehicles { get; set; }
+        IEnumerable<SosContact> SosContacts { get; set; }
 
         protected T GetValueOrDefault<T>(string key, T defaultValue);
         protected void SetValue(string key, object value);

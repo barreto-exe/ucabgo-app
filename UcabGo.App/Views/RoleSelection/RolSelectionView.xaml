@@ -8,34 +8,47 @@
     x:DataType="viewmodel:RoleSelectionViewModel"
     BackgroundColor="{AppThemeBinding Light={StaticResource Gray100},
                                       Dark={StaticResource Gray900}}">
-    <ScrollView HorizontalOptions="Center" VerticalOptions="Center">
-        <VerticalStackLayout>
-            <Border Margin="20" MaximumWidthRequest="400">
-                <VerticalStackLayout>
-                    <Image
-                        HeightRequest="150"
-                        Source="driver.png"
-                        VerticalOptions="Start" />
-                    <Button
-                        Margin="0,20"
-                        Command="{Binding DriverCommand}"
-                        Text="Dar cola" />
-                </VerticalStackLayout>
-            </Border>
+    <Grid>
+        <ScrollView HorizontalOptions="Center" VerticalOptions="Center">
+            <VerticalStackLayout>
+                <Border Margin="20,0,20,20" MaximumWidthRequest="400">
+                    <VerticalStackLayout>
+                        <Image
+                            Margin="0,20,0,10"
+                            HeightRequest="150"
+                            Source="driver.png"
+                            VerticalOptions="Start" />
+                        <Button
+                            Margin="0,20"
+                            Command="{Binding DriverCommand}"
+                            IsEnabled="{Binding AreButtonsEnabled}"
+                            Text="Dar cola" />
+                    </VerticalStackLayout>
+                </Border>
 
-            <Border Margin="20,0" MaximumWidthRequest="400">
-                <VerticalStackLayout>
-                    <Image
-                        Margin="0,20,0,0"
-                        HeightRequest="150"
-                        Source="walker.png"
-                        VerticalOptions="Start" />
-                    <Button
-                        Margin="0,20"
-                        Command="{Binding PassengerCommand}"
-                        Text="Pedir cola" />
-                </VerticalStackLayout>
-            </Border>
-        </VerticalStackLayout>
-    </ScrollView>
+                <Border Margin="20,0" MaximumWidthRequest="400">
+                    <VerticalStackLayout>
+                        <Image
+                            Margin="0,20,0,10"
+                            HeightRequest="150"
+                            Source="walker.png"
+                            VerticalOptions="Start" />
+                        <Button
+                            Margin="0,20"
+                            Command="{Binding PassengerCommand}"
+                            IsEnabled="{Binding AreButtonsEnabled}"
+                            Text="Pedir cola" />
+                    </VerticalStackLayout>
+                </Border>
+
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <ProgressBar
+            Margin="-5"
+            IsVisible="{Binding IsLoading}"
+            Progress="{Binding ProgressBarValue}"
+            VerticalOptions="Start" />
+    </Grid>
 </ContentPage>

@@ -75,23 +75,23 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
 	  <ApplicationTitle>Ucabery</ApplicationTitle>
-	  <ApplicationDisplayVersion>0.2.0</ApplicationDisplayVersion>
+	  <ApplicationDisplayVersion>0.3.0</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
 	  <ApplicationTitle>Ucabery</ApplicationTitle>
-	  <ApplicationDisplayVersion>0.2.0</ApplicationDisplayVersion>
+	  <ApplicationDisplayVersion>0.3.0</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android|AnyCPU'">
 	  <ApplicationTitle>Ucabery</ApplicationTitle>
-	  <ApplicationDisplayVersion>0.2.0</ApplicationDisplayVersion>
+	  <ApplicationDisplayVersion>0.3.0</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android|AnyCPU'">
 	  <ApplicationTitle>Ucabery</ApplicationTitle>
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
-	  <ApplicationDisplayVersion>0.2.0</ApplicationDisplayVersion>
+	  <ApplicationDisplayVersion>0.3.0</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|AnyCPU'">
@@ -133,6 +133,7 @@
 	  <None Remove="Resources\Images\sos.svg" />
 	  <None Remove="Resources\Images\taxi.svg" />
 	  <None Remove="Resources\Images\walker.svg" />
+	  <None Remove="Resources\Raw\data.example.json" />
 	  <None Remove="Resources\Raw\data.json" />
 	</ItemGroup>
 
@@ -169,7 +170,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiAsset Update="Resources\Raw\data.example.json">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="Shells\SessionShell.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AskRide\ActivePassengerView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\GiveRide\ActiveRiderView.xaml">

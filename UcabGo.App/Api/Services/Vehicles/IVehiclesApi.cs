@@ -5,7 +5,7 @@ namespace UcabGo.App.Api.Services.Vehicles
 {
     public interface IVehiclesApi
     {
-        Task<ApiResponse<List<Vehicle>>> GetVehicles();
+        Task<ApiResponse<IEnumerable<Vehicle>>> GetVehicles();
         Task<ApiResponse<Vehicle>> AddVehicle(Vehicle vehicle);
         Task<ApiResponse<Vehicle>> UpdateVehicle(Vehicle vehicle);
         Task<ApiResponse<Vehicle>> DeleteVehicle(int id);

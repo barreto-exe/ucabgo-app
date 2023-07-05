@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UcabGo.App.Api.Services.PassengerService;
 using UcabGo.App.Api.Services.PassengerService.Inputs;
 using UcabGo.App.Api.Tools;
+using UcabGo.App.Models;
 using UcabGo.App.Services;
 using PassengerModel = UcabGo.App.Models.Passenger;
 
@@ -24,12 +25,18 @@ namespace UcabGo.App.Api.Services.Passenger
 
         public async Task<ApiResponse<PassengerModel>> CancelRide(int rideId)
         {
-            return await PostAsync<PassengerModel>(ApiRoutes.PASSENGER + "/rides/cancel", new { rideId });
+            return await PutAsync<PassengerModel>(ApiRoutes.PASSENGER + "/cancel", new { rideId });
         }
 
         public async Task<ApiResponse<PassengerModel>> FinishRide(int rideId)
         {
-            return await PostAsync<PassengerModel>(ApiRoutes.PASSENGER + "/rides/finish", new { rideId });
+            return await PutAsync<PassengerModel>(ApiRoutes.PASSENGER + "/finish", new { rideId });
         }
+
+        public async Task<ApiResponse<IEnumerable<Ride>>> GetRides(bool onlyAvailable)
+        {
+            return await GetAsync<IEnumerable<Ride>>(ApiRoutes.PASSENGER + "/rides", new { onlyAvailable });
+        }
+
     }
 }

@@ -7,6 +7,7 @@ using UcabGo.App.Api.Services.Rides;
 using UcabGo.App.Models;
 using UcabGo.App.Services;
 using UcabGo.App.Utils;
+using UcabGo.App.Views;
 using Location = UcabGo.App.Models.Location;
 
 
@@ -31,9 +32,6 @@ namespace UcabGo.App.ViewModel
         string greeting;
 
         [ObservableProperty]
-        bool isModalVisible;
-
-        [ObservableProperty]
         bool noRidesFound;
 
         [ObservableProperty]
@@ -56,7 +54,6 @@ namespace UcabGo.App.ViewModel
             }
 
             Greeting = $"Hola, {settings.User.Name}.";
-            IsModalVisible = false;
 
             await Refresh();
         }
@@ -70,11 +67,41 @@ namespace UcabGo.App.ViewModel
             NoRidesFound = false;
 
             bool goingToCampus = SelectedDestination.Alias.ToLower().Contains("ucab");
-            var response = await ridesApi.GetMatchingRides(SelectedDestination, Convert.ToInt32(settings.User.WalkingDistance), goingToCampus);
+            
+            var ridesTask = ridesApi.GetMatchingRides(SelectedDestination, Convert.ToInt32(settings.User.WalkingDistance), goingToCampus);
+            var passengerTask = passengerApi.GetRides(onlyAvailable: true);
 
-            if (response?.Message == "RIDES_FOUND")
+            await Task.WhenAll(ridesTask, passengerTask);
+
+            var ridesResponse = await ridesTask;
+            var passengerResponse = await passengerTask;
+
+            if (ridesResponse?.Message == "RIDES_FOUND")
             {
-                Rides = new(response.Data.Where(x => x.Ride.SeatQuantity > 0));
+                if (!goingToCampus)
+                {
+                    Rides = new(ridesResponse.Data.Where(x => x.Ride.AvailableSeats > 0));
+                }
+                else
+                {
+                    Rides = new(ridesResponse.Data.Where(x => x.Ride.AvailableSeats > 0).Select(r =>
+                    {
+                        r.Ride.Destination.Zone = "UCAB Guayana.";
+                        return r;
+                    }));
+                }
+            }
+
+            if (passengerResponse?.Message == "RIDES_FOUND" && passengerResponse.Data.Any(x => x.IsAvailable))
+            {
+                //Is a passenger that's not been ignored or cancelled
+                var passengers = passengerResponse.Data.First(x => x.IsAvailable).Passengers;
+                bool isPassenger = passengers.Any(x => x.Id == settings.User.Id && x.TimeIgnored == null && x.TimeCancelled == null);
+
+                if (isPassenger)
+                {
+                    await navigation.NavigateToAsync<ActivePassengerView>();
+                }
             }
 
             RidesFound = Rides?.Count > 0;
@@ -102,10 +129,7 @@ namespace UcabGo.App.ViewModel
                 var response = await passengerApi.AskForRide(input);
                 if (response?.Message == "ASKED_FOR_RIDE")
                 {
-                    await Application.Current.MainPage.DisplayAlert("Atención", "Se ha solicitado el viaje exitosamente.", "Aceptar");
-
-                    //Go to waiting page
-                    //await navigation.NavigateToAsync<WaitingRideViewModel>();
+                    await navigation.NavigateToAsync<ActivePassengerView>();
                 }
                 else if(response?.Message != null)
                 {

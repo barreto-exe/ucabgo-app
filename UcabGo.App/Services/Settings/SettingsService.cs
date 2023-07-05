@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using UcabGo.App.Api.Models;
+using UcabGo.App.Models;
 using Location = UcabGo.App.Models.Location;
 
 namespace UcabGo.App.Services.Settings
@@ -11,6 +12,8 @@ namespace UcabGo.App.Services.Settings
         private readonly User UserDefault = null;
         private readonly Location HomeDefault = null;
         private readonly Location CampusDefault = null;
+        private readonly IEnumerable<Vehicle> VehiclesDefault = null;
+        private readonly IEnumerable<SosContact> SosContactsDefault = null;
 
         //Getters and setters for settings
         public string AccessToken
@@ -33,6 +36,16 @@ namespace UcabGo.App.Services.Settings
         {
             get => GetValueOrDefault(nameof(Campus), CampusDefault);
             set => SetValue(nameof(Campus), value);
+        }
+        public IEnumerable<Vehicle> Vehicles
+        {
+            get => GetValueOrDefault(nameof(Vehicles), VehiclesDefault);
+            set => SetValue(nameof(Vehicles), value);
+        }
+        public IEnumerable<SosContact> SosContacts
+        {
+            get => GetValueOrDefault(nameof(SosContacts), SosContactsDefault);
+            set => SetValue(nameof(SosContacts), value);
         }
 
         //Methods for settings

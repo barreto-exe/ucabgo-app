@@ -43,12 +43,14 @@ namespace UcabGo.App.ViewModel
             var contacts = await sosContactsApi.GetSosContacts();
             if (contacts?.Message == "SOSCONTACTS_FOUND")
             {
-                IsEmpty = contacts.Data.Count == 0;
+                IsEmpty = !contacts.Data.Any();
 
                 foreach (var contact in contacts.Data)
                 {
                     SosContacts.Add(contact);
                 }
+
+                settings.SosContacts = contacts.Data;
             }
 
             IsRefreshing = false;

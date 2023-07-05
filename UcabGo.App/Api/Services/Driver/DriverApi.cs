@@ -12,14 +12,14 @@ namespace UcabGo.App.Api.Services.Driver
         {
         }
 
-        public async Task<ApiResponse<List<Ride>>> GetRides(bool onlyAvailable)
+        public async Task<ApiResponse<IEnumerable<Ride>>> GetRides(bool onlyAvailable)
         {
             var query = new
             {
                 OnlyAvailable = onlyAvailable,
             };
 
-            return await GetAsync<List<Ride>>($"{ApiRoutes.DRIVER}/rides", query);
+            return await GetAsync<IEnumerable<Ride>>($"{ApiRoutes.DRIVER}/rides", query);
         }
         public async Task<ApiResponse<Ride>> CreateRide(RideCreateInput rideInput)
         {
@@ -49,9 +49,9 @@ namespace UcabGo.App.Api.Services.Driver
             };
             return PutAsync<Ride>($"{ApiRoutes.DRIVER}/rides/cancel", input);
         }
-        public async Task<ApiResponse<List<PassengerModel>>> GetPassengers(int rideId)
+        public async Task<ApiResponse<IEnumerable<PassengerModel>>> GetPassengers(int rideId)
         {
-            return await GetAsync<List<PassengerModel>>($"{ApiRoutes.DRIVER}/{rideId}/passengers");
+            return await GetAsync<IEnumerable<PassengerModel>>($"{ApiRoutes.DRIVER}/{rideId}/passengers");
         }
         public async Task<ApiResponse<Ride>> AcceptPassenger(int rideId, int passengerId)
         {

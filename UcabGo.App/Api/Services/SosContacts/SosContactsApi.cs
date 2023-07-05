@@ -10,9 +10,9 @@ namespace UcabGo.App.Api.Services.SosContacts
         {
         }
 
-        public async Task<ApiResponse<List<SosContact>>> GetSosContacts()
+        public async Task<ApiResponse<IEnumerable<SosContact>>> GetSosContacts()
         {
-            return await GetAsync<List<SosContact>>(ApiRoutes.SOS_CONTACTS);
+            return await GetAsync<IEnumerable<SosContact>>(ApiRoutes.SOS_CONTACTS);
         }
         public async Task<ApiResponse<SosContact>> AddSosContact(SosContact sosContact)
         {

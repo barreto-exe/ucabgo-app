@@ -228,7 +228,8 @@ namespace UcabGo.App.ViewModel
                             "Zona",
                             message: "Indica la zona de tu destino.",
                             cancel: "Cancelar",
-                            placeholder: "Ej: Alta Vista, Unare...");
+                            placeholder: "Ej: Alta Vista, Unare...",
+                            accept: "Aceptar");
                 }
 
                 if (zone == "Cancelar" || string.IsNullOrEmpty(zone))
@@ -246,7 +247,8 @@ namespace UcabGo.App.ViewModel
                             "Detalle",
                             message: "Punto de referencia o información extra para el conductor.",
                             cancel: "Cancelar",
-                            placeholder: "Ej: Al final de la calle.");
+                            placeholder: "Ej: Al final de la calle.",
+                            accept: "Aceptar");
                 if (detail == "Cancelar" || string.IsNullOrEmpty(detail))
                 {
                     await Application.Current.MainPage.DisplayAlert("Error", "Debe indicar el detalle", "Aceptar");
@@ -260,7 +262,7 @@ namespace UcabGo.App.ViewModel
                 {
                     Latitude = CurrentPin.Position.Latitude,
                     Longitude = CurrentPin.Position.Longitude,
-                    Alias = "Destino temporal de pasajero",
+                    Alias = $"Destino {DateTime.Now:dd/MM/yy}",
                     Zone = zone,
                     Detail = detail,
                 };

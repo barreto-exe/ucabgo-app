@@ -52,10 +52,12 @@
                     IsVisible="{Binding IsRefreshing}" />
 
                 <Image
+                    Margin="20"
                     HorizontalOptions="CenterAndExpand"
                     IsVisible="{Binding RidesFound}"
                     Source="park_gps.png" />
                 <Image
+                    Margin="40"
                     HorizontalOptions="CenterAndExpand"
                     IsVisible="{Binding NoRidesFound}"
                     Source="searching.png" />

@@ -10,9 +10,9 @@ namespace UcabGo.App.Api.Services.Vehicles
         {
         }
 
-        public async Task<ApiResponse<List<Vehicle>>> GetVehicles()
+        public async Task<ApiResponse<IEnumerable<Vehicle>>> GetVehicles()
         {
-            return await GetAsync<List<Vehicle>>(ApiRoutes.USER_VEHICLES);
+            return await GetAsync<IEnumerable<Vehicle>>(ApiRoutes.USER_VEHICLES);
         }
         public async Task<ApiResponse<Vehicle>> AddVehicle(Vehicle vehicle)
         {

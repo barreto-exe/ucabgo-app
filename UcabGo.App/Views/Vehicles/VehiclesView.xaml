@@ -43,7 +43,7 @@
                     SelectionMode="None">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:Vehicle">
-                            <Frame Margin="0,10">
+                            <Border Margin="0,10" Padding="20">
                                 <VerticalStackLayout Margin="1" Spacing="10">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -109,7 +109,7 @@
                                             TextColor="White" />
                                     </HorizontalStackLayout>
                                 </VerticalStackLayout>
-                            </Frame>
+                            </Border>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>

@@ -56,9 +56,9 @@
             ZIndex="2">
             <Grid.Shadow>
                 <Shadow
-                    Opacity="0.8"
-                    Radius="30"
-                    Offset="2,5" />
+                    Opacity="0.5"
+                    Radius="5"
+                    Offset="1,1" />
             </Grid.Shadow>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -125,9 +125,9 @@
                 VerticalOptions="End">
                 <ImageButton.Shadow>
                     <Shadow
-                        Opacity="0.8"
-                        Radius="10"
-                        Offset="2,4" />
+                        Opacity="0.5"
+                        Radius="5"
+                        Offset="1,1" />
                 </ImageButton.Shadow>
             </ImageButton>
 
@@ -142,9 +142,9 @@
                 VerticalOptions="End">
                 <ImageButton.Shadow>
                     <Shadow
-                        Opacity="0.8"
-                        Radius="10"
-                        Offset="2,4" />
+                        Opacity="0.5"
+                        Radius="5"
+                        Offset="1,1" />
                 </ImageButton.Shadow>
             </ImageButton>
         </Grid>

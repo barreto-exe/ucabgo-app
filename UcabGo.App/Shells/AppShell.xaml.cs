@@ -11,6 +11,8 @@ public partial class AppShell : Shell
         InitializeComponent();
         this.navigationService = navigationService;
 
+        lblVersion.Text = $"Versión {VersionTracking.CurrentVersion}";
+
         Routing.RegisterRoute(nameof(PasswordView), typeof(PasswordView));
         Routing.RegisterRoute(nameof(PhoneView), typeof(PhoneView));
         Routing.RegisterRoute(nameof(SosContactsView), typeof(SosContactsView));
@@ -24,6 +26,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(ActiveRiderView), typeof(ActiveRiderView));
         Routing.RegisterRoute(nameof(SelectDestinationView), typeof(SelectDestinationView));
         Routing.RegisterRoute(nameof(RidesAvailableView), typeof(RidesAvailableView));
+        Routing.RegisterRoute(nameof(ActivePassengerView), typeof(ActivePassengerView));
     }
 
     protected override async void OnParentSet()

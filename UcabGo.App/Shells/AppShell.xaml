@@ -32,6 +32,7 @@
                 Text="© Todos los derechos reservados."
                 TextColor="Gray" />
             <Label
+                x:Name="lblVersion"
                 FontSize="Micro"
                 HorizontalOptions="Center"
                 Text="Versión 1.0.0"

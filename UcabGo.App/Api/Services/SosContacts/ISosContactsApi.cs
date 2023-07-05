@@ -5,7 +5,7 @@ namespace UcabGo.App.Api.Services.SosContacts
 {
     public interface ISosContactsApi
     {
-        Task<ApiResponse<List<SosContact>>> GetSosContacts();
+        Task<ApiResponse<IEnumerable<SosContact>>> GetSosContacts();
         Task<ApiResponse<SosContact>> AddSosContact(SosContact sosContact);
         Task<ApiResponse<SosContact>> UpdateSosContact(SosContact sosContact);
         Task<ApiResponse<SosContact>> DeleteSosContact(int id);
