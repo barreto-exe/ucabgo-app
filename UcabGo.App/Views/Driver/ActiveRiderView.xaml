@@ -110,6 +110,7 @@
                         <!--  Chat button  -->
                         <Button
                             Grid.Column="3"
+                            Command="{Binding ChatCommand}"
                             FontFamily="IconFont"
                             FontSize="Large"
                             HeightRequest="60"

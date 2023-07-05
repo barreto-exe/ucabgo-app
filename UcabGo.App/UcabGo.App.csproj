@@ -139,6 +139,7 @@
 
 	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
+	  <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="7.0.1" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 
@@ -149,10 +150,10 @@
 	  <Compile Update="Shells\SessionShell.xaml.cs">
 	    <DependentUpon>SessionShell.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\GiveRide\ActiveRiderView.xaml.cs">
+	  <Compile Update="Views\Driver\ActiveRiderView.xaml.cs">
 	    <DependentUpon>ActiveRiderView.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\GiveRide\DestinationAddView.xaml.cs">
+	  <Compile Update="Views\Driver\DestinationAddView.xaml.cs">
 	    <DependentUpon>DestinationAddView.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\Documentation\HelpView.xaml.cs">
@@ -179,16 +180,19 @@
 	  <MauiXaml Update="Shells\SessionShell.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\AskRide\ActivePassengerView.xaml">
+	  <MauiXaml Update="Views\Chat\ChatView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\GiveRide\ActiveRiderView.xaml">
+	  <MauiXaml Update="Views\Passenger\ActivePassengerView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\GiveRide\DestinationAddView.xaml">
+	  <MauiXaml Update="Views\Driver\ActiveRiderView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\GiveRide\DestinationsListView.xaml">
+	  <MauiXaml Update="Views\Driver\DestinationAddView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Driver\DestinationsListView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Documentation\AboutView.xaml">
@@ -212,10 +216,10 @@
 	  <MauiXaml Update="Views\GiveRide\StartRideView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\AskRide\SelectDestinationView.xaml">
+	  <MauiXaml Update="Views\Passenger\SelectDestinationView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\AskRide\RidesAvailableView.xaml">
+	  <MauiXaml Update="Views\Passenger\RidesAvailableView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Vehicles\VehiclesAddView.xaml">

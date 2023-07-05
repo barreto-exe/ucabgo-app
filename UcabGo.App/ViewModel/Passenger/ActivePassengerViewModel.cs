@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using UcabGo.App.Api.Services.PassengerService;
 using UcabGo.App.Models;
 using UcabGo.App.Services;
+using UcabGo.App.Views;
 
 namespace UcabGo.App.ViewModel
 {
@@ -250,6 +251,10 @@ namespace UcabGo.App.ViewModel
 
                 var minutesLeft = TimeSpan.FromMinutes(15) - timePassed;
 
+#if DEBUG
+                minutesLeft = TimeSpan.FromSeconds(10);
+#endif
+
                 if (minutesLeft.TotalSeconds <= 0)
                 {
                     await CancelRideApi();
@@ -268,7 +273,7 @@ namespace UcabGo.App.ViewModel
         async Task CallSosContacts()
         {
             var contact = await Application.Current.MainPage.DisplayActionSheet("Contactar a", "Cancelar", null, settings.SosContacts.Select(x => x.Name).ToArray());
-            if (!contact.Equals("Cancelar") && !string.IsNullOrEmpty(contact))
+            if (!string.IsNullOrEmpty(contact) && !contact.Equals("Cancelar"))
             {
                 if (PhoneDialer.Default.IsSupported)
                 {
@@ -276,6 +281,17 @@ namespace UcabGo.App.ViewModel
                     PhoneDialer.Default.Open(contactSelected.Phone);
                 }
             }
+        }
+
+        [RelayCommand]
+        async Task Chat()
+        {
+            var parameters = new Dictionary<string, object>()
+            {
+                { "rideId", Ride.Id },
+            };
+
+            await navigation.NavigateToAsync<ChatView>(parameters);
         }
 
         public enum DoubleCheckResult

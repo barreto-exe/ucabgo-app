@@ -1,6 +1,7 @@
 ﻿using Maui.GoogleMaps.Hosting;
 using UcabGo.App.Api.Interfaces;
 using UcabGo.App.Api.Services;
+using UcabGo.App.Api.Services.Chat;
 using UcabGo.App.Api.Services.Destinations;
 using UcabGo.App.Api.Services.Driver;
 using UcabGo.App.Api.Services.GoogleMaps;
@@ -8,6 +9,7 @@ using UcabGo.App.Api.Services.Locations;
 using UcabGo.App.Api.Services.Passenger;
 using UcabGo.App.Api.Services.PassengerService;
 using UcabGo.App.Api.Services.Rides;
+using UcabGo.App.Api.Services.SignalR;
 using UcabGo.App.Api.Services.SosContacts;
 using UcabGo.App.Api.Services.User;
 using UcabGo.App.Api.Services.Vehicles;
@@ -51,6 +53,9 @@ public static class MauiProgram
         builder.Services.AddSingleton<IDriverApi, DriverApi>();
         builder.Services.AddSingleton<IRidesApi, RidesApi>();
         builder.Services.AddSingleton<IPassengerApi, PassengerApi>();
+        builder.Services.AddSingleton<IChatApi, ChatApi>();
+
+        builder.Services.AddSingleton<IHubConnectionFactory, HubConnectionFactory>();
 
 
         //DI Services
@@ -79,6 +84,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<SelectDestinationViewModel>();
         builder.Services.AddSingleton<RidesAvailableViewModel>();
         builder.Services.AddSingleton<ActivePassengerViewModel>();
+        builder.Services.AddSingleton<ChatViewModel>();
 
         //DI Views
         builder.Services.AddSingleton<LoginView>();
@@ -101,6 +107,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<SelectDestinationView>();
         builder.Services.AddSingleton<RidesAvailableView>();
         builder.Services.AddSingleton<ActivePassengerView>();
+        builder.Services.AddSingleton<ChatView>();
 
 
         //Removes the underline from the Entry

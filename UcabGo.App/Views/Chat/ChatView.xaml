@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="UcabGo.App.Views.ChatView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:icon="clr-namespace:UcabGo.App.Utils"
+    xmlns:m="clr-namespace:UcabGo.App.Models"
+    xmlns:vm="clr-namespace:UcabGo.App.ViewModel"
+    Title="Chat"
+    x:DataType="vm:ChatViewModel">
+    <Grid RowDefinitions="*, Auto">
+        <ScrollView x:Name="scrollview" Padding="10">
+            <StackLayout
+                x:DataType="vm:ChatViewModel"
+                BindableLayout.ItemsSource="{Binding Messages}"
+                Orientation="Vertical">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="m:ChatMessage">
+                        <Grid>
+                            <StackLayout Margin="5" IsVisible="{Binding IsMine}">
+                                <Border BackgroundColor="{StaticResource Primary}" HorizontalOptions="End">
+                                    <Label
+                                        FontSize="Medium"
+                                        HorizontalOptions="End"
+                                        Text="{Binding Content}"
+                                        TextColor="White" />
+                                </Border>
+
+                                <Label
+                                    Margin="10,0"
+                                    FontSize="Micro"
+                                    HorizontalOptions="End"
+                                    Text="{Binding TimeSent, StringFormat='{0:hh:mm tt}'}" />
+                            </StackLayout>
+
+                            <StackLayout Margin="5" IsVisible="{Binding IsNotMine}">
+                                <Border HorizontalOptions="Start">
+                                    <VerticalStackLayout>
+                                        <Label
+                                            FontSize="Small"
+                                            Text="{Binding Username}"
+                                            TextColor="{StaticResource Primary}" />
+                                        <Label FontSize="Medium" Text="{Binding Content}" />
+                                    </VerticalStackLayout>
+                                </Border>
+
+                                <Label
+                                    Margin="10,0"
+                                    FontSize="Micro"
+                                    Text="{Binding TimeSent, StringFormat='{0:hh:mm tt}'}" />
+                            </StackLayout>
+                        </Grid>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+        </ScrollView>
+
+        <Grid Grid.Row="1" Margin="10,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Border>
+                <Entry
+                    Grid.Column="0"
+                    Margin="5,0"
+                    Placeholder="Escribe un mensaje"
+                    Text="{Binding MessageText}" />
+            </Border>
+            <Button
+                Grid.Column="1"
+                Margin="5,0"
+                Command="{Binding SendMessageCommand}"
+                CommandParameter="{Binding MessageText}"
+                CornerRadius="100"
+                FontFamily="IconFont"
+                HeightRequest="50"
+                Text="{x:Static icon:IconFont.Send}"
+                WidthRequest="50" />
+        </Grid>
+
+    </Grid>
+</ContentPage>
