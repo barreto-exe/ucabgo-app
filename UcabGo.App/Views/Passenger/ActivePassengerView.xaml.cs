@@ -17,4 +17,12 @@ public partial class ActivePassengerView : ContentPage
 
         (BindingContext as ActivePassengerViewModel)?.OnAppearing();
     }
+
+	protected override void OnDisappearing()
+	{
+        base.OnDisappearing();
+
+        (BindingContext as ActivePassengerViewModel)?.OnDisappearing();
+    }
+
 }

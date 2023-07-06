@@ -1,7 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.AspNetCore.SignalR.Client;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using UcabGo.App.Api.Services.PassengerService;
+using UcabGo.App.Api.Services.SignalR;
+using UcabGo.App.Api.Tools;
 using UcabGo.App.Models;
 using UcabGo.App.Services;
 using UcabGo.App.Views;
@@ -11,6 +15,9 @@ namespace UcabGo.App.ViewModel
     public partial class ActivePassengerViewModel : ViewModelBase
     {
         readonly IPassengerApi passengerApi;
+
+        readonly HubConnection hubConnection;
+        CancellationTokenSource tokenSource;
 
         [ObservableProperty]
         Ride ride;
@@ -42,33 +49,72 @@ namespace UcabGo.App.ViewModel
         [ObservableProperty]
         string timerText;
 
-        CancellationTokenSource cancellationToken { get; set; }
+        CancellationTokenSource timerCancellationToken;
 
-        public ActivePassengerViewModel(ISettingsService settingsService, INavigationService navigation, IPassengerApi passengerApi) : base(settingsService, navigation)
+        public ActivePassengerViewModel(ISettingsService settingsService, INavigationService navigation, IPassengerApi passengerApi, IHubConnectionFactory hubConnectionFactory) : base(settingsService, navigation)
         {
             this.passengerApi = passengerApi;
 
             ride = new();
             passenger = new();
             passengers = new();
+
+            hubConnection = hubConnectionFactory.GetHubConnection(ApiRoutes.ACTIVE_RIDE_HUB);
         }
 
         public override async void OnAppearing()
         {
             base.OnAppearing();
 
-            await Refresh();
+            await Refresh(true);
+
+            await RunHubConnection();
         }
 
-        [RelayCommand]
-        async Task Refresh()
+        private async Task RunHubConnection()
         {
-            cancellationToken = new();
+            hubConnection.On<int>(ApiRoutes.ACTIVE_RIDE_RECEIVE_UPDATE, async (rideId) =>
+            {
+                if (rideId == Ride.Id)
+                {
+                    await Refresh(false);
+                }
+            });
 
-            IsLoading = true;
-            IsWaiting = false;
-            IsAccepted = false;
+            tokenSource = new();
+            try
+            {
+                if (hubConnection.State == HubConnectionState.Disconnected)
+                {
+                    await hubConnection.StartAsync(tokenSource.Token);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(hubConnection.State.ToString() + ex.Message);
+                await RunHubConnection();
+            }
+        }
+
+        public override async void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            tokenSource.Cancel();
+            await hubConnection.StopAsync();
+        }
+
+        async Task Refresh(bool withAnimation)
+        {
+            timerCancellationToken = new();
+
+            IsLoading = true && withAnimation;
             TimerText = string.Empty;
+            if(withAnimation)
+            {
+                IsWaiting = false;
+                IsAccepted = false;
+            }
 
             bool isInfoLoaded = await LoadRideInformation();
             if (!isInfoLoaded)
@@ -84,11 +130,15 @@ namespace UcabGo.App.ViewModel
 
             if (IsWaiting)
             {
-                await RunTimer();
+                //Run timer inside dispatcher to avoid cross thread exception
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    await RunTimer();
+                });
             }
             else
             {
-                cancellationToken.Cancel();
+                timerCancellationToken.Cancel();
             }
         }
 
@@ -242,7 +292,7 @@ namespace UcabGo.App.ViewModel
         {
             while (true)
             {
-                if(cancellationToken.IsCancellationRequested)
+                if(timerCancellationToken.IsCancellationRequested)
                 {
                     break;
                 }

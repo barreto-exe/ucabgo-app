@@ -8,14 +8,18 @@ using UcabGo.App.Models;
 using UcabGo.App.Services;
 using CommunityToolkit.Maui.Core.Extensions;
 using CommunityToolkit.Maui.Core.Platform;
+using UcabGo.App.Api.Tools;
+using System.Diagnostics;
 
 namespace UcabGo.App.ViewModel
 {
     [QueryProperty(nameof(RideId), "rideId")]
     public partial class ChatViewModel : ViewModelBase
     {
-        readonly HubConnection hubConnection;
         readonly IChatApi chatApi;
+
+        readonly HubConnection hubConnection;
+        CancellationTokenSource tokenSource;
 
         [ObservableProperty]
         int rideId;
@@ -29,14 +33,12 @@ namespace UcabGo.App.ViewModel
         [ObservableProperty]
         bool isLoading;
 
-        CancellationTokenSource tokenSource;
-
         public CollectionView CollectionView { get; set; }
         public Entry ChatEntry { get; set; }
 
         public ChatViewModel(ISettingsService settingsService, INavigationService navigation, IHubConnectionFactory hubConnectionFactory, IChatApi chatApi) : base(settingsService, navigation)
         {
-            hubConnection = hubConnectionFactory.GetHubConnection("chat");
+            hubConnection = hubConnectionFactory.GetHubConnection(ApiRoutes.CHAT_HUB);
             this.chatApi = chatApi;
         }
 
@@ -52,8 +54,12 @@ namespace UcabGo.App.ViewModel
 
             IsLoading = false;
 
+            await RunHubConnection();
+        }
 
-            hubConnection.On<int>("ReceiveMessage", async (rideId) =>
+        private async Task RunHubConnection()
+        {
+            hubConnection.On<int>(ApiRoutes.CHAT_RECEIVE_MESSAGE, async (rideId) =>
             {
                 if (rideId == RideId)
                 {
@@ -62,21 +68,26 @@ namespace UcabGo.App.ViewModel
             });
 
             tokenSource = new();
-            await hubConnection.StartAsync(tokenSource.Token);
+            try
+            {
+                if (hubConnection.State == HubConnectionState.Disconnected)
+                {
+                    await hubConnection.StartAsync(tokenSource.Token);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(hubConnection.State.ToString() + ex.Message);
+                await RunHubConnection();
+            }
         }
 
         public override async void OnDisappearing()
         {
             base.OnDisappearing();
 
-            try
-            {
-                await hubConnection.StopAsync(tokenSource.Token);
-            }
-            catch
-            {
-                tokenSource.Cancel();
-            }
+            tokenSource.Cancel();
+            await hubConnection.StopAsync();
         }
 
 
@@ -120,7 +131,7 @@ namespace UcabGo.App.ViewModel
                 int index = Messages.Count - 1;
                 if (index > 0) CollectionView.ScrollTo(index, animate: true);
                 
-                CollectionView.Focus();
+                //CollectionView.Focus();
             }
             else if (response?.Message == "CHAT_NOT_FOUND")
             {

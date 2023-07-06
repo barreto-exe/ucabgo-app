@@ -80,18 +80,18 @@ namespace UcabGo.App.ViewModel
             IsButtonEnabled = true;
 
             //Set camera over current location or default
-            MapSpan mapSpan;
-            var location = await MapHelper.GetCurrentLocation();
-            if (location != null)
-            {
-                //cameraUpdate = CameraUpdateFactory.NewCameraPosition(new CameraPosition(new Position(location.Latitude, location.Longitude), 13, 0, 0));
-                mapSpan = MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromKilometers(1));
-                map.MoveToRegion(mapSpan);
-            }
-            else
-            {
-                map.MoveCameraToCampus();
-            }
+            //MapSpan mapSpan;
+            //var location = await MapHelper.GetCurrentLocation();
+            //if (location != null)
+            //{
+            //    //cameraUpdate = CameraUpdateFactory.NewCameraPosition(new CameraPosition(new Position(location.Latitude, location.Longitude), 13, 0, 0));
+            //    mapSpan = MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromKilometers(1));
+            //    map.MoveToRegion(mapSpan);
+            //}
+            //else
+            //{
+            //    map.MoveCameraToCampus();
+            //}
         }
         private void Map_MapClicked(object sender, MapClickedEventArgs e)
         {

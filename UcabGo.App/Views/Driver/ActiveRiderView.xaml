@@ -6,7 +6,7 @@
     xmlns:icons="clr-namespace:UcabGo.App.Utils"
     xmlns:model="clr-namespace:UcabGo.App.Models"
     xmlns:viewmodel="clr-namespace:UcabGo.App.ViewModel"
-    Title="Cola en curso"
+    Title="Viaje de conductor en curso"
     x:DataType="viewmodel:ActiveRiderViewModel"
     BackgroundColor="{AppThemeBinding Light={StaticResource Gray100},
                                       Dark={StaticResource Gray900}}">
@@ -25,13 +25,6 @@
             </Grid.RowDefinitions>
             <ScrollView IsVisible="{Binding IsDataVisible}">
                 <VerticalStackLayout Padding="10">
-
-                    <Button
-                        Command="{Binding RefreshCommand}"
-                        IsVisible="false"
-                        Text="Refresh" />
-
-
                     <!--  Vehicle card  -->
                     <Border Margin="10">
                         <Grid

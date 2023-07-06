@@ -17,4 +17,9 @@ public partial class RidesAvailableView : ContentPage
         (BindingContext as RidesAvailableViewModel)?.OnAppearing();
     }
 
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        (BindingContext as RidesAvailableViewModel)?.OnDisappearing();
+    }
 }

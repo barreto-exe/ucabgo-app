@@ -51,7 +51,7 @@
 
         <Grid
             Margin="20"
-            HorizontalOptions="Center"
+            HorizontalOptions="CenterAndExpand"
             VerticalOptions="Start"
             ZIndex="2">
             <Grid.Shadow>

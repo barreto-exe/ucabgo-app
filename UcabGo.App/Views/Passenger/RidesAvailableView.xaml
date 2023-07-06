@@ -66,12 +66,12 @@
 
             <CollectionView
                 Grid.Row="0"
-                Margin="20,0"
+                Margin="10,0"
                 ItemsSource="{Binding Rides}"
                 SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:RideMatching">
-                        <Border Margin="10,0">
+                        <Border Margin="10">
                             <Grid Margin="10" ColumnDefinitions="*,Auto">
                                 <VerticalStackLayout>
                                     <Label

@@ -1,4 +1,5 @@
 ﻿using Maui.GoogleMaps.Hosting;
+using Microsoft.Extensions.Logging;
 using UcabGo.App.Api.Interfaces;
 using UcabGo.App.Api.Services;
 using UcabGo.App.Api.Services.Chat;
@@ -41,6 +42,16 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 fonts.AddFont("MaterialIcons-Regular.ttf", "IconFont");
             });
+
+
+#if DEBUG
+        builder.Services.AddLogging(configure =>
+        {
+            configure
+                .AddDebug()
+                .AddFilter("com.ucab.ucabgo.app", LogLevel.Debug);
+        });
+#endif
 
         //DI API Services
         builder.Services.AddSingleton<IAuthApi, AuthApi>();

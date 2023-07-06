@@ -28,7 +28,6 @@ namespace UcabGo.App.Api.Services.SignalR
                     .WithAutomaticReconnect()
                     .Build();
 
-                _connections.Clear();
                 _connections.Add(hubName, connection);
             }
 

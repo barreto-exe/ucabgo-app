@@ -6,7 +6,7 @@
     xmlns:icons="clr-namespace:UcabGo.App.Utils"
     xmlns:model="clr-namespace:UcabGo.App.Models"
     xmlns:viewmodel="clr-namespace:UcabGo.App.ViewModel"
-    Title="Cola en curso"
+    Title="Viaje de pasajero en curso"
     x:DataType="viewmodel:ActivePassengerViewModel"
     BackgroundColor="{AppThemeBinding Light={StaticResource Gray100},
                                       Dark={StaticResource Gray900}}">
@@ -41,12 +41,6 @@
             <!--  Ride accepted  -->
             <ScrollView IsVisible="{Binding IsAccepted}">
                 <VerticalStackLayout Padding="10">
-
-                    <Button
-                        Command="{Binding RefreshCommand}"
-                        IsVisible="false"
-                        Text="Refresh" />
-
 
                     <!--  Driver card  -->
                     <Border Margin="10">

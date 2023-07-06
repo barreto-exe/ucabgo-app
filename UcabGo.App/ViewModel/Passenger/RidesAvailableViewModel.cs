@@ -1,9 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.AspNetCore.SignalR.Client;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using UcabGo.App.Api.Services.PassengerService;
 using UcabGo.App.Api.Services.PassengerService.Inputs;
 using UcabGo.App.Api.Services.Rides;
+using UcabGo.App.Api.Services.SignalR;
+using UcabGo.App.Api.Tools;
 using UcabGo.App.Models;
 using UcabGo.App.Services;
 using UcabGo.App.Utils;
@@ -18,6 +22,9 @@ namespace UcabGo.App.ViewModel
     {
         readonly IRidesApi ridesApi;
         readonly IPassengerApi passengerApi;
+
+        readonly HubConnection hubConnection;
+        CancellationTokenSource tokenSource;
 
         [ObservableProperty]
         Location selectedDestination;
@@ -37,10 +44,12 @@ namespace UcabGo.App.ViewModel
         [ObservableProperty]
         bool ridesFound;
 
-        public RidesAvailableViewModel(ISettingsService settingsService, INavigationService navigation, IRidesApi ridesApi, IPassengerApi passengerApi) : base(settingsService, navigation)
+        public RidesAvailableViewModel(ISettingsService settingsService, INavigationService navigation, IRidesApi ridesApi, IPassengerApi passengerApi, IHubConnectionFactory hubConnectionFactory) : base(settingsService, navigation)
         {
             this.ridesApi = ridesApi;
             this.passengerApi = passengerApi;
+            this.hubConnection = hubConnectionFactory.GetHubConnection(ApiRoutes.RIDES_MATCHING_HUB);
+
             Rides = new();
         }
 
@@ -55,16 +64,47 @@ namespace UcabGo.App.ViewModel
 
             Greeting = $"Hola, {settings.User.Name}.";
 
-            await Refresh();
+            await Refresh(true);
+
+            await RunHubConnection();
         }
 
-        [RelayCommand]
-        async Task Refresh()
+        private async Task RunHubConnection()
+        {
+            hubConnection.On(ApiRoutes.RIDES_MATCHING_RECEIVE_UPDATE, () => Refresh(false));
+
+            tokenSource = new();
+            try
+            {
+                if (hubConnection.State == HubConnectionState.Disconnected)
+                {
+                    await hubConnection.StartAsync(tokenSource.Token);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(hubConnection.State.ToString() + ex.Message);
+                await RunHubConnection();
+            }
+        }
+
+        public override async void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            tokenSource.Cancel();
+            await hubConnection.StopAsync();
+        }
+
+        async Task Refresh(bool withAnimation)
         {
             Rides.Clear();
-            IsRefreshing = true;
-            RidesFound = false;
-            NoRidesFound = false;
+            IsRefreshing = true && withAnimation;
+            if (withAnimation)
+            {
+                RidesFound = false;
+                NoRidesFound = false;
+            }
 
             bool goingToCampus = SelectedDestination.Alias.ToLower().Contains("ucab");
             

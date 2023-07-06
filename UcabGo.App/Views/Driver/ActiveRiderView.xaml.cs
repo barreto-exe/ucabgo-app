@@ -15,4 +15,10 @@ public partial class ActiveRiderView : ContentPage
         base.OnAppearing();
         (BindingContext as ActiveRiderViewModel)?.OnAppearing();
     }
+
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        (BindingContext as ActiveRiderViewModel)?.OnDisappearing();
+    }
 }

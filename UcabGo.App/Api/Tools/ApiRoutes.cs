@@ -21,5 +21,15 @@ namespace UcabGo.App.Api.Tools
         public static string RIDES_MATCHING { get => BASE_URL + "rides/matching"; }
         public static string RIDES { get => BASE_URL + "rides"; }
         public static string PASSENGER { get => BASE_URL + "passenger"; }
+
+        //Hubs strings
+        public static string CHAT_HUB { get => "chat"; }
+        public static string CHAT_RECEIVE_MESSAGE { get => "ReceiveMessage"; }
+
+        public static string ACTIVE_RIDE_HUB { get => "activeride"; }
+        public static string ACTIVE_RIDE_RECEIVE_UPDATE { get => "ReceiveUpdate"; }
+        
+        public static string RIDES_MATCHING_HUB { get => "ridesmatching"; }
+        public static string RIDES_MATCHING_RECEIVE_UPDATE { get => "ReceiveUpdate"; }
     }
 }
