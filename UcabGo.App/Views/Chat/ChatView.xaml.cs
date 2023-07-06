@@ -8,7 +8,8 @@ public partial class ChatView : ContentPage
     {
         InitializeComponent();
 
-        viewModel.ScrollView = scrollview;
+        viewModel.CollectionView = collectionView;
+        viewModel.ChatEntry = chatEntry;
 
         BindingContext = viewModel;
     }
@@ -17,9 +18,11 @@ public partial class ChatView : ContentPage
     {
         base.OnAppearing();
         (BindingContext as ChatViewModel)?.OnAppearing();
-
-        //Scroll to the last message
-        scrollview.ScrollToAsync(0, scrollview.Content.Height, false);
     }
 
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        (BindingContext as ChatViewModel)?.OnDisappearing();
+    }
 }

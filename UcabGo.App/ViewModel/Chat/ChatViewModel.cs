@@ -1,17 +1,20 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.AspNetCore.SignalR.Client;
 using System.Collections.ObjectModel;
 using UcabGo.App.Api.Services.Chat;
 using UcabGo.App.Api.Services.SignalR;
 using UcabGo.App.Models;
 using UcabGo.App.Services;
+using CommunityToolkit.Maui.Core.Extensions;
+using CommunityToolkit.Maui.Core.Platform;
 
 namespace UcabGo.App.ViewModel
 {
     [QueryProperty(nameof(RideId), "rideId")]
     public partial class ChatViewModel : ViewModelBase
     {
-        readonly IHubConnectionFactory hubConnectionFactory;
+        readonly HubConnection hubConnection;
         readonly IChatApi chatApi;
 
         [ObservableProperty]
@@ -23,11 +26,17 @@ namespace UcabGo.App.ViewModel
         [ObservableProperty]
         ObservableCollection<ChatMessage> messages;
 
-        public ScrollView ScrollView { get; set; }
+        [ObservableProperty]
+        bool isLoading;
+
+        CancellationTokenSource tokenSource;
+
+        public CollectionView CollectionView { get; set; }
+        public Entry ChatEntry { get; set; }
 
         public ChatViewModel(ISettingsService settingsService, INavigationService navigation, IHubConnectionFactory hubConnectionFactory, IChatApi chatApi) : base(settingsService, navigation)
         {
-            this.hubConnectionFactory = hubConnectionFactory;
+            hubConnection = hubConnectionFactory.GetHubConnection("chat");
             this.chatApi = chatApi;
         }
 
@@ -35,22 +44,57 @@ namespace UcabGo.App.ViewModel
         {
             base.OnAppearing();
 
+            Messages = new();
+
+            IsLoading = true;
+
             await RefreshMessages();
+
+            IsLoading = false;
+
+
+            hubConnection.On<int>("ReceiveMessage", async (rideId) =>
+            {
+                if (rideId == RideId)
+                {
+                    await RefreshMessages();
+                }
+            });
+
+            tokenSource = new();
+            await hubConnection.StartAsync(tokenSource.Token);
         }
+
+        public override async void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            try
+            {
+                await hubConnection.StopAsync(tokenSource.Token);
+            }
+            catch
+            {
+                tokenSource.Cancel();
+            }
+        }
+
 
         [RelayCommand]
         public async Task SendMessage()
         {
-            MessageText = MessageText.Trim();
             if (string.IsNullOrEmpty(MessageText))
             {
                 return;
             }
 
-            var response = await chatApi.SendMessage(RideId, MessageText);
+            string messageText = MessageText.Trim();
+            MessageText = string.Empty;
+            await ChatEntry.HideKeyboardAsync(CancellationToken.None);
+
+            var response = await chatApi.SendMessage(RideId, messageText);
             if (response?.Message == "MESSAGE_SENT")
             {
-                MessageText = string.Empty;
                 await RefreshMessages();
             }
             else
@@ -64,10 +108,19 @@ namespace UcabGo.App.ViewModel
             var response = await chatApi.GetMessages(RideId);
             if(response?.Message == "MESSAGES_FOUND")
             {
-                Messages = new(response.Data);
+                //Add only messages that are not already in the list 
+                foreach (var message in response.Data)
+                {
+                    if (!Messages.Any(m => m.Id == message.Id))
+                    {
+                        Messages.Add(message);
+                    }
+                }
 
-                await ScrollView.ScrollToAsync(0, ScrollView.Content.Height, true);
-                ScrollView.Focus();
+                int index = Messages.Count - 1;
+                if (index > 0) CollectionView.ScrollTo(index, animate: true);
+                
+                CollectionView.Focus();
             }
             else if (response?.Message == "CHAT_NOT_FOUND")
             {

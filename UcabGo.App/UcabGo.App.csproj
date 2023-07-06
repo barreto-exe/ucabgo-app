@@ -138,6 +138,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="CommunityToolkit.Maui.Core" Version="5.2.0" />
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="7.0.1" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
@@ -257,6 +258,6 @@
 	  </PackageReference>
 	</ItemGroup>
 
-	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionUcabGoAppHideInfoBar="True" /></VisualStudio></ProjectExtensions>
+	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionUcabGoAppHideInfoBar="True" XamarinHotReloadUnhandledDeviceExceptionUcabGoAppHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 
 </Project>

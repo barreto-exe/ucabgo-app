@@ -17,5 +17,10 @@ namespace UcabGo.App.ViewModel
         {
             //Override for some functionality
         }
+
+        public virtual void OnDisappearing()
+        {
+            //Override for some functionality
+        }
     }
 }

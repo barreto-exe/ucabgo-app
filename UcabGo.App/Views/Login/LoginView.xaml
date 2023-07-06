@@ -48,6 +48,7 @@
                     Placeholder="Contraseña"
                     Text="{Binding Password}" />
             </Border>
+
             <Label
                 Margin="0,-20,0,0"
                 FontSize="12"
