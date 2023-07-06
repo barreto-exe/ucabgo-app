@@ -71,7 +71,10 @@ namespace UcabGo.App.ViewModel
 
         private async Task RunHubConnection()
         {
-            hubConnection.On(ApiRoutes.RIDES_MATCHING_RECEIVE_UPDATE, () => Refresh(false));
+            hubConnection.On<int>(ApiRoutes.RIDES_MATCHING_RECEIVE_UPDATE, async (rideId) =>
+            {
+                await Refresh(false);
+            });
 
             tokenSource = new();
             try
@@ -98,10 +101,10 @@ namespace UcabGo.App.ViewModel
 
         async Task Refresh(bool withAnimation)
         {
-            Rides.Clear();
             IsRefreshing = true && withAnimation;
             if (withAnimation)
             {
+                Rides.Clear();
                 RidesFound = false;
                 NoRidesFound = false;
             }

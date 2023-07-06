@@ -302,7 +302,7 @@ namespace UcabGo.App.ViewModel
                 var minutesLeft = TimeSpan.FromMinutes(15) - timePassed;
 
 #if DEBUG
-                minutesLeft = TimeSpan.FromSeconds(10);
+                //minutesLeft = TimeSpan.FromSeconds(10);
 #endif
 
                 if (minutesLeft.TotalSeconds <= 0)
