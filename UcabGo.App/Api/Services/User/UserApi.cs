@@ -11,13 +11,15 @@ namespace UcabGo.App.Api.Services.User
         {
         }
 
-        public async Task<ApiResponse<Models.User>> ChangePhoneAsync(string phone)
+        public async Task<ApiResponse<Models.User>> ChangePersonalInfoAsync(string name, string lastName, string phone)
         {
             var input = new
             {
+                Name = name,
+                LastName = lastName,
                 Phone = phone
             };
-            return await PutAsync<Models.User>(ApiRoutes.CHANGE_PHONE, input);
+            return await PutAsync<Models.User>(ApiRoutes.USER, input);
         }
 
         public async Task<ApiResponse<Models.User>> ChangeWalkingDistanceAsync(int walkingDistance)

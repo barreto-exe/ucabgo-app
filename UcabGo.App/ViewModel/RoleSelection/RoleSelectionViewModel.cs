@@ -153,7 +153,7 @@ namespace UcabGo.App.ViewModel
             List<string> options = new();
 
             string myHome = "➡🏡 Mi dirección de casa";
-            string myPhone = "➡📱 Número de teléfono";
+            string myPhone = "➡👤 Información personal";
             string myWalkingDistance = "➡🚶🏼 Distancia de caminata";
             string mySosContacts = "➡📞 Contactos de emergencia";
             string myVehicles = "➡🚗 Vehículos";

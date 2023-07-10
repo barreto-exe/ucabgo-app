@@ -68,7 +68,10 @@ namespace UcabGo.App.ViewModel
 
             await Refresh(true);
 
-            await RunHubConnection();
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                await RunHubConnection();
+            });
         }
 
         private async Task RunHubConnection()

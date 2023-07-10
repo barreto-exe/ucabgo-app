@@ -4,7 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:viewmodel="clr-namespace:UcabGo.App.ViewModel"
-    Title="Número de teléfono"
+    Title="Datos personales"
     x:DataType="viewmodel:PhoneViewModel">
     <Grid>
         <Grid.RowDefinitions>
@@ -13,11 +13,21 @@
         </Grid.RowDefinitions>
         <ScrollView Grid.Row="0" VerticalOptions="Start">
             <VerticalStackLayout Margin="20" Spacing="25">
+
+                <Label Margin="0,0,0,-20" Text="Nombres:" />
+                <Border>
+                    <Entry Placeholder="Primer y segundo nombre" Text="{Binding Name}" />
+                </Border>
+
+                <Label Margin="0,0,0,-20" Text="Apellidos:" />
+                <Border>
+                    <Entry Placeholder="Primer y segundo apellido" Text="{Binding LastName}" />
+                </Border>
+
                 <Label Margin="0,0,0,-20" Text="Teléfono:" />
                 <Border>
                     <Entry Placeholder="0414-1234567" Text="{Binding Phone}" />
                 </Border>
-
                 <Label
                     Margin="0,-20,0,0"
                     FontSize="12"
@@ -32,7 +42,7 @@
         <Button
             Grid.Row="1"
             Margin="20"
-            Command="{Binding ChangePhoneCommand}"
+            Command="{Binding SaveCommand}"
             HeightRequest="50"
             IsEnabled="{Binding IsButtonEnabled}"
             Text="{Binding ButtonText}" />
