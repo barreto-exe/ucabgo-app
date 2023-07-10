@@ -41,10 +41,14 @@
                 <Button
                     Grid.Column="1"
                     Margin="5"
+                    Background="White"
+                    BorderColor="{StaticResource Primary}"
+                    BorderWidth="1"
                     Command="{Binding SaveCommand}"
                     HeightRequest="50"
                     IsEnabled="{Binding IsButtonEnabled}"
-                    Text="{Binding ButtonText}" />
+                    Text="{Binding ButtonText}"
+                    TextColor="{StaticResource Primary}" />
             </Grid>
         </Grid>
 
@@ -117,7 +121,7 @@
             <ImageButton
                 Grid.Column="0"
                 Margin="25,20,10,0"
-                Background="{StaticResource Gray500}"
+                Background="{StaticResource Primary}"
                 Command="{Binding HomeClickedCommand}"
                 CornerRadius="8"
                 HeightRequest="50"

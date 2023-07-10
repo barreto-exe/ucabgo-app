@@ -6,7 +6,7 @@
     xmlns:icons="clr-namespace:UcabGo.App.Utils"
     xmlns:model="clr-namespace:UcabGo.App.Models"
     xmlns:viewmodel="clr-namespace:UcabGo.App.ViewModel"
-    Title="Viaje de conductor en curso"
+    Title="Conductor"
     x:DataType="viewmodel:ActiveRiderViewModel"
     BackgroundColor="{AppThemeBinding Light={StaticResource Gray100},
                                       Dark={StaticResource Gray900}}">

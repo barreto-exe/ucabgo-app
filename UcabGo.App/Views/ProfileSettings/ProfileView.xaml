@@ -49,6 +49,7 @@
                             Source="profile.jpf"
                             VerticalOptions="Center"
                             WidthRequest="130"
+                            IsVisible="{Binding IsProfilePictureEmpty}"
                             ZIndex="0" />
 
                         <ImageButton

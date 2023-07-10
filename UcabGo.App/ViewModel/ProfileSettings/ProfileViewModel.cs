@@ -3,6 +3,9 @@ using CommunityToolkit.Mvvm.Input;
 using UcabGo.App.Api.Services.User;
 using UcabGo.App.Services;
 using UcabGo.App.Views;
+#if ANDROID33_0_OR_GREATER
+using AndroidX.Core.Content;
+#endif
 
 namespace UcabGo.App.ViewModel
 {
@@ -10,13 +13,18 @@ namespace UcabGo.App.ViewModel
     {
         [ObservableProperty]
         string username;
+
         [ObservableProperty]
         string email;
+
         [ObservableProperty]
         ImageSource pictureUrl;
 
         [ObservableProperty]
         bool isImageLoading;
+
+        [ObservableProperty]
+        bool isProfilePictureEmpty;
 
         readonly IUserApi userApi;
 
@@ -35,6 +43,7 @@ namespace UcabGo.App.ViewModel
         {
             Username = settings.User.Name + " " + settings.User.LastName;
             Email = settings.User.Email;
+            IsProfilePictureEmpty = true;
             IsImageLoading = false;
 
             if(settings.ReloadImage)
@@ -54,6 +63,7 @@ namespace UcabGo.App.ViewModel
             }
 
             settings.ReloadImage = false;
+            IsProfilePictureEmpty = PictureUrl == null;
         }
 
         [RelayCommand]
@@ -126,11 +136,14 @@ namespace UcabGo.App.ViewModel
                 status = await Permissions.RequestAsync<Permissions.StorageWrite>();
             }
 
+#if !ANDROID33_0_OR_GREATER
+
             if(status != PermissionStatus.Granted)
             {
                 await Application.Current.MainPage.DisplayAlert("Error", "Es necesario que aceptes los permisos de almacenamiento para poder cambiar la foto de perfil.", "Aceptar");
                 return;
             }
+#endif
 
             IsImageLoading = true;
 
@@ -155,6 +168,7 @@ namespace UcabGo.App.ViewModel
                         settings.User = user;
 
                         PictureUrl = ImageSource.FromUri(new Uri(settings.User.ProfilePicture));
+                        IsProfilePictureEmpty = false;
                     }
                     else if (response.Message == "INVALID_FILE")
                     {
