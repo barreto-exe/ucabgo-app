@@ -13,6 +13,7 @@ namespace UcabGo.App.Services
         Location Campus { get; set; }
         IEnumerable<Vehicle> Vehicles { get; set; }
         IEnumerable<SosContact> SosContacts { get; set; }
+        bool ReloadImage { get; set; }
 
         protected T GetValueOrDefault<T>(string key, T defaultValue);
         protected void SetValue(string key, object value);

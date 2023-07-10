@@ -193,15 +193,8 @@ namespace UcabGo.App.ViewModel
 
             Passenger = Ride.Passengers.Where(x => x.User.Id == settings.User.Id).FirstOrDefault(x => !x.IsEnded);
             Passengers = new(Ride.Passengers.Where(x => x.IsActive).DistinctBy(x => x.User.Id));
-
-            if (Ride?.Destination?.Alias.ToLower().Contains("ucab") == true)
-            {
-                DestinationText = "UCAB Guayana"; 
-            }
-            else
-            {
-                DestinationText = Ride?.Destination?.Zone;
-            }
+            
+            DestinationText = Ride?.Destination?.DestinationText;
 
             return true;
         }
@@ -297,13 +290,14 @@ namespace UcabGo.App.ViewModel
                     break;
                 }
 
+#if DEBUG
+                var timePassed = DateTime.Now.ToUniversalTime() - Passenger.TimeSolicited.ToUniversalTime();
+#elif RELEASE
                 var timePassed = DateTime.Now.ToUniversalTime() - Passenger.TimeSolicited;
+#endif
 
                 var minutesLeft = TimeSpan.FromMinutes(15) - timePassed;
 
-#if DEBUG
-                //minutesLeft = TimeSpan.FromSeconds(10);
-#endif
 
                 if (minutesLeft.TotalSeconds <= 0)
                 {

@@ -1,4 +1,4 @@
-using CommunityToolkit.Mvvm.ComponentModel;
+ï»¿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Maui.GoogleMaps;
 using System.Collections.ObjectModel;
@@ -153,7 +153,7 @@ namespace UcabGo.App.ViewModel
         {
             if (CurrentPin == null)
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "Debe seleccionar una ubicación.", "Aceptar");
+                await Application.Current.MainPage.DisplayAlert("Error", "Debe seleccionar una ubicaciÃ³n.", "Aceptar");
                 return;
             }
 
@@ -181,7 +181,7 @@ namespace UcabGo.App.ViewModel
             var geocode = await mapsService.GetGeocode(
                 CurrentPin.Position.Latitude,
                 CurrentPin.Position.Longitude);
-            var opciones = geocode.Components.Append("Otro...").ToArray();
+            var opciones = geocode.Components.Select(x => "ðŸ“ " + x).Append("Otro...").ToArray();
 
             string zone = "";
             if (geocode.Components.Count() > 1)
@@ -218,7 +218,7 @@ namespace UcabGo.App.ViewModel
             string detail = await Application.Current.MainPage
                     .DisplayPromptAsync(
                         "Detalle",
-                        message: "Punto de referencia o información extra para el conductor.",
+                        message: "Punto de referencia o informaciÃ³n extra para el conductor.",
                         cancel: "Cancelar",
                         accept: "Aceptar",
                         placeholder: "Ej: Al final de la calle.");
@@ -243,7 +243,7 @@ namespace UcabGo.App.ViewModel
             var response = await destinationsService.AddDestination(destination);
             if (response.Message == "LOCATION_CREATED")
             {
-                await Application.Current.MainPage.DisplayAlert("Éxito", "Destino guardado correctamente.", "Aceptar");
+                await Application.Current.MainPage.DisplayAlert("Ã‰xito", "Destino guardado correctamente.", "Aceptar");
                 await navigation.GoBackAsync();
             }
             else

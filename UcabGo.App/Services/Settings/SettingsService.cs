@@ -47,6 +47,11 @@ namespace UcabGo.App.Services.Settings
             get => GetValueOrDefault(nameof(SosContacts), SosContactsDefault);
             set => SetValue(nameof(SosContacts), value);
         }
+        public bool ReloadImage
+        {
+            get => GetValueOrDefault(nameof(ReloadImage), false);
+            set => SetValue(nameof(ReloadImage), value);
+        }
 
         //Methods for settings
         public void SetValue(string key, object value)

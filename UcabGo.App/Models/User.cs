@@ -11,5 +11,6 @@ namespace UcabGo.App.Api.Models
         public string CompleteName { get => $"{Name} {LastName}"; }
         public string Phone { get; set; }
         public float WalkingDistance { get; set; }
+        public string ProfilePicture { get; set; }
     }
 }

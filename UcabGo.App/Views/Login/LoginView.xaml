@@ -29,7 +29,7 @@
                     x:Name="TxtEmail"
                     IsSpellCheckEnabled="False"
                     Keyboard="Email"
-                    Placeholder="usuario@est.ucab.edu.ve"
+                    Placeholder="usuario@ucab.edu.ve"
                     Text="{Binding Email}" />
             </Border>
             <Label

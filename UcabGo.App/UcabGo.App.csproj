@@ -121,6 +121,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiImage Remove="Resources\Images\profile.svg" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Resources\Fonts\MaterialIcons-Regular.ttf" />
 	  <None Remove="Resources\Images\add_car.svg" />
 	  <None Remove="Resources\Images\car_side.svg" />
@@ -129,12 +133,19 @@
 	  <None Remove="Resources\Images\logout_white_24dp.svg" />
 	  <None Remove="Resources\Images\order_ride.svg" />
 	  <None Remove="Resources\Images\park_gps.svg" />
+	  <None Remove="Resources\Images\profile.svg" />
 	  <None Remove="Resources\Images\searching.svg" />
 	  <None Remove="Resources\Images\sos.svg" />
 	  <None Remove="Resources\Images\taxi.svg" />
 	  <None Remove="Resources\Images\walker.svg" />
 	  <None Remove="Resources\Raw\data.example.json" />
 	  <None Remove="Resources\Raw\data.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Resources\Images\profile.svg">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </EmbeddedResource>
 	</ItemGroup>
 
 	<ItemGroup>

@@ -21,5 +21,19 @@
                 return "📍 " + Alias;
             }
         }
+        public string DestinationText
+        {
+            get
+            {
+                if (Alias.ToLower().Contains("ucab") == true)
+                {
+                    return "UCAB Guayana";
+                }
+                else
+                {
+                    return Zone;
+                }
+            }
+        }
     }
 }

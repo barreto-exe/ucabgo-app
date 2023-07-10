@@ -5,6 +5,7 @@ namespace UcabGo.App.Models
     public class Passenger
     {
         public int Id { get; set; }
+        public Location FinalLocation { get; set; }
         public User User { get; set; }
         public string Initial { get => User?.Name[0].ToString().ToUpper(); }
         public DateTime TimeSolicited { get; set; }

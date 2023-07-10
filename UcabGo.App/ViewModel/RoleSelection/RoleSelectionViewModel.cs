@@ -150,22 +150,28 @@ namespace UcabGo.App.ViewModel
 
         async Task<bool> ValidateInitialValues(bool isDriver)
         {
-            List<string> options = new List<string>();  
-                      // string.IsNullOrEmpty(settings.Home)
+            List<string> options = new();
+
+            string myHome = "➡🏡 Mi dirección de casa";
+            string myPhone = "➡📱 Número de teléfono";
+            string myWalkingDistance = "➡🚶🏼 Distancia de caminata";
+            string mySosContacts = "➡📞 Contactos de emergencia";
+            string myVehicles = "➡🚗 Vehículos";
+
             if(settings.Home == null ){
-                options.Add("Mi dirección de casa");
+                options.Add(myHome);
             }
             if(settings.User.Phone == null){
-                options.Add("Número de teléfono");
+                options.Add(myPhone);
             }
             if(settings.User.WalkingDistance == 0 && !isDriver){
-                options.Add("Distancia de caminata");
+                options.Add(myWalkingDistance);
             }
             if(hasSosContacts == false){
-                options.Add("Contactos de emergencia");
+                options.Add(mySosContacts);
             }
             if(hasVehicles == false && isDriver){
-                options.Add("Vehículos");
+                options.Add(myVehicles);
             }
 
             if(options.Count > 0){
@@ -177,24 +183,25 @@ namespace UcabGo.App.ViewModel
                         null,
                         options.ToArray());
 
-                switch(option){
-                    case "Mi dirección de casa":
-                        await navigation.NavigateToAsync<MapView>();
-                        break;
-                    case "Número de teléfono":
-                        await navigation.NavigateToAsync<PhoneView>();
-                        break;
-                    case "Distancia de caminata":
-                        await navigation.NavigateToAsync<WalkingDistanceView>();
-                        break;
-                    case "Contactos de emergencia":
-                        await navigation.NavigateToAsync<SosContactsView>();
-                        break;
-                    case "Vehículos":
-                        await navigation.NavigateToAsync<VehiclesView>();
-                        break;
-                    default:
-                        return false;
+                if(option == myHome)
+                {
+                    await navigation.NavigateToAsync<MapView>();
+                }
+                else if(option == myPhone)
+                {
+                    await navigation.NavigateToAsync<PhoneView>();
+                }
+                else if(option == myWalkingDistance)
+                {
+                    await navigation.NavigateToAsync<WalkingDistanceView>();
+                }
+                else if(option == mySosContacts)
+                {
+                    await navigation.NavigateToAsync<SosContactsView>();
+                }
+                else if(option == myVehicles)
+                {
+                    await navigation.NavigateToAsync<VehiclesView>();
                 }
 
                 return false;

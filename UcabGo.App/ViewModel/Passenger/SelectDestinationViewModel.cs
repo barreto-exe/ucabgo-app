@@ -207,7 +207,7 @@ namespace UcabGo.App.ViewModel
                 var geocode = await mapsService.GetGeocode(
                     CurrentPin.Position.Latitude,
                     CurrentPin.Position.Longitude);
-                var opciones = geocode.Components.Append("Otro...").ToArray();
+                var opciones = geocode.Components.Select(x => "📍 " + x).Append("Otro...").ToArray();
 
                 string zone = string.Empty;
                 if (geocode.Components.Count() > 1)

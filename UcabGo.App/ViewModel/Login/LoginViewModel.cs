@@ -73,6 +73,8 @@ public partial class LoginViewModel : ViewModelBase
             var campusLocation = await locationsApiService.GetUserCampus();
             settings.Campus = campusLocation;
 
+            settings.ReloadImage = true;
+
             await navigation.RestartSession();
         }
         else if (message == "WRONG_CREDENTIALS")

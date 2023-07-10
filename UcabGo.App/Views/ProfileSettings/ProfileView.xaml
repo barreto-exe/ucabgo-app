@@ -36,24 +36,42 @@
             <VerticalStackLayout>
                 <VerticalStackLayout Margin="10">
                     <!--  Circulo imagen de perfil  -->
-                    <Frame
-                        Margin="0,10"
-                        Padding="1"
-                        BackgroundColor="White"
-                        BorderColor="White"
-                        CornerRadius="100"
-                        HeightRequest="125"
-                        HorizontalOptions="Center"
-                        WidthRequest="125">
-                        <Image
-                            Aspect="AspectFit"
-                            HeightRequest="100"
-                            HorizontalOptions="Center"
-                            Source="dotnet_bot.png"
-                            VerticalOptions="Center"
-                            WidthRequest="100" />
-                    </Frame>
 
+                    <Grid>
+                        <ImageButton
+                            Margin="10"
+                            Padding="1"
+                            Aspect="AspectFit"
+                            BackgroundColor="White"
+                            CornerRadius="65"
+                            HeightRequest="130"
+                            HorizontalOptions="Center"
+                            Source="profile.jpf"
+                            VerticalOptions="Center"
+                            WidthRequest="130"
+                            ZIndex="0" />
+
+                        <ImageButton
+                            Margin="10"
+                            Padding="1"
+                            Aspect="AspectFill"
+                            Command="{Binding ChangeProfilePictureCommand}"
+                            CornerRadius="65"
+                            HeightRequest="130"
+                            HorizontalOptions="Center"
+                            Source="{Binding PictureUrl}"
+                            VerticalOptions="Center"
+                            WidthRequest="130"
+                            ZIndex="1" />
+
+                        <ActivityIndicator
+                            HorizontalOptions="Center"
+                            IsRunning="{Binding IsImageLoading}"
+                            IsVisible="{Binding IsImageLoading}"
+                            VerticalOptions="Center"
+                            ZIndex="2" />
+
+                    </Grid>
                     <!--  Nombre de usuario  -->
                     <Label
                         Margin="0,10"

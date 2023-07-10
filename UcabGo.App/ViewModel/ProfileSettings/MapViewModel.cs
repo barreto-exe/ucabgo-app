@@ -1,4 +1,4 @@
-using CommunityToolkit.Mvvm.ComponentModel;
+锘縰sing CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Maui.GoogleMaps;
 using System.Collections.ObjectModel;
@@ -161,7 +161,7 @@ namespace UcabGo.App.ViewModel
         {
             if (CurrentPin == null)
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "Debe seleccionar una ubicaci髇", "Aceptar");
+                await Application.Current.MainPage.DisplayAlert("Error", "Debe seleccionar una ubicaci贸n", "Aceptar");
                 return;
             }
 
@@ -171,7 +171,7 @@ namespace UcabGo.App.ViewModel
             var geocode = await mapsService.GetGeocode(
                 CurrentPin.Position.Latitude,
                 CurrentPin.Position.Longitude);
-            var opciones = geocode.Components.Append("Otro...").ToArray();
+            var opciones = geocode.Components.Select(x => "馃搷 " + x).Append("Otro...").ToArray();
 
             string zone = "";
             if (geocode.Components.Count() > 1)
@@ -208,7 +208,7 @@ namespace UcabGo.App.ViewModel
             string detail = await Application.Current.MainPage
                     .DisplayPromptAsync(
                         "Detalle",
-                        message: "Punto de referencia o informaci髇 extra para el conductor.",
+                        message: "Punto de referencia o informaci贸n extra para el conductor.",
                         cancel: "Cancelar",
                         placeholder: "Ej: Al final de la calle.",
                         accept: "Aceptar");
@@ -235,12 +235,12 @@ namespace UcabGo.App.ViewModel
             if (myHomeResponse.Message == "HOME_UPDATED")
             {
                 settings.Home = myHomeResponse.Data;
-                await Application.Current.MainPage.DisplayAlert("蓌ito", "Ubicaci髇 guardada", "Aceptar");
+                await Application.Current.MainPage.DisplayAlert("脡xito", "Ubicaci贸n guardada", "Aceptar");
                 await navigation.GoBackAsync();
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "No se pudo guardar la ubicaci髇", "Aceptar");
+                await Application.Current.MainPage.DisplayAlert("Error", "No se pudo guardar la ubicaci贸n", "Aceptar");
             }
 
             ButtonText = "Guardar";

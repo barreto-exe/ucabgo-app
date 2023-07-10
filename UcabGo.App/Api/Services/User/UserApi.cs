@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+using System.Net;
 using UcabGo.App.Api.Tools;
 using UcabGo.App.Services;
 
@@ -25,6 +27,22 @@ namespace UcabGo.App.Api.Services.User
                 WalkingDistance = walkingDistance
             };
             return await PutAsync<Models.User>(ApiRoutes.WALKING_DISTANCE, input);
+        }
+
+        public async Task<ApiResponse<Models.User>> UpdateProfilePicture(MultipartFormDataContent input)
+        {
+            var response = await Client.PutAsync(ApiRoutes.USER_PICTURE, input);
+            if (response.IsSuccessStatusCode || response.StatusCode == HttpStatusCode.BadRequest)
+            {
+                // Request was successful
+                var content = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<ApiResponse<Models.User>>(content);
+                return result;
+            }
+            else
+            {
+                throw new Exception("Error updating profile picture");
+            }
         }
     }
 }

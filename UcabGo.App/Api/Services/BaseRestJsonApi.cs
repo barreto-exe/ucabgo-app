@@ -9,14 +9,14 @@ namespace UcabGo.App.Api.Services
 {
     public abstract class BaseRestJsonApi
     {
-        readonly HttpClient client;
+        protected HttpClient Client { get; private set; }
         readonly JsonSerializerSettings serializerSettings;
         readonly ISettingsService settingsService;
         readonly INavigationService navigationService;
 
         public BaseRestJsonApi(ISettingsService settingsService, INavigationService navigationService)
         {
-            client = new HttpClient();
+            Client = new HttpClient();
             serializerSettings = new()
             {
                 DateFormatString = "yyyy-MM-dd hh:mm:ss",
@@ -33,7 +33,7 @@ namespace UcabGo.App.Api.Services
             var token = settingsService.AccessToken;
             if (!string.IsNullOrEmpty(token))
             {
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             }
         }
 
@@ -44,7 +44,7 @@ namespace UcabGo.App.Api.Services
             try
             {
                 RefreshToken();
-                var response = await client.GetAsync(url);
+                var response = await Client.GetAsync(url);
                 return await GeneralResponse<T>(response);
             }
             catch
@@ -58,7 +58,7 @@ namespace UcabGo.App.Api.Services
             url = AppendQueryFilters(url, query);
             try
             {
-                var response = await client.GetAsync(url);
+                var response = await Client.GetAsync(url);
                 string responseString = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject(responseString, serializerSettings);
             }
@@ -101,7 +101,7 @@ namespace UcabGo.App.Api.Services
             try
             {
                 RefreshToken();
-                var response = await client.PostAsync(new Uri(url), content);
+                var response = await Client.PostAsync(new Uri(url), content);
                 return await GeneralResponse<T>(response);
             }
             catch
@@ -122,7 +122,7 @@ namespace UcabGo.App.Api.Services
             try
             {
                 RefreshToken();
-                var response = await client.PutAsync(new Uri(url), content);
+                var response = await Client.PutAsync(new Uri(url), content);
                 return await GeneralResponse<T>(response);
             }
             catch
@@ -136,7 +136,7 @@ namespace UcabGo.App.Api.Services
             try
             {
                 RefreshToken();
-                var response = await client.DeleteAsync(new Uri(url));
+                var response = await Client.DeleteAsync(new Uri(url));
                 return await GeneralResponse<T>(response);
             }
             catch
