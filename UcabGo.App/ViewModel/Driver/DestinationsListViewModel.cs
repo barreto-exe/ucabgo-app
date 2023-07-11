@@ -67,7 +67,23 @@ namespace UcabGo.App.ViewModel
             Destinations.Clear();
             IsRefreshing = true;
 
-            var destinations = await destinationsService.GetDestinations();
+            var taskDestination = destinationsService.GetDestinations();
+            var taskCooldown = driverApi.GetCooldownTime();
+
+            await Task.WhenAll(taskDestination, taskCooldown);
+
+            var destinations = await taskDestination;
+            var cooldown = await taskCooldown;
+
+            if(cooldown?.Message == "COOLDOWN_TIME" && cooldown.Data.IsInCooldown)
+            {
+                var formattedCooldown = cooldown.Data.Cooldown.ToString(@"mm\:ss");
+                await Application.Current.MainPage.DisplayAlert("Atención", $"Debes esperar {formattedCooldown} minutos para poder crear otro viaje.", "Aceptar");
+                await navigation.GoBackAsync();
+                return;
+            }
+
+
             if (destinations?.Message == "LOCATIONS_FOUND")
             {
                 //Order the Destinations arbitrarily. First the one with alias "Ucab", then the one with "Casa", then the others.

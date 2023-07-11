@@ -1,4 +1,5 @@
 using UcabGo.App.Api.Services.Driver.Inputs;
+using UcabGo.App.Api.Services.Rides.Dtos;
 using UcabGo.App.Api.Tools;
 using UcabGo.App.Models;
 using UcabGo.App.Services;
@@ -64,6 +65,11 @@ namespace UcabGo.App.Api.Services.Driver
         public Task<ApiResponse<Ride>> CancelPassenger(int rideId, int passengerId)
         {
             return PutAsync<Ride>($"{ApiRoutes.DRIVER}/{rideId}/passengers/{passengerId}/cancel");
+        }
+
+        public async Task<ApiResponse<CooldownDto>> GetCooldownTime()
+        {
+            return await GetAsync<CooldownDto>(ApiRoutes.DRIVER_COOLDOWN);
         }
     }
 }

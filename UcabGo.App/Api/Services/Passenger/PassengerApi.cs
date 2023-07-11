@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UcabGo.App.Api.Services.PassengerService;
 using UcabGo.App.Api.Services.PassengerService.Inputs;
+using UcabGo.App.Api.Services.Rides.Dtos;
 using UcabGo.App.Api.Tools;
 using UcabGo.App.Models;
 using UcabGo.App.Services;
@@ -36,6 +37,10 @@ namespace UcabGo.App.Api.Services.Passenger
         public async Task<ApiResponse<IEnumerable<Ride>>> GetRides(bool onlyAvailable)
         {
             return await GetAsync<IEnumerable<Ride>>(ApiRoutes.PASSENGER + "/rides", new { onlyAvailable });
+        }
+        public async Task<ApiResponse<CooldownDto>> GetCooldownTime()
+        {
+            return await GetAsync<CooldownDto>(ApiRoutes.PASSENGER_COOLDOWN);
         }
 
     }

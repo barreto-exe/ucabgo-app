@@ -19,9 +19,11 @@ namespace UcabGo.App.Api.Tools
         public static string HOME { get => BASE_URL + "user/home"; }
         public static string DESTINATIONS { get => BASE_URL + "user/destinations"; }
         public static string DRIVER { get => BASE_URL + "driver"; }
+        public static string DRIVER_COOLDOWN { get => BASE_URL + "driver/cooldown"; }
         public static string RIDES_MATCHING { get => BASE_URL + "rides/matching"; }
         public static string RIDES { get => BASE_URL + "rides"; }
         public static string PASSENGER { get => BASE_URL + "passenger"; }
+        public static string PASSENGER_COOLDOWN { get => BASE_URL + "passenger/cooldown"; }
 
         //Hubs strings
         public static string CHAT_HUB { get => "chat"; }

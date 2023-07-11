@@ -45,6 +45,8 @@ namespace UcabGo.App.ViewModel
         [ObservableProperty]
         bool ridesFound;
 
+        bool isInCooldown;
+
         public RidesAvailableViewModel(ISettingsService settingsService, INavigationService navigation, IRidesApi ridesApi, IPassengerApi passengerApi, IHubConnectionFactory hubConnectionFactory) : base(settingsService, navigation)
         {
             this.ridesApi = ridesApi;
@@ -57,16 +59,15 @@ namespace UcabGo.App.ViewModel
 
         public override async void OnAppearing()
         {
+            Greeting = $"Hola, {settings.User.Name}.";
+            await Refresh(true);
+
             //Go back if no destination is selected
-            if (SelectedDestination == null)
+            if (SelectedDestination == null || isInCooldown)
             {
                 await navigation.GoBackAsync();
                 return;
             }
-
-            Greeting = $"Hola, {settings.User.Name}.";
-
-            await Refresh(true);
 
             await RunHubConnection();
         }
@@ -115,13 +116,11 @@ namespace UcabGo.App.ViewModel
             bool goingToCampus = SelectedDestination.Alias.ToLower().Contains("ucab");
             
             var ridesTask = ridesApi.GetMatchingRides(SelectedDestination, Convert.ToInt32(settings.User.WalkingDistance), goingToCampus);
-            var passengerTask = passengerApi.GetRides(onlyAvailable: true);
+            var taskCooldown = passengerApi.GetCooldownTime();
 
-            await Task.WhenAll(ridesTask, passengerTask);
+            await Task.WhenAll(ridesTask, taskCooldown);
 
             var ridesResponse = await ridesTask;
-            var passengerResponse = await passengerTask;
-
             if (ridesResponse?.Message == "RIDES_FOUND")
             {
                 if (!goingToCampus)
@@ -138,17 +137,28 @@ namespace UcabGo.App.ViewModel
                 }
             }
 
-            if (passengerResponse?.Message == "RIDES_FOUND" && passengerResponse.Data.Any(x => x.IsAvailable))
+            var cooldown = await taskCooldown;
+            if (cooldown?.Message == "COOLDOWN_TIME" && cooldown.Data.IsInCooldown)
             {
-                //Is a passenger that's not been ignored or cancelled
-                var passengers = passengerResponse.Data.First(x => x.IsAvailable).Passengers;
-                bool isPassenger = passengers.Any(x => x.Id == settings.User.Id && x.TimeIgnored == null && x.TimeCancelled == null);
-
-                if (isPassenger)
-                {
-                    await navigation.NavigateToAsync<ActivePassengerView>();
-                }
+                isInCooldown = true;
+                var formattedCooldown = cooldown.Data.Cooldown.ToString(@"mm\:ss");
+                await Application.Current.MainPage.DisplayAlert("Atención", $"Debes esperar {formattedCooldown} minutos para poder tomar otro viaje.", "Aceptar");
+                await navigation.NavigateToAsync("//" + nameof(RoleSelectionView));
+                return;
             }
+
+            //Deleted this code for performance reasons
+            //if (passengerResponse?.Message == "RIDES_FOUND" && passengerResponse.Data.Any(x => x.IsAvailable))
+            //{
+            //    //Is a passenger that's not been ignored or cancelled
+            //    var passengers = passengerResponse.Data.First(x => x.IsAvailable).Passengers;
+            //    bool isPassenger = passengers.Any(x => x.Id == settings.User.Id && x.TimeIgnored == null && x.TimeCancelled == null);
+
+            //    if (isPassenger)
+            //    {
+            //        await navigation.NavigateToAsync<ActivePassengerView>();
+            //    }
+            //}
 
             RidesFound = Rides?.Count > 0;
             NoRidesFound = !RidesFound;

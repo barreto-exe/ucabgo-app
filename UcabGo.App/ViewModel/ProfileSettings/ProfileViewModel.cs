@@ -121,6 +121,12 @@ namespace UcabGo.App.ViewModel
         [RelayCommand]
         async Task Logout()
         {
+            var opcion = await Application.Current.MainPage.DisplayAlert("Cerrar sesión", "¿Estás seguro que deseas cerrar sesión?", "Si", "No");
+            if (!opcion)
+            {
+                return;
+            }
+
             settings.User = null;
             settings.AccessToken = null;
 

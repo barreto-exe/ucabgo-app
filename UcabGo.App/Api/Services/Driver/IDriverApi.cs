@@ -1,4 +1,5 @@
 ﻿using UcabGo.App.Api.Services.Driver.Inputs;
+using UcabGo.App.Api.Services.Rides.Dtos;
 using UcabGo.App.Api.Tools;
 using UcabGo.App.Models;
 using PassengerModel = UcabGo.App.Models.Passenger;
@@ -16,5 +17,6 @@ namespace UcabGo.App.Api.Services.Driver
         Task<ApiResponse<Ride>> AcceptPassenger(int rideId, int passengerId);
         Task<ApiResponse<Ride>> IgnorePassenger(int rideId, int passengerId);
         Task<ApiResponse<Ride>> CancelPassenger(int rideId, int passengerId);
+        Task<ApiResponse<CooldownDto>> GetCooldownTime();
     }
 }

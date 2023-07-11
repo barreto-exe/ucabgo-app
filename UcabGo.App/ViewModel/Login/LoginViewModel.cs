@@ -49,6 +49,14 @@ public partial class LoginViewModel : ViewModelBase
 #endif
     }
 
+    public override void OnAppearing()
+    {
+#if !DEBUG
+        Email = string.Empty;
+        Password = string.Empty;
+#endif
+    }
+
     [RelayCommand]
     async Task Login()
     {

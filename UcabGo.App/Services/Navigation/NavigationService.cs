@@ -37,5 +37,10 @@ namespace UcabGo.App.Services.Navigation
                     ? Shell.Current.GoToAsync(typeof(T).Name, routeParameters)
                     : Shell.Current.GoToAsync(typeof(T).Name);
         }
+
+        public Task NavigateToAsync(string route)
+        {
+            return Shell.Current.GoToAsync(route);
+        }
     }
 }
