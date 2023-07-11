@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="UcabGo.App.Views.RegisterView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:UcabGo.App.ViewModel"
+    Title="Registrarse"
+    x:DataType="viewmodel:RegisterViewModel">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ScrollView Grid.Row="0" VerticalOptions="Start">
+            <VerticalStackLayout Margin="20" Spacing="25">
+
+                <Label Margin="0,0,0,-20" Text="Correo UCAB:" />
+                <Border>
+                    <Entry
+                        x:Name="TxtEmail"
+                        IsSpellCheckEnabled="False"
+                        Keyboard="Email"
+                        Placeholder="usuario@ucab.edu.ve"
+                        Text="{Binding Email}" />
+                </Border>
+                <Label
+                    Margin="0,-20,0,0"
+                    FontSize="12"
+                    HorizontalOptions="Start"
+                    IsVisible="{Binding IsEmailErrorVisible}"
+                    Text="❌ Correo inválido. &#10;-Sólo permitidos correos UCAB."
+                    TextColor="Red" />
+                <Label
+                    Margin="0,-20,0,0"
+                    FontSize="12"
+                    HorizontalOptions="Start"
+                    IsVisible="{Binding IsInvalidCredentialsVisible}"
+                    Text="❌ Ya existe un usuario con este correo electrónico."
+                    TextColor="Red" />
+
+                <Label Margin="0,0,0,-20" Text="Nombres:" />
+                <Border>
+                    <Entry Placeholder="Primer y segundo nombre" Text="{Binding Name}" />
+                </Border>
+
+                <Label Margin="0,0,0,-20" Text="Apellidos:" />
+                <Border>
+                    <Entry Placeholder="Primer y segundo apellido" Text="{Binding LastName}" />
+                </Border>
+
+                <Label Margin="0,0,0,-20" Text="Teléfono:" />
+                <Border>
+                    <Entry Placeholder="0414-1234567" Text="{Binding Phone}" />
+                </Border>
+                <Label
+                    Margin="0,-20,0,0"
+                    FontSize="12"
+                    HorizontalOptions="Start"
+                    IsVisible="{Binding IsPhoneErrorVisible}"
+                    Text="❌ Formato inválido. &#10;-Ingrese un número de teléfono venezolano válido."
+                    TextColor="Red" />
+
+                <Label Margin="0,0,0,-20" Text="Contraseña:" />
+                <Border>
+                    <Entry
+                        IsPassword="True"
+                        Placeholder="Contraseña"
+                        Text="{Binding Password}" />
+                </Border>
+                <Label
+                    Margin="0,-20,0,0"
+                    FontSize="12"
+                    HorizontalOptions="Start"
+                    IsVisible="{Binding IsPasswordErrorVisible}"
+                    Text="❌ Contraseña inválida. &#10;- Mínimo 8 caracteres. &#10;- Al menos una mayúscula. &#10;- Al menos un número. &#10;- Al menos un carácter especial."
+                    TextColor="Red" />
+
+                <Label Margin="0,0,0,-20" Text="Confirmar contraseña:" />
+                <Border>
+                    <Entry
+                        IsPassword="True"
+                        Placeholder="Confirmar contraseña"
+                        Text="{Binding ConfirmPassword}" />
+                </Border>
+                <Label
+                    Margin="0,-20,0,0"
+                    FontSize="12"
+                    HorizontalOptions="Start"
+                    IsVisible="{Binding IsConfirmPasswordErrorVisible}"
+                    Text="❌ Las contraseñas no coinciden."
+                    TextColor="Red" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!--  Save button  -->
+        <Button
+            Grid.Row="1"
+            Margin="20"
+            Command="{Binding RegisterCommand}"
+            HeightRequest="50"
+            IsEnabled="{Binding IsButtonEnabled}"
+            Text="{Binding ButtonText}" />
+    </Grid>
+</ContentPage>

@@ -16,7 +16,8 @@ namespace UcabGo.App.ViewModel
     {
         readonly IPassengerApi passengerApi;
 
-        readonly HubConnection hubConnection;
+        readonly IHubConnectionFactory hubConnectionFactory;
+        HubConnection hubConnection;
         CancellationTokenSource tokenSource;
 
         [ObservableProperty]
@@ -59,7 +60,7 @@ namespace UcabGo.App.ViewModel
             passenger = new();
             passengers = new();
 
-            hubConnection = hubConnectionFactory.GetHubConnection(ApiRoutes.ACTIVE_RIDE_HUB);
+            this.hubConnectionFactory = hubConnectionFactory;
         }
 
         public override async void OnAppearing()
@@ -76,12 +77,19 @@ namespace UcabGo.App.ViewModel
 
         private async Task RunHubConnection()
         {
-            hubConnection.On<int>(ApiRoutes.ACTIVE_RIDE_RECEIVE_UPDATE, async (rideId) =>
+            var requestsInProcess = new List<string>();
+
+            hubConnection = hubConnectionFactory.GetHubConnection(ApiRoutes.ACTIVE_RIDE_HUB);
+            hubConnection.On<int, string>(ApiRoutes.ACTIVE_RIDE_RECEIVE_UPDATE, async (rideId, sender) =>
             {
-                if (rideId == Ride.Id)
+                if (rideId == Ride.Id && !requestsInProcess.Contains(sender))
                 {
+                    requestsInProcess.Add(sender);
+
                     await Refresh(false);
                 }
+
+                requestsInProcess.Remove(sender);
             });
 
             tokenSource = new();
@@ -162,40 +170,49 @@ namespace UcabGo.App.ViewModel
             else if (endedRide?.Message == "RIDES_FOUND" && endedRide.Data.Any(RideNeedsDoubleCheck))
             {
                 Ride = endedRide.Data.First(RideNeedsDoubleCheck);
-                var doubleCheck = await DoubleCheckRide();
 
-                switch (doubleCheck)
+                MainThread.BeginInvokeOnMainThread(async () =>
                 {
-                    case DoubleCheckResult.ArrivedOk:
-                        {
-                            //TODO - Rate driver screen
-                            await navigation.GoBackAsync();
-                            return false;
-                        }
-                    case DoubleCheckResult.Complaint:
-                        {
-                            //TODO - Complaint screen
-                            await navigation.GoBackAsync();
-                            return false;
-                        }
-                    case DoubleCheckResult.ApiError:
-                        {
-                            break;
-                        }
-                }
+                    var doubleCheck = await DoubleCheckRide();
+                    switch (doubleCheck)
+                    {
+                        case DoubleCheckResult.ArrivedOk:
+                            {
+                                //TODO - Rate driver screen
+                                await navigation.GoBackAsync();
+                                break;
+                            }
+                        case DoubleCheckResult.Complaint:
+                            {
+                                //TODO - Complaint screen
+                                await navigation.GoBackAsync();
+                                break;
+                            }
+                        case DoubleCheckResult.ApiError:
+                            {
+                                break;
+                            }
+                    }
+                });
+                 
+
+                return false;
             }
             else
             {
                 //If user is in this screen previosly, it means that the ride was canceled
-                await Application.Current.MainPage.DisplayAlert("Atención", "El viaje ha sido cancelado por el conductor.", "Aceptar.");
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    await Application.Current.MainPage.DisplayAlert("Atención", "El viaje ha sido cancelado por el conductor.", "Aceptar.");
+                    await navigation.GoBackAsync();
+                });
 
-                await navigation.GoBackAsync();
 
                 return false;
             }
 
             Passenger = Ride.Passengers.Where(x => x.User.Id == settings.User.Id).FirstOrDefault(x => !x.IsEnded);
-            Passengers = new(Ride.Passengers.Where(x => x.IsActive).DistinctBy(x => x.User.Id));
+            Passengers = new(Ride.Passengers.Where(x => x.IsAccepted && x.IsActive).DistinctBy(x => x.User.Id));
             
             DestinationText = Ride?.Destination?.DestinationText;
 

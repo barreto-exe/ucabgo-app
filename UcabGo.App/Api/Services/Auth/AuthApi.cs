@@ -1,6 +1,7 @@
 using UcabGo.App.Api.Interfaces;
 using UcabGo.App.Api.Models;
 using UcabGo.App.Api.Tools;
+using UcabGo.App.Models.Inputs;
 using UcabGo.App.Services;
 
 namespace UcabGo.App.Api.Services
@@ -31,6 +32,11 @@ namespace UcabGo.App.Api.Services
             };
 
             return await PostAsync<Login>(ApiRoutes.LOGIN, login);
+        }
+
+        public async Task<ApiResponse<Login>> RegisterAsync(RegisterInput input)
+        {
+            return await PostAsync<Login>(ApiRoutes.REGISTER, input);
         }
     }
 }

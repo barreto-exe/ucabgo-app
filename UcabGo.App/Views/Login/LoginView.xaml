@@ -79,7 +79,13 @@
                 HeightRequest="1"
                 HorizontalOptions="FillAndExpand" />
 
-            <Button x:Name="BtnGoogle" Text="Registrarse con Google" />
+            <Button
+                BackgroundColor="Transparent"
+                BorderColor="{StaticResource Primary}"
+                BorderWidth="1"
+                Command="{Binding RegisterCommand}"
+                Text="Registrarse"
+                TextColor="{StaticResource Primary}" />
 
         </VerticalStackLayout>
     </ScrollView>

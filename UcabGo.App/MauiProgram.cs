@@ -96,6 +96,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<RidesAvailableViewModel>();
         builder.Services.AddSingleton<ActivePassengerViewModel>();
         builder.Services.AddSingleton<ChatViewModel>();
+        builder.Services.AddSingleton<RegisterViewModel>();
 
         //DI Views
         builder.Services.AddSingleton<LoginView>();
@@ -119,6 +120,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<RidesAvailableView>();
         builder.Services.AddSingleton<ActivePassengerView>();
         builder.Services.AddSingleton<ChatView>();
+        builder.Services.AddSingleton<RegisterView>();
 
 
         //Removes the underline from the Entry

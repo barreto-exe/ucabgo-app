@@ -17,21 +17,14 @@ namespace UcabGo.App.Api.Services.SignalR
         {
             var apiUrl = EnviromentVariables.GetValue("ApiUrl");
 
-            if (!_connections.ContainsKey(hubName))
-            {
-                var connection = new HubConnectionBuilder()
-                    .WithUrl(apiUrl, options => 
-                    {
-                        options.AccessTokenProvider = () => Task.FromResult(settings.AccessToken);
-                        options.Headers.Add("HubName", hubName);
-                    })
-                    .WithAutomaticReconnect()
-                    .Build();
-
-                _connections.Add(hubName, connection);
-            }
-
-            return _connections[hubName];
+            return new HubConnectionBuilder()
+                .WithUrl(apiUrl, options =>
+                {
+                    options.AccessTokenProvider = () => Task.FromResult(settings.AccessToken);
+                    options.Headers.Add("HubName", hubName);
+                })
+                .WithAutomaticReconnect()
+                .Build();
         }
     }
 }

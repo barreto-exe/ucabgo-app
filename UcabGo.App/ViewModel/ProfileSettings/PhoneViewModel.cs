@@ -32,8 +32,6 @@ namespace UcabGo.App.ViewModel
         public PhoneViewModel(ISettingsService settingsService, INavigationService navigation, IUserApi phoneApi) : base(settingsService, navigation)
         {
             this.userApi = phoneApi;
-
-            OnAppearing();
         }
 
         public override void OnAppearing()

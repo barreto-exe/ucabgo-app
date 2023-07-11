@@ -23,7 +23,8 @@ namespace UcabGo.App.ViewModel
         readonly IRidesApi ridesApi;
         readonly IPassengerApi passengerApi;
 
-        readonly HubConnection hubConnection;
+        readonly IHubConnectionFactory hubConnectionFactory;
+        HubConnection hubConnection;
         CancellationTokenSource tokenSource;
 
         [ObservableProperty]
@@ -48,9 +49,10 @@ namespace UcabGo.App.ViewModel
         {
             this.ridesApi = ridesApi;
             this.passengerApi = passengerApi;
-            this.hubConnection = hubConnectionFactory.GetHubConnection(ApiRoutes.RIDES_MATCHING_HUB);
 
             Rides = new();
+
+            this.hubConnectionFactory = hubConnectionFactory;
         }
 
         public override async void OnAppearing()
@@ -71,6 +73,7 @@ namespace UcabGo.App.ViewModel
 
         private async Task RunHubConnection()
         {
+            hubConnection = hubConnectionFactory.GetHubConnection(ApiRoutes.RIDES_MATCHING_HUB);
             hubConnection.On<int>(ApiRoutes.RIDES_MATCHING_RECEIVE_UPDATE, async (rideId) =>
             {
                 await Refresh(false);

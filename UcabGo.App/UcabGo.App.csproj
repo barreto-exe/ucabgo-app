@@ -235,6 +235,9 @@
 	  <MauiXaml Update="Views\Passenger\RidesAvailableView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Register\RegisterView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Vehicles\VehiclesAddView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

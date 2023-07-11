@@ -1,4 +1,5 @@
 ﻿using UcabGo.App.Services;
+using UcabGo.App.Views;
 
 namespace UcabGo.App.Shells;
 
@@ -9,6 +10,8 @@ public partial class SessionShell : Shell
     {
         InitializeComponent();
         this.navigationService = navigationService;
+
+        Routing.RegisterRoute(nameof(RegisterView), typeof(RegisterView));
     }
 
     protected override async void OnParentSet()

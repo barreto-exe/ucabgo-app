@@ -18,7 +18,8 @@ namespace UcabGo.App.ViewModel
     {
         readonly IChatApi chatApi;
 
-        readonly HubConnection hubConnection;
+        readonly IHubConnectionFactory hubConnectionFactory;
+        HubConnection hubConnection;
         CancellationTokenSource tokenSource;
 
         [ObservableProperty]
@@ -38,8 +39,9 @@ namespace UcabGo.App.ViewModel
 
         public ChatViewModel(ISettingsService settingsService, INavigationService navigation, IHubConnectionFactory hubConnectionFactory, IChatApi chatApi) : base(settingsService, navigation)
         {
-            hubConnection = hubConnectionFactory.GetHubConnection(ApiRoutes.CHAT_HUB);
             this.chatApi = chatApi;
+
+            this.hubConnectionFactory = hubConnectionFactory;
         }
 
         public override async void OnAppearing()
@@ -59,6 +61,7 @@ namespace UcabGo.App.ViewModel
 
         private async Task RunHubConnection()
         {
+            hubConnection = hubConnectionFactory.GetHubConnection(ApiRoutes.CHAT_HUB);
             hubConnection.On<int>(ApiRoutes.CHAT_RECEIVE_MESSAGE, async (rideId) =>
             {
                 if (rideId == RideId)

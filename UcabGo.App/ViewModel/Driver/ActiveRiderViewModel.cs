@@ -16,7 +16,8 @@ namespace UcabGo.App.ViewModel
     {
         readonly IDriverApi driverApi;
 
-        readonly HubConnection hubConnection;
+        readonly IHubConnectionFactory hubConnectionFactory;
+        HubConnection hubConnection;
         CancellationTokenSource tokenSource;
 
         [ObservableProperty]
@@ -56,7 +57,7 @@ namespace UcabGo.App.ViewModel
             ride = new();
             passengers = new();
 
-            hubConnection = hubConnectionFactory.GetHubConnection(ApiRoutes.ACTIVE_RIDE_HUB);
+            this.hubConnectionFactory = hubConnectionFactory;
         }
 
         public override async void OnAppearing()
@@ -65,17 +66,27 @@ namespace UcabGo.App.ViewModel
 
             await Refresh(true);
 
-            await RunHubConnection();
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                await RunHubConnection();
+            });
         }
 
         private async Task RunHubConnection()
         {
-            hubConnection.On<int>(ApiRoutes.ACTIVE_RIDE_RECEIVE_UPDATE, async (rideId) =>
+            var requestsInProcess = new List<string>();
+
+            hubConnection = hubConnectionFactory.GetHubConnection(ApiRoutes.ACTIVE_RIDE_HUB);
+            hubConnection.On<int, string>(ApiRoutes.ACTIVE_RIDE_RECEIVE_UPDATE, async (rideId, sender) =>
             {
-                if (rideId == Ride.Id)
+                if (rideId == Ride.Id && !requestsInProcess.Contains(sender))
                 {
+                    requestsInProcess.Add(sender);
+
                     await Refresh(false);
                 }
+
+                requestsInProcess.Remove(sender);
             });
 
             tokenSource = new();

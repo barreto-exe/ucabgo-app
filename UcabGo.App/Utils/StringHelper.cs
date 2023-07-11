@@ -19,4 +19,17 @@ public static class StringHelper
 
         return phone;
     }
+
+
+    public static bool IsValidEmail(this string email)
+    {
+        var pattern = @"^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)?ucab\.edu\.ve$";
+        return Regex.IsMatch(email, pattern);
+    }
+
+    public static bool IsValidPassword(this string password)
+    {
+        var pattern = @"^(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$";
+        return Regex.IsMatch(password, pattern);
+    }
 }

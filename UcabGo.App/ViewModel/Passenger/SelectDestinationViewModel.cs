@@ -231,6 +231,10 @@ namespace UcabGo.App.ViewModel
                             placeholder: "Ej: Alta Vista, Unare...",
                             accept: "Aceptar");
                 }
+                else
+                {
+                    zone = zone.Replace("📍 ", "");
+                }
 
                 if (zone == "Cancelar" || string.IsNullOrEmpty(zone))
                 {

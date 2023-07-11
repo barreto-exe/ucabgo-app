@@ -4,6 +4,8 @@ using System.Text.RegularExpressions;
 using UcabGo.App.Api.Interfaces;
 using UcabGo.App.Api.Services.Locations;
 using UcabGo.App.Services;
+using UcabGo.App.Utils;
+using UcabGo.App.Views;
 
 namespace UcabGo.App.ViewModel;
 
@@ -51,8 +53,8 @@ public partial class LoginViewModel : ViewModelBase
     async Task Login()
     {
         IsInvalidCredentialsVisible = false;
-        IsEmailErrorVisible = !IsValidEmail();
-        IsPasswordErrorVisible = !IsValidPassword();
+        IsEmailErrorVisible = !Email.IsValidEmail();
+        IsPasswordErrorVisible = !Password.IsValidPassword();
 
         if (IsEmailErrorVisible || IsPasswordErrorVisible) return;
 
@@ -85,16 +87,9 @@ public partial class LoginViewModel : ViewModelBase
         IsEnabled = true;
     }
 
-
-    bool IsValidEmail()
+    [RelayCommand]
+    async Task Register()
     {
-        var pattern = @"^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)?ucab\.edu\.ve$";
-        return Regex.IsMatch(Email, pattern);
-    }
-
-    bool IsValidPassword()
-    {
-        var pattern = @"^(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$";
-        return Regex.IsMatch(Password, pattern);
+        await navigation.NavigateToAsync<RegisterView>();
     }
 }

@@ -7,7 +7,7 @@
     xmlns:local="clr-namespace:UcabGo.App.Utils"
     xmlns:model="clr-namespace:UcabGo.App.Models"
     xmlns:vm="clr-namespace:UcabGo.App.ViewModel"
-    Title="Modo pasajero"
+    Title="Colas disponibles"
     x:DataType="vm:RidesAvailableViewModel">
     <ContentPage.Resources>
         <ResourceDictionary>
