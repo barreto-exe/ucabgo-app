@@ -5,33 +5,168 @@
         font-family: Verdana, Geneva, Tahoma, sans-serif
       }
     </style> -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
   </head>
   <body>
-    <h2>Video Tutorial</h2>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/fuhE6PYnRMc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col">
+          <div class="card shadow p-3 mb-5 bg-body rounded">
+            <div class="card-body ">
+              <h2>Video Tutorial</h2>
+              <div class="ratio ratio-16x9">
+                <iframe  src="https://www.youtube.com/embed/fuhE6PYnRMc" 
+                allowfullscreen
+                ></iframe>
+              </div>
+              <!-- <iframe
+   
+                src="https://www.youtube.com/embed/fuhE6PYnRMc"
+                title="Tutorial"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              ></iframe> -->
+            </div>
+          </div>
+        </div>
+      </div>
 
-    <button type="button" class="btn btn-primary">Primary</button>
-<button type="button" class="btn btn-secondary">Secondary</button>
-<button type="button" class="btn btn-success">Success</button>
-<button type="button" class="btn btn-danger">Danger</button>
-<button type="button" class="btn btn-warning">Warning</button>
-<button type="button" class="btn btn-info">Info</button>
-<button type="button" class="btn btn-light">Light</button>
-<button type="button" class="btn btn-dark">Dark</button>
+      <div class="row mb-5">
+        <div class="col">
+          <div class="card shadow p-3 mb-5 bg-body rounded">
+            <div class="card-body">
 
-<button type="button" class="btn btn-link">Link</button>
-    <h2>Preguntas Frecuentes</h2>
-    <p><strong>¿Quiénes pueden utilizar la app para "dar la cola"?</strong></p>
-    <p>Todos los miembros de la comunidad universitaria de la UCAB Guayana pueden utilizar la app, incluyendo estudiantes, profesores y personal administrativo.</p>
-    <p><strong>¿Cómo funciona el sistema para "dar la cola"?</strong></p>
-    <p>La app permite a los conductores publicar información sobre sus viajes, incluyendo información del conductor y el horario de salida. Los demás usuarios pueden buscar viajes disponibles y solicitar un "aventón" al conductor.</p>
-    <p><strong>¿Cómo se garantiza la seguridad de los usuarios en el sistema para "dar la cola"?</strong></p>
-    <p>Los usuarios pueden verificar la información de perfil de otros usuarios al "pedir la cola". Además, se recomienda que los usuarios se comuniquen con el conductor antes del viaje  usando el chat que tiene la aplicación para confirmar los detalles y establecer medidas de seguridad adicionales.</p>
-    <p><strong>¿Cómo se manejan las emergencias en la app durante un viaje?</strong></p>
-    <p>La aplicación cuenta con un “Botón de emergencia”, el cual se puede presionar durante un viaje y enviará un mensaje SOS a los contactos de emergencia que se deben añadir anteriormente en el perfil del usuario.</p>
-    <p><strong>¿Cómo se manejan las cancelaciones de una cola?</strong></p>
-    <p>Los usuarios pueden cancelar sus solicitudes de "cola" en cualquier momento antes del viaje, pero tendrán que esperar por lo menos 15 minutos para poder pedir otra cola.</p>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+              <div class="accordion" id="faqExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingOne">
+                    <button
+                      class="accordion-button"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseOne"
+                      aria-expanded="true"
+                      aria-controls="collapseOne"
+                    >
+                      ¿Cómo funciona el sistema para "dar la cola"?
+                    </button>
+                  </h2>
+                  <div
+                    id="collapseOne"
+                    class="accordion-collapse collapse show"
+                    aria-labelledby="headingOne"
+                    data-bs-parent="#faqExample"
+                  >
+                    <div class="accordion-body">
+                      La app permite a los conductores publicar información
+                      sobre sus viajes, incluyendo información del conductor y
+                      el horario de salida. Los demás usuarios pueden buscar
+                      viajes disponibles y solicitar un "aventón" al conductor.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTwo">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseTwo"
+                      aria-expanded="false"
+                      aria-controls="collapseTwo"
+                    >
+                      ¿Cómo se garantiza la seguridad de los usuarios en el
+                      sistema para "dar la cola"?
+                    </button>
+                  </h2>
+                  <div
+                    id="collapseTwo"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="headingTwo"
+                    data-bs-parent="#faqExample"
+                  >
+                    <div class="accordion-body">
+                      Los usuarios pueden verificar la información de perfil de
+                      otros usuarios al "pedir la cola". Además, se recomienda
+                      que los usuarios se comuniquen con el conductor antes del
+                      viaje usando el chat que tiene la aplicación para
+                      confirmar los detalles y establecer medidas de seguridad
+                      adicionales.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingThree">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseThree"
+                      aria-expanded="false"
+                      aria-controls="collapseThree"
+                    >
+                      ¿Cómo se manejan las emergencias en la app durante un
+                      viaje?
+                    </button>
+                  </h2>
+                  <div
+                    id="collapseThree"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="headingThree"
+                    data-bs-parent="#faqExample"
+                  >
+                    <div class="accordion-body">
+                      La aplicación cuenta con un “Botón de emergencia”, el cual
+                      se puede presionar durante un viaje y enviará un mensaje
+                      SOS a los contactos de emergencia que se deben añadir
+                      anteriormente en el perfil del usuario.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingFour">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseFour"
+                      aria-expanded="false"
+                      aria-controls="collapseFour"
+                    >
+                      ¿Cómo se manejan las cancelaciones de una cola?
+                    </button>
+                  </h2>
+                  <div
+                    id="collapseFour"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="headingFour"
+                    data-bs-parent="#faqExample"
+                  >
+                    <div class="accordion-body">
+                      Los usuarios pueden cancelar sus solicitudes de "cola" en
+                      cualquier momento antes del viaje, pero tendrán que
+                      esperar por lo menos 15 minutos para poder pedir otra
+                      cola.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
