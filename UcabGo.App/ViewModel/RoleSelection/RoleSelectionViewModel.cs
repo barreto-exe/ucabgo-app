@@ -24,9 +24,6 @@ namespace UcabGo.App.ViewModel
         [ObservableProperty]
         bool isLoading;
 
-        [ObservableProperty]
-        double progressBarValue;
-
         public RoleSelectionViewModel(
             ISettingsService settingsService, INavigationService navigationService, IDriverApi driverApi, ISosContactsApi contactsApi, IVehiclesApi vehiclesApi, IPassengerApi passengerApi) : base(settingsService, navigationService)
         {
@@ -42,7 +39,6 @@ namespace UcabGo.App.ViewModel
 
             IsLoading = true;
             AreButtonsEnabled = false;
-            ProgressBarValue = 0;
 
             var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
             if (status != PermissionStatus.Granted)
@@ -57,11 +53,7 @@ namespace UcabGo.App.ViewModel
                 var contactsTask = sosContactApi.GetSosContacts();
                 var vehiclesTask = vehiclesApi.GetVehicles();
 
-                ProgressBarValue = 0.2;
-
-                await Task.WhenAll(ridesTask, contactsTask, vehiclesTask, passengerTask);
-
-                await LoadingAnimation();
+                await Task.WhenAny(ridesTask, contactsTask, vehiclesTask, passengerTask);
 
                 var rides = await ridesTask;
                 if (rides?.Data?.Count() > 0)
@@ -96,20 +88,6 @@ namespace UcabGo.App.ViewModel
 
             IsLoading = false;
             AreButtonsEnabled = true;
-
-            async Task LoadingAnimation()
-            {
-                await Task.Delay(100);
-                ProgressBarValue = 0.5;
-                await Task.Delay(100);
-                ProgressBarValue = 0.6;
-                await Task.Delay(100);
-                ProgressBarValue = 0.75;
-                await Task.Delay(100);
-                ProgressBarValue = 0.95;
-                await Task.Delay(100);
-                ProgressBarValue = 1;
-            }
         }
 
         [RelayCommand]

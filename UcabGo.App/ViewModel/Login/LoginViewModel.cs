@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Text.RegularExpressions;
 using UcabGo.App.Api.Interfaces;
 using UcabGo.App.Api.Services.Locations;
 using UcabGo.App.Services;
@@ -32,6 +31,12 @@ public partial class LoginViewModel : ViewModelBase
     [ObservableProperty]
     bool isInvalidCredentialsVisible;
 
+    [ObservableProperty]
+    bool isPasswordVisible;
+
+    [ObservableProperty]
+    string buttonText;
+
     public LoginViewModel(
         IAuthApi authService,
         ILocationsApiService locationsApiService,
@@ -55,6 +60,9 @@ public partial class LoginViewModel : ViewModelBase
         Email = string.Empty;
         Password = string.Empty;
 #endif
+        IsPasswordVisible = false;
+
+        ButtonText = "Iniciar sesión";
     }
 
     [RelayCommand]
@@ -67,6 +75,7 @@ public partial class LoginViewModel : ViewModelBase
         if (IsEmailErrorVisible || IsPasswordErrorVisible) return;
 
         IsEnabled = false;
+        ButtonText = "Iniciando sesión...";
 
         var responseData = await authService.LoginAsync(Email, Password);
         var loginData = responseData?.Data;
@@ -93,6 +102,7 @@ public partial class LoginViewModel : ViewModelBase
         }
 
         IsEnabled = true;
+        ButtonText = "Iniciar sesión";
     }
 
     [RelayCommand]

@@ -3,9 +3,14 @@
     x:Class="UcabGo.App.Views.RegisterView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:UcabGo.App.Utils"
     xmlns:viewmodel="clr-namespace:UcabGo.App.ViewModel"
     Title="Registrarse"
     x:DataType="viewmodel:RegisterViewModel">
+    <ContentPage.Resources>
+        <local:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+    </ContentPage.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -20,7 +25,7 @@
                         x:Name="TxtEmail"
                         IsSpellCheckEnabled="False"
                         Keyboard="Email"
-                        Placeholder="usuario@ucab.edu.ve"
+                        Placeholder="✉️ usuario@ucab.edu.ve"
                         Text="{Binding Email}" />
                 </Border>
                 <Label
@@ -40,17 +45,17 @@
 
                 <Label Margin="0,0,0,-20" Text="Nombres:" />
                 <Border>
-                    <Entry Placeholder="Primer y segundo nombre" Text="{Binding Name}" />
+                    <Entry Placeholder="👤 Primer y segundo nombre" Text="{Binding Name}" />
                 </Border>
 
                 <Label Margin="0,0,0,-20" Text="Apellidos:" />
                 <Border>
-                    <Entry Placeholder="Primer y segundo apellido" Text="{Binding LastName}" />
+                    <Entry Placeholder="👤 Primer y segundo apellido" Text="{Binding LastName}" />
                 </Border>
 
                 <Label Margin="0,0,0,-20" Text="Teléfono:" />
                 <Border>
-                    <Entry Placeholder="0414-1234567" Text="{Binding Phone}" />
+                    <Entry Placeholder="📞 0414-1234567" Text="{Binding Phone}" />
                 </Border>
                 <Label
                     Margin="0,-20,0,0"
@@ -63,8 +68,8 @@
                 <Label Margin="0,0,0,-20" Text="Contraseña:" />
                 <Border>
                     <Entry
-                        IsPassword="True"
-                        Placeholder="Contraseña"
+                        IsPassword="{Binding Source={x:Reference CheckPassword}, Path=IsChecked, Converter={StaticResource InverseBooleanConverter}}"
+                        Placeholder="🗝️ Contraseña"
                         Text="{Binding Password}" />
                 </Border>
                 <Label
@@ -78,8 +83,8 @@
                 <Label Margin="0,0,0,-20" Text="Confirmar contraseña:" />
                 <Border>
                     <Entry
-                        IsPassword="True"
-                        Placeholder="Confirmar contraseña"
+                        IsPassword="{Binding Source={x:Reference CheckPassword}, Path=IsChecked, Converter={StaticResource InverseBooleanConverter}}"
+                        Placeholder="🗝️ Confirmar contraseña"
                         Text="{Binding ConfirmPassword}" />
                 </Border>
                 <Label
@@ -89,6 +94,11 @@
                     IsVisible="{Binding IsConfirmPasswordErrorVisible}"
                     Text="❌ Las contraseñas no coinciden."
                     TextColor="Red" />
+
+                <HorizontalStackLayout Margin="0,-20,0,0">
+                    <CheckBox x:Name="CheckPassword" IsChecked="{Binding IsPasswordVisible}" />
+                    <Label Text="Mostrar contraseña" VerticalOptions="Center" />
+                </HorizontalStackLayout>
 
             </VerticalStackLayout>
         </ScrollView>

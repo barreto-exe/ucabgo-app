@@ -32,6 +32,9 @@ namespace UcabGo.App.ViewModel
         [ObservableProperty]
         private bool isButtonEnabled;
 
+        [ObservableProperty]
+        bool isPasswordVisible;
+
         readonly IAuthApi authService;
 
         public PasswordViewModel(ISettingsService settingsService, INavigationService navigation, IAuthApi authService) : base(settingsService, navigation)
@@ -51,6 +54,7 @@ namespace UcabGo.App.ViewModel
             IsConfirmPasswordErrorVisible = false;
             ButtonText = "Guardar";
             IsButtonEnabled = true;
+            IsPasswordVisible = false;
         }
 
         [RelayCommand]

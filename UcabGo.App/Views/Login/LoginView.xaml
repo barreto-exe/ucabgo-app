@@ -3,91 +3,140 @@
     x:Class="UcabGo.App.Views.LoginView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:UcabGo.App.Utils"
     xmlns:viewmodel="clr-namespace:UcabGo.App.ViewModel"
     Title="Iniciar Sesión"
     x:DataType="viewmodel:LoginViewModel">
-
+    <ContentPage.Resources>
+        <local:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+    </ContentPage.Resources>
     <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25"
-            VerticalOptions="Center">
 
-            <Label
-                Margin="0,20,0,10"
-                FontSize="24"
-                Text="¡Bienvenido a Ucabery!" />
+        <Grid RowDefinitions="Auto, Auto, *">
+
+            <VerticalStackLayout
+                Grid.Row="0"
+                Margin="20"
+                Spacing="20">
+                <VerticalStackLayout HorizontalOptions="Center">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="26"
+                        HorizontalOptions="Center"
+                        Text="¡Bienvenido a Ucabery!" />
+                    <Label
+                        FontSize="22"
+                        HorizontalOptions="Center"
+                        Text="Tu viaje hacia el futuro" />
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
 
             <Image
-                HeightRequest="200"
+                Grid.Row="1"
+                Margin="20"
                 HorizontalOptions="Center"
-                Source="order_ride.png" />
-
-            <Label Margin="0,0,0,-20" Text="Correo UCAB:" />
-            <Border>
-                <Entry
-                    x:Name="TxtEmail"
-                    IsSpellCheckEnabled="False"
-                    Keyboard="Email"
-                    Placeholder="usuario@ucab.edu.ve"
-                    Text="{Binding Email}" />
-            </Border>
-            <Label
-                Margin="0,-20,0,0"
-                FontSize="12"
-                HorizontalOptions="Start"
-                IsVisible="{Binding IsEmailErrorVisible}"
-                Text="❌ Correo inválido. &#10;-Sólo permitidos correos UCAB."
-                TextColor="Red" />
-
-            <Label Margin="0,0,0,-20" Text="Contraseña:" />
-            <Border>
-                <Entry
-                    x:Name="TxtPassword"
-                    IsPassword="True"
-                    Placeholder="Contraseña"
-                    Text="{Binding Password}" />
-            </Border>
-
-            <Label
-                Margin="0,-20,0,0"
-                FontSize="12"
-                HorizontalOptions="Start"
-                IsVisible="{Binding IsPasswordErrorVisible}"
-                Text="❌ Contraseña inválida. &#10;- Mínimo 8 caracteres. &#10;- Al menos una mayúscula. &#10;- Al menos un número. &#10;- Al menos un carácter especial."
-                TextColor="Red" />
+                MaximumWidthRequest="350"
+                Source="order_ride.png"
+                VerticalOptions="Center" />
 
 
-            <!--  a label binded to Token  -->
-            <Label
-                FontSize="Small"
-                HorizontalOptions="StartAndExpand"
-                IsVisible="{Binding IsInvalidCredentialsVisible}"
-                Text="⚠ Credenciales inválidas."
-                TextColor="Red" />
+            <Frame
+                Grid.Row="2"
+                Margin="0,200,0,0"
+                BackgroundColor="{AppThemeBinding Light={StaticResource Gray100},
+                                                  Dark=Black}"
+                BorderColor="{AppThemeBinding Light={StaticResource Gray100},
+                                              Dark=Black}"
+                CornerRadius="0"
+                VerticalOptions="Fill" />
+            <Frame
+                Grid.Row="2"
+                BackgroundColor="{AppThemeBinding Light={StaticResource Gray100},
+                                                  Dark=Black}"
+                BorderColor="{AppThemeBinding Light={StaticResource Gray100},
+                                              Dark=Black}"
+                CornerRadius="60">
+                <VerticalStackLayout>
+                    <VerticalStackLayout Margin="20" Spacing="25">
+                        <Label Margin="0,0,0,-20" Text="Correo UCAB:" />
+                        <Border>
+                            <Entry
+                                x:Name="TxtEmail"
+                                IsSpellCheckEnabled="False"
+                                Keyboard="Email"
+                                Placeholder="✉️ usuario@ucab.edu.ve"
+                                Text="{Binding Email}" />
+                        </Border>
+                        <Label
+                            Margin="0,-20,0,0"
+                            FontSize="12"
+                            HorizontalOptions="Start"
+                            IsVisible="{Binding IsEmailErrorVisible}"
+                            Text="❌ Correo inválido. &#10;-Sólo permitidos correos UCAB."
+                            TextColor="Red" />
 
-            <Button
-                x:Name="BtnLogin"
-                Command="{Binding LoginCommand}"
-                IsEnabled="{Binding IsEnabled}"
-                Text="Iniciar sesión" />
+                        <Label Margin="0,0,0,-20" Text="Contraseña:" />
+                        <Border>
+                            <Entry
+                                x:Name="TxtPassword"
+                                IsPassword="{Binding Source={x:Reference CheckPassword}, Path=IsChecked, Converter={StaticResource InverseBooleanConverter}}"
+                                Placeholder="🗝️ Contraseña"
+                                Text="{Binding Password}" />
+                        </Border>
+
+                        <HorizontalStackLayout Margin="0,-20,0,0">
+                            <CheckBox x:Name="CheckPassword" IsChecked="{Binding IsPasswordVisible}" />
+                            <Label Text="Mostrar contraseña" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <Label
+                            Margin="0,-20,0,0"
+                            FontSize="12"
+                            HorizontalOptions="Start"
+                            IsVisible="{Binding IsPasswordErrorVisible}"
+                            Text="❌ Contraseña inválida. &#10;- Mínimo 8 caracteres. &#10;- Al menos una mayúscula. &#10;- Al menos un número. &#10;- Al menos un carácter especial."
+                            TextColor="Red" />
 
 
-            <!--  A horizontal line that divides the buttons  -->
-            <BoxView
-                BackgroundColor="Black"
-                HeightRequest="1"
-                HorizontalOptions="FillAndExpand" />
+                        <Label
+                            FontSize="Small"
+                            HorizontalOptions="StartAndExpand"
+                            IsVisible="{Binding IsInvalidCredentialsVisible}"
+                            Text="⚠ Credenciales inválidas."
+                            TextColor="Red" />
 
-            <Button
-                BackgroundColor="Transparent"
-                BorderColor="{StaticResource Primary}"
-                BorderWidth="1"
-                Command="{Binding RegisterCommand}"
-                Text="Registrarse"
-                TextColor="{StaticResource Primary}" />
 
-        </VerticalStackLayout>
+
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Margin="20,0">
+                        <Button
+                            x:Name="BtnLogin"
+                            Command="{Binding LoginCommand}"
+                            IsEnabled="{Binding IsEnabled}"
+                            Text="{Binding ButtonText}" />
+
+                        <HorizontalStackLayout Margin="0,5" HorizontalOptions="CenterAndExpand">
+                            <Label
+                                FontSize="14"
+                                Text="¿Aún no tienes cuenta?"
+                                VerticalOptions="Center" />
+                            <Button
+                                Margin="5,0,0,0"
+                                BackgroundColor="Transparent"
+                                BorderColor="Transparent"
+                                Command="{Binding RegisterCommand}"
+                                FontSize="14"
+                                Text="Registrarse"
+                                TextColor="{StaticResource Primary}" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+
+            </Frame>
+        </Grid>
     </ScrollView>
 
 </ContentPage>

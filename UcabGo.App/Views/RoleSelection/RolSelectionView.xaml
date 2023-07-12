@@ -3,13 +3,20 @@
     x:Class="UcabGo.App.Views.RoleSelectionView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:UcabGo.App.Utils"
     xmlns:viewmodel="clr-namespace:UcabGo.App.ViewModel"
     Title="Inicio"
     x:DataType="viewmodel:RoleSelectionViewModel"
     BackgroundColor="{AppThemeBinding Light={StaticResource Gray100},
                                       Dark={StaticResource Gray900}}">
+    <ContentPage.Resources>
+        <local:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+    </ContentPage.Resources>
     <Grid>
-        <ScrollView HorizontalOptions="Center" VerticalOptions="Center">
+        <ScrollView
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            ZIndex="0">
             <VerticalStackLayout>
                 <Border Margin="20,0,20,20" MaximumWidthRequest="400">
                     <VerticalStackLayout>
@@ -21,8 +28,13 @@
                         <Button
                             Margin="0,20"
                             Command="{Binding DriverCommand}"
-                            IsEnabled="{Binding AreButtonsEnabled}"
+                            IsVisible="{Binding IsLoading, Converter={StaticResource InverseBooleanConverter}}"
                             Text="Dar cola" />
+                        <ActivityIndicator
+                            HorizontalOptions="Center"
+                            IsRunning="{Binding IsLoading}"
+                            IsVisible="{Binding IsLoading}"
+                            VerticalOptions="Center" />
                     </VerticalStackLayout>
                 </Border>
 
@@ -36,19 +48,16 @@
                         <Button
                             Margin="0,20"
                             Command="{Binding PassengerCommand}"
-                            IsEnabled="{Binding AreButtonsEnabled}"
+                            IsVisible="{Binding IsLoading, Converter={StaticResource InverseBooleanConverter}}"
                             Text="Pedir cola" />
+                        <ActivityIndicator
+                            HorizontalOptions="Center"
+                            IsRunning="{Binding IsLoading}"
+                            IsVisible="{Binding IsLoading}"
+                            VerticalOptions="Center" />
                     </VerticalStackLayout>
                 </Border>
-
-
             </VerticalStackLayout>
         </ScrollView>
-
-        <ProgressBar
-            Margin="-5"
-            IsVisible="{Binding IsLoading}"
-            Progress="{Binding ProgressBarValue}"
-            VerticalOptions="Start" />
     </Grid>
 </ContentPage>

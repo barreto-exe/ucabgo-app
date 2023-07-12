@@ -47,7 +47,7 @@
                             HeightRequest="130"
                             HorizontalOptions="Center"
                             IsVisible="{Binding IsProfilePictureEmpty}"
-                            Source="profile.jpf"
+                            Source="profile.jpg"
                             VerticalOptions="Center"
                             WidthRequest="130"
                             ZIndex="0" />

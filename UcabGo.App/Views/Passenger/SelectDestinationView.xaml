@@ -41,7 +41,7 @@
                 <Button
                     Grid.Column="1"
                     Margin="5"
-                    Background="White"
+                    BackgroundColor="Transparent"
                     BorderColor="{StaticResource Primary}"
                     BorderWidth="1"
                     Command="{Binding SaveCommand}"

@@ -56,6 +56,9 @@ namespace UcabGo.App.ViewModel
         [ObservableProperty]
         bool isInvalidCredentialsVisible;
 
+        [ObservableProperty]
+        bool isPasswordVisible;
+
         readonly IAuthApi authService;
 
         readonly ILocationsApiService locationsApiService;
@@ -75,6 +78,7 @@ namespace UcabGo.App.ViewModel
 
             IsInvalidCredentialsVisible = false;
             IsPhoneErrorVisible = false;
+            IsPasswordVisible = false;
 
             CleanFields();
         }
