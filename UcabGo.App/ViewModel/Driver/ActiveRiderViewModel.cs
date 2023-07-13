@@ -1,8 +1,10 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.AspNetCore.SignalR.Client;
+using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using UcabGo.App.Api.Models;
 using UcabGo.App.Api.Services.Driver;
 using UcabGo.App.Api.Services.SignalR;
 using UcabGo.App.Api.Tools;
@@ -108,8 +110,12 @@ namespace UcabGo.App.ViewModel
         {
             base.OnDisappearing();
 
-            tokenSource.Cancel();
-            await hubConnection.StopAsync();
+            try
+            {
+                tokenSource.Cancel();
+                await hubConnection.StopAsync();
+            }
+            catch { }
         }
 
         async Task Refresh(bool withAnimation)
@@ -382,13 +388,29 @@ namespace UcabGo.App.ViewModel
             var response = await driverApi.CompleteRide(Ride.Id);
             if (response?.Message == "RIDE_COMPLETED")
             {
-                //TODO - Go to rating page
-                await navigation.GoBackAsync();
+                await GoToRatingView();
             }
             else
             {
                 await Application.Current.MainPage.DisplayAlert("Error", "No se pudo completar el viaje.", "Aceptar");
             }
+        }
+
+        private async Task GoToRatingView()
+        {
+            var users = from p in Passengers
+                        where p.IsAccepted && !p.IsCancelled
+                        select p.User;
+            string userJson = JsonConvert.SerializeObject(users);
+
+            var parameters = new Dictionary<string, object>
+                                {
+                                    { "usersJson", userJson },
+                                    { "rideId", Ride.Id },
+                                    { "isDriver", true }
+                                };
+
+            await navigation.NavigateToAsync<RateUserView>(parameters);
         }
     }
 }

@@ -37,6 +37,9 @@ namespace UcabGo.App.ViewModel
         {
             base.OnAppearing();
 
+            //await navigation.NavigateToAsync<RateUserView>();
+            //return;
+
             IsLoading = true;
             AreButtonsEnabled = false;
 

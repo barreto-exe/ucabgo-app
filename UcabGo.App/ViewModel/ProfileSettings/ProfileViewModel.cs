@@ -64,6 +64,12 @@ namespace UcabGo.App.ViewModel
 
             settings.ReloadImage = false;
             IsProfilePictureEmpty = PictureUrl == null;
+
+            //Force to load the image (current bug)
+            if (!string.IsNullOrEmpty(settings.User.ProfilePicture))
+            {
+                PictureUrl = ImageSource.FromUri(new Uri(settings.User.ProfilePicture));
+            }
         }
 
         [RelayCommand]

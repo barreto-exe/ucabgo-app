@@ -51,6 +51,7 @@
                         Grid.Column="1"
                         Margin="20"
                         DragCompletedCommand="{Binding ValueUpdatedCommand}"
+                        HeightRequest="80"
                         Maximum="800"
                         Minimum="1"
                         VerticalOptions="Center"

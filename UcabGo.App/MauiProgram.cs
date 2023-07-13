@@ -13,6 +13,7 @@ using UcabGo.App.Api.Services.Rides;
 using UcabGo.App.Api.Services.SignalR;
 using UcabGo.App.Api.Services.SosContacts;
 using UcabGo.App.Api.Services.User;
+using UcabGo.App.Api.Services.UserRating;
 using UcabGo.App.Api.Services.Vehicles;
 using UcabGo.App.Services;
 using UcabGo.App.Services.Navigation;
@@ -65,7 +66,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IRidesApi, RidesApi>();
         builder.Services.AddSingleton<IPassengerApi, PassengerApi>();
         builder.Services.AddSingleton<IChatApi, ChatApi>();
-
+        builder.Services.AddSingleton<IUserRatingApi, UserRatingApi>();
         builder.Services.AddSingleton<IHubConnectionFactory, HubConnectionFactory>();
 
 
@@ -97,6 +98,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<ActivePassengerViewModel>();
         builder.Services.AddSingleton<ChatViewModel>();
         builder.Services.AddSingleton<RegisterViewModel>();
+        builder.Services.AddSingleton<RateUserViewModel>();
 
         //DI Views
         builder.Services.AddSingleton<LoginView>();
@@ -121,6 +123,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<ActivePassengerView>();
         builder.Services.AddSingleton<ChatView>();
         builder.Services.AddSingleton<RegisterView>();
+        builder.Services.AddSingleton<RateUserView>();
+
 
 
         //Removes the underline from the Entry

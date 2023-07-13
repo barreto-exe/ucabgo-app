@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.AspNetCore.SignalR.Client;
+using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using UcabGo.App.Api.Models;
 using UcabGo.App.Api.Services.PassengerService;
 using UcabGo.App.Api.Services.SignalR;
 using UcabGo.App.Api.Tools;
@@ -111,8 +113,12 @@ namespace UcabGo.App.ViewModel
         {
             base.OnDisappearing();
 
-            tokenSource.Cancel();
-            await hubConnection.StopAsync();
+            try
+            {
+                tokenSource.Cancel();
+                await hubConnection.StopAsync();
+            }
+            catch { }
         }
 
         async Task Refresh(bool withAnimation)
@@ -178,14 +184,13 @@ namespace UcabGo.App.ViewModel
                     {
                         case DoubleCheckResult.ArrivedOk:
                             {
-                                //TODO - Rate driver screen
-                                await navigation.GoBackAsync();
+                                await GoToRatingView();
                                 break;
                             }
                         case DoubleCheckResult.Complaint:
                             {
                                 //TODO - Complaint screen
-                                await navigation.GoBackAsync();
+                                await navigation.NavigateToAsync("//" + nameof(RoleSelectionView));
                                 break;
                             }
                         case DoubleCheckResult.ApiError:
@@ -217,6 +222,20 @@ namespace UcabGo.App.ViewModel
             DestinationText = Ride?.Destination?.DestinationText;
 
             return true;
+        }
+
+        private async Task GoToRatingView()
+        {
+            string userJson = JsonConvert.SerializeObject(new List<User>() { Ride.Driver });
+
+            var parameters = new Dictionary<string, object>
+                                {
+                                    { "usersJson", userJson },
+                                    { "rideId", Ride.Id },
+                                    { "isDriver", false }
+                                };
+
+            await navigation.NavigateToAsync<RateUserView>(parameters);
         }
 
         private async Task<DoubleCheckResult> DoubleCheckRide()
@@ -288,9 +307,7 @@ namespace UcabGo.App.ViewModel
                 var response = await passengerApi.FinishRide(Ride.Id);
                 if (response?.Message == "RIDE_FINISHED")
                 {
-                    //TODO - Rate driver screen
-                    await navigation.GoBackAsync();
-
+                    await GoToRatingView();
                 }
                 else
                 {

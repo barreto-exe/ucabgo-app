@@ -3,11 +3,8 @@
     x:Class="UcabGo.App.Views.TermsView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="TermsPage">
-    <VerticalStackLayout>
-        <Label
-            HorizontalOptions="Center"
-            Text="Términos y Condiciones"
-            VerticalOptions="Center" />
-    </VerticalStackLayout>
+    Title="Términos y condiciones">
+    <ScrollView>
+        <WebView Source="https://htmlpreview.github.io/?https://github.com/barreto-exe/ucabgo-app/blob/main/Docs/Terms.html" />
+    </ScrollView>
 </ContentPage>

@@ -16,6 +16,7 @@ namespace UcabGo.App.Models
 
         public bool IsWaiting { get => TimeAccepted == null; }
         public bool IsAccepted { get => TimeAccepted != null; }
+        public bool IsCancelled { get => TimeCancelled != null; }
         public bool IsEnded { get => TimeIgnored != null || TimeCancelled != null || TimeFinished != null; }
         public bool IsActive { get => TimeIgnored == null && TimeCancelled == null && TimeFinished == null; }
     }

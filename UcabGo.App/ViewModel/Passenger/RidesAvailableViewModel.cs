@@ -99,8 +99,12 @@ namespace UcabGo.App.ViewModel
         {
             base.OnDisappearing();
 
-            tokenSource.Cancel();
-            await hubConnection.StopAsync();
+            try
+            {
+                tokenSource.Cancel();
+                await hubConnection.StopAsync();
+            }
+            catch { }
         }
 
         async Task Refresh(bool withAnimation)

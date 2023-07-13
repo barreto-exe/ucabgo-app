@@ -136,6 +136,7 @@
 	  <None Remove="Resources\Images\searching.svg" />
 	  <None Remove="Resources\Images\sos.svg" />
 	  <None Remove="Resources\Images\taxi.svg" />
+	  <None Remove="Resources\Images\wait.svg" />
 	  <None Remove="Resources\Images\walker.svg" />
 	  <None Remove="Resources\Raw\data.example.json" />
 	  <None Remove="Resources\Raw\data.json" />
@@ -155,6 +156,9 @@
 	  </Compile>
 	  <Compile Update="Shells\SessionShell.xaml.cs">
 	    <DependentUpon>SessionShell.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\Documentation\PrivacyView.xaml.cs">
+	    <DependentUpon>PrivacyView.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\Driver\ActiveRiderView.xaml.cs">
 	    <DependentUpon>ActiveRiderView.xaml</DependentUpon>
@@ -187,6 +191,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Chat\ChatView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Documentation\PrivacyView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Passenger\ActivePassengerView.xaml">
@@ -226,6 +233,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Passenger\RidesAvailableView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\RateUser\RateUserView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Register\RegisterView.xaml">

@@ -130,20 +130,13 @@
                                     <VerticalStackLayout Margin="1">
 
                                         <HorizontalStackLayout>
-                                            <Frame
-                                                Padding="0"
+                                            <ImageButton
+                                                Aspect="Fill"
                                                 BackgroundColor="{StaticResource Secondary}"
-                                                CornerRadius="100"
+                                                CornerRadius="30"
                                                 HeightRequest="60"
-                                                WidthRequest="60">
-                                                <Label
-                                                    FontFamily="IconFont"
-                                                    FontSize="30"
-                                                    HorizontalOptions="Center"
-                                                    Text="{Binding Initial}"
-                                                    TextColor="White"
-                                                    VerticalOptions="Center" />
-                                            </Frame>
+                                                Source="{Binding User.ProfilePicture}"
+                                                WidthRequest="60" />
 
                                             <VerticalStackLayout Margin="15" VerticalOptions="Center">
                                                 <Label
@@ -156,11 +149,16 @@
                                         </HorizontalStackLayout>
 
                                         <!--  Label with the passenger's location  -->
-                                        <Label
-                                            Margin="0,10,0,0"
-                                            FontSize="Small"
-                                            Text="{Binding FinalLocation.DestinationText}"
-                                            VerticalOptions="Center" />
+                                        <HorizontalStackLayout Margin="0,10,0,0">
+                                            <Label
+                                                FontSize="Small"
+                                                Text="🏁 Destino: "
+                                                VerticalOptions="Center" />
+                                            <Label
+                                                FontSize="Small"
+                                                Text="{Binding FinalLocation.DestinationText}"
+                                                VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
 
                                         <Grid ColumnDefinitions="*,Auto,Auto">
                                             <Label

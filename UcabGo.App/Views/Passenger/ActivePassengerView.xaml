@@ -19,17 +19,28 @@
             VerticalOptions="Start" />
 
         <!--  Waiting screen  -->
-        <VerticalStackLayout IsVisible="{Binding IsWaiting}">
-            <Label
-                Margin="20"
-                HorizontalTextAlignment="Center"
-                Text="Por favor, espere mientras el conductor acepta su solicitud." />
+        <Grid IsVisible="{Binding IsWaiting}" RowDefinitions="80, Auto, Auto">
 
-            <Label
+            <VerticalStackLayout Grid.Row="1">
+                <Label
+                    FontSize="Large"
+                    HorizontalTextAlignment="Center"
+                    Text="Espere mientras el conductor                      acepta su solicitud." />
+                <Label
+                    Margin="40"
+                    FontSize="Medium"
+                    HorizontalTextAlignment="Center"
+                    Text="{Binding TimerText}" />
+            </VerticalStackLayout>
+
+            <Image
+                Grid.Row="2"
                 Margin="20"
                 HorizontalOptions="Center"
-                Text="{Binding TimerText}" />
-        </VerticalStackLayout>
+                MaximumWidthRequest="300"
+                Source="wait.png"
+                VerticalOptions="Center" />
+        </Grid>
 
 
         <Grid>
@@ -161,20 +172,13 @@
                                     <VerticalStackLayout Margin="1">
 
                                         <HorizontalStackLayout>
-                                            <Frame
-                                                Padding="0"
+                                            <ImageButton
+                                                Aspect="Fill"
                                                 BackgroundColor="{StaticResource Secondary}"
-                                                CornerRadius="100"
+                                                CornerRadius="30"
                                                 HeightRequest="60"
-                                                WidthRequest="60">
-                                                <Label
-                                                    FontFamily="IconFont"
-                                                    FontSize="30"
-                                                    HorizontalOptions="Center"
-                                                    Text="{Binding Initial}"
-                                                    TextColor="White"
-                                                    VerticalOptions="Center" />
-                                            </Frame>
+                                                Source="{Binding User.ProfilePicture}"
+                                                WidthRequest="60" />
 
                                             <VerticalStackLayout Margin="15" VerticalOptions="Center">
                                                 <Label

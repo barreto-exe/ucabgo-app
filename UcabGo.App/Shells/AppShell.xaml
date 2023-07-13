@@ -97,4 +97,15 @@
                 Color="Gray" />
         </ShellContent.Icon>
     </ShellContent>
+    <ShellContent
+        Title="Políticas de privacidad"
+        ContentTemplate="{DataTemplate local:Views.PrivacyView}"
+        Route="PrivacyView">
+        <ShellContent.Icon>
+            <FontImageSource
+                FontFamily="IconFont"
+                Glyph="{x:Static icon:IconFont.Privacy_tip}"
+                Color="Gray" />
+        </ShellContent.Icon>
+    </ShellContent>
 </Shell>

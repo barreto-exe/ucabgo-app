@@ -28,9 +28,12 @@
                         <Button
                             Margin="0,20"
                             Command="{Binding DriverCommand}"
+                            HeightRequest="45"
                             IsVisible="{Binding IsLoading, Converter={StaticResource InverseBooleanConverter}}"
                             Text="Dar cola" />
                         <ActivityIndicator
+                            Margin="0,20"
+                            HeightRequest="45"
                             HorizontalOptions="Center"
                             IsRunning="{Binding IsLoading}"
                             IsVisible="{Binding IsLoading}"
@@ -48,9 +51,12 @@
                         <Button
                             Margin="0,20"
                             Command="{Binding PassengerCommand}"
+                            HeightRequest="45"
                             IsVisible="{Binding IsLoading, Converter={StaticResource InverseBooleanConverter}}"
                             Text="Pedir cola" />
                         <ActivityIndicator
+                            Margin="0,20"
+                            HeightRequest="45"
                             HorizontalOptions="Center"
                             IsRunning="{Binding IsLoading}"
                             IsVisible="{Binding IsLoading}"

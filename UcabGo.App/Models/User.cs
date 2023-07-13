@@ -10,5 +10,6 @@ namespace UcabGo.App.Api.Models
         public string Phone { get; set; }
         public float WalkingDistance { get; set; }
         public string ProfilePicture { get; set; }
+        public string Initial { get => Name[0].ToString().ToUpper(); }
     }
 }

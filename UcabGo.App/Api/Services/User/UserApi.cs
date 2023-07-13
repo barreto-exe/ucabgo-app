@@ -33,6 +33,7 @@ namespace UcabGo.App.Api.Services.User
 
         public async Task<ApiResponse<Models.User>> UpdateProfilePicture(MultipartFormDataContent input)
         {
+            RefreshToken();
             var response = await Client.PutAsync(ApiRoutes.USER_PICTURE, input);
             if (response.IsSuccessStatusCode || response.StatusCode == HttpStatusCode.BadRequest)
             {

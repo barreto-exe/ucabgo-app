@@ -24,6 +24,8 @@ namespace UcabGo.App.Api.Tools
         public static string RIDES { get => BASE_URL + "rides"; }
         public static string PASSENGER { get => BASE_URL + "passenger"; }
         public static string PASSENGER_COOLDOWN { get => BASE_URL + "passenger/cooldown"; }
+        public static string STARS { get => BASE_URL + "stars"; }
+        public static string STARS_AVERAGE { get => BASE_URL + "stars/average"; }
 
         //Hubs strings
         public static string CHAT_HUB { get => "chat"; }

@@ -3,11 +3,8 @@
     x:Class="UcabGo.App.Views.AboutView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="AboutView">
-    <VerticalStackLayout>
-        <Label
-            HorizontalOptions="Center"
-            Text="Acerca de"
-            VerticalOptions="Center" />
-    </VerticalStackLayout>
+    Title="Acerca de">
+    <ScrollView>
+        <WebView Source="https://htmlpreview.github.io/?https://github.com/barreto-exe/ucabgo-app/blob/main/Docs/About.html" />
+    </ScrollView>
 </ContentPage>

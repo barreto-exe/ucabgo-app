@@ -28,7 +28,7 @@ namespace UcabGo.App.Api.Services
             RefreshToken();
         }
 
-        private void RefreshToken()
+        protected void RefreshToken()
         {
             var token = settingsService.AccessToken;
             if (!string.IsNullOrEmpty(token))
