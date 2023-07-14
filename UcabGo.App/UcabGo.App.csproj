@@ -75,23 +75,23 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
 	  <ApplicationTitle>Ucabery</ApplicationTitle>
-	  <ApplicationDisplayVersion>0.5.0</ApplicationDisplayVersion>
+	  <ApplicationDisplayVersion>0.7.0</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
 	  <ApplicationTitle>Ucabery</ApplicationTitle>
-	  <ApplicationDisplayVersion>0.5.0</ApplicationDisplayVersion>
+	  <ApplicationDisplayVersion>0.7.0</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android|AnyCPU'">
 	  <ApplicationTitle>Ucabery</ApplicationTitle>
-	  <ApplicationDisplayVersion>0.5.0</ApplicationDisplayVersion>
+	  <ApplicationDisplayVersion>0.7.0</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android|AnyCPU'">
 	  <ApplicationTitle>Ucabery</ApplicationTitle>
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
-	  <ApplicationDisplayVersion>0.5.0</ApplicationDisplayVersion>
+	  <ApplicationDisplayVersion>0.7.0</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|AnyCPU'">
