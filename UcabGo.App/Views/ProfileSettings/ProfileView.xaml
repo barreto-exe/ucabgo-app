@@ -101,10 +101,10 @@
                         <Button Command="{Binding WalkingDistanceCommand}" Text="🚶    Distancia de caminata" />
                         <Button Command="{Binding SosContactsCommand}" Text="🆘    Contactos de emergencia" />
                         <Button Command="{Binding VehiclesCommand}" Text="🚗    Vehículos" />
-                        <Button
+                        <!--<Button
                             Command="{Binding MyTripsCommand}"
                             CornerRadius="8"
-                            Text="🚘    Mis viajes" />
+                            Text="🚘    Mis viajes" />-->
                     </VerticalStackLayout>
                 </Frame>
                 <!--  Botón de cerrar sesión  -->
