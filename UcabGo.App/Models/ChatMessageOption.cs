@@ -29,7 +29,7 @@
                 FinalPortions = new List<string>
                 {
                     "Estoy en el lugar de encuentro",
-                    "Estoy en saliendo",
+                    "Estoy saliendo",
                     "Estoy en camino",
                     "Estoy llegando",
                     "¡Ya llegué!",
@@ -64,7 +64,7 @@
                     "La entrada del centro comercial",
                     "La entrada del supermercado",
                     "La vigilancia del lugar",
-                    "Afuera, en la avenida",
+                    "La avenida, afuera",
                 }
             },
             new()
@@ -77,7 +77,7 @@
                     "La entrada del centro comercial",
                     "La entrada del supermercado",
                     "La vigilancia del lugar",
-                    "Afuera, en la avenida",
+                    "La avenida, afuera",
                 }
             },
             new()
@@ -90,7 +90,7 @@
                     "La entrada del centro comercial",
                     "La entrada del supermercado",
                     "La vigilancia del lugar",
-                    "Afuera, en la avenida",
+                    "La avenida, afuera",
                 }
             },
         };
