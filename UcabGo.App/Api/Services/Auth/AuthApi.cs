@@ -38,5 +38,10 @@ namespace UcabGo.App.Api.Services
         {
             return await PostAsync<Login>(ApiRoutes.REGISTER, input);
         }
+
+        public async Task<ApiResponse<object>> ResendValidationEmail(string email)
+        {
+            return await GetAsync<object>(ApiRoutes.VALIDATE_EMAIL, new { ValidationEmail = email });
+        }
     }
 }

@@ -81,7 +81,23 @@ public partial class LoginViewModel : ViewModelBase
         var loginData = responseData?.Data;
         var message = responseData?.Message;
 
-        if (loginData != null)
+        if(message == "USER_NOT_VALIDATED")
+        {
+            bool sendAgain = await Application.Current.MainPage.DisplayAlert("Error", "Aún no has confirmado tu correo electrónico. ¿Deseas reenviar el correo de confirmación?", "Sí", "No");
+
+            if (sendAgain)
+            {
+                var resendResponse = await authService.ResendValidationEmail(Email);
+                var resendMessage = resendResponse?.Message;
+
+                if (resendMessage == "NOT_FOUND")
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "El correo electrónico no está registrado o ya ha sido verificado.", "Aceptar");
+                }
+            }
+
+        }
+        else if (loginData != null)
         {
             settings.User = loginData.User;
             settings.AccessToken = loginData.Token;

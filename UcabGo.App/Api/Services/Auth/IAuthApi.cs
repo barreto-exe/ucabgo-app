@@ -9,5 +9,6 @@ namespace UcabGo.App.Api.Interfaces
         Task<ApiResponse<Login>> LoginAsync(string email, string password);
         Task<ApiResponse<Login>> RegisterAsync(RegisterInput input);
         Task<ApiResponse<object>> ChangePasswordAsync(string oldPassword, string newPassword);
+        Task<ApiResponse<object>> ResendValidationEmail(string email);
     }
 }

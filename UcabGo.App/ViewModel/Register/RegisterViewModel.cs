@@ -123,22 +123,12 @@ namespace UcabGo.App.ViewModel
                 Phone = Phone,
                 Password = Password
             });
-            var loginData = responseData?.Data;
             var message = responseData?.Message;
-            if (loginData != null)
+            if (message == "USER_REGISTERED")
             {
-                settings.User = loginData.User;
-                settings.AccessToken = loginData.Token;
+                await Application.Current.MainPage.DisplayAlert("Éxito", "Se ha registrado exitosamente. Por favor, ingrese al link que fue enviado a su correo electrónico.", "Aceptar");
 
-                var homeLocation = (await locationsApiService.GetUserHome()).Data;
-                settings.Home = homeLocation;
-
-                var campusLocation = await locationsApiService.GetUserCampus();
-                settings.Campus = campusLocation;
-
-                settings.ReloadImage = true;
-
-                await navigation.RestartSession();
+                await navigation.GoBackAsync();
             }
             else if (message == "USER_ALREADY_EXISTS")
             {
