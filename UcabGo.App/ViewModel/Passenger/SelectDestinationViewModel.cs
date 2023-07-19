@@ -76,7 +76,7 @@ namespace UcabGo.App.ViewModel
             CurrentPin = null;
             SearchQuery = string.Empty;
             IsResultsVisible = false;
-            ButtonText = "Enviar";
+            ButtonText = "Aceptar";
             IsButtonEnabled = true;
 
             //Set camera over current location or default

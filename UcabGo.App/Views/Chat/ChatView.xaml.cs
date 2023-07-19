@@ -9,7 +9,6 @@ public partial class ChatView : ContentPage
         InitializeComponent();
 
         viewModel.CollectionView = collectionView;
-        viewModel.ChatEntry = chatEntry;
 
         BindingContext = viewModel;
     }

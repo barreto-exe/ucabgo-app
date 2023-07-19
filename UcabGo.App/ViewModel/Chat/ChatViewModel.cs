@@ -18,6 +18,7 @@ namespace UcabGo.App.ViewModel
     {
         readonly IChatApi chatApi;
 
+        
         readonly IHubConnectionFactory hubConnectionFactory;
         HubConnection hubConnection;
         CancellationTokenSource tokenSource;
@@ -34,14 +35,19 @@ namespace UcabGo.App.ViewModel
         [ObservableProperty]
         bool isLoading;
 
+        [ObservableProperty]
+        ObservableCollection<ChatMessageOption> messageOptions;
+        
         public CollectionView CollectionView { get; set; }
-        public Entry ChatEntry { get; set; }
+
 
         public ChatViewModel(ISettingsService settingsService, INavigationService navigation, IHubConnectionFactory hubConnectionFactory, IChatApi chatApi) : base(settingsService, navigation)
         {
             this.chatApi = chatApi;
 
             this.hubConnectionFactory = hubConnectionFactory;
+
+            this.messageOptions = new(ChatMessageOption.GetChatMessageOptions());
         }
 
         public override async void OnAppearing()
@@ -93,20 +99,39 @@ namespace UcabGo.App.ViewModel
             await hubConnection.StopAsync();
         }
 
-
         [RelayCommand]
-        public async Task SendMessage()
+        public async Task SelectMessage(ChatMessageOption option)
         {
-            if (string.IsNullOrEmpty(MessageText))
+            var options = option.FinalPortions
+                .Select(x => $"📨 {x}")
+                .ToArray();
+
+            var finalPortion = await Application.Current.MainPage
+                .DisplayActionSheet("Completa el mensaje", "Cancelar", null, options);
+
+            if (finalPortion != "Cancelar" && !string.IsNullOrWhiteSpace(finalPortion))
             {
-                return;
+                finalPortion = finalPortion.Replace("📨", "").Trim();
+                
+                if(option.FirstPortion == string.Empty)
+                {
+                    await SendMessage(finalPortion);
+                }
+                else
+                {
+                    //Replace emoji and set to lower only two first characters
+                    char firstChar = finalPortion[0].ToString().ToLower()[0];
+                    char secondChar = finalPortion[1].ToString().ToLower()[0];
+                    finalPortion = $"{firstChar}{secondChar}{finalPortion[2..]}";
+
+                    await SendMessage($"{option.FirstPortion} {finalPortion}");
+                }
             }
+        }
 
-            string messageText = MessageText.Trim();
-            MessageText = string.Empty;
-            await ChatEntry.HideKeyboardAsync(CancellationToken.None);
-
-            var response = await chatApi.SendMessage(RideId, messageText);
+        public async Task SendMessage(string message)
+        {
+            var response = await chatApi.SendMessage(RideId, message);
             if (response?.Message == "MESSAGE_SENT")
             {
                 await RefreshMessages();
